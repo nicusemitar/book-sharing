@@ -13,6 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 
 
 import java.util.Set;
@@ -46,9 +49,9 @@ public class User {
     @EqualsAndHashCode.Exclude
     private Set<Review> reviews;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    @ManyToMany
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> userRoles;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
