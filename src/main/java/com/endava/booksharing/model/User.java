@@ -1,8 +1,11 @@
 package com.endava.booksharing.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.ToString;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,6 +26,9 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name = "t_user")
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http:/www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http:/www.thymeleaf.org ">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Book Sharing</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/register.css}">
+    <!-- jQuery and JS bundle w/ Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <img th:src="@{/images/logo.png}" height="60px" width="180px"/>
+</nav>
+
+<div class="container">
+    <div class="jumbotron" style="background: none">
+        <div class="container d-flex justify-content-center">
+            <div class="w3-center w3-animate-opacity" id="fileForm" role="form">
+                <div class="form-group">
+                    <h2>Registration Form</h2>
+                    <hr>
+                </div>
+                <div class="form-group">
+                    <label for="email"><span class="req"><img class="navbar-toggler-icon"
+                                                              src="/images/email.png"> </span> Email Address: </label>
+                    <input class="form-control" autocomplete="off" required type="text" id="email"
+                           oninput="emailValidate(this.value);"/>
+                    <div class="status" id="status"></div>
+                </div>
+                <div class="form-group">
+                    <label for="username"><span class="req"><img class="navbar-toggler-icon"
+                                                                 src="/images/userlogo.png"></span> Username: </label>
+                    <input class="form-control" autocomplete="off" type="text" id="txt" oninput="Validate(this.value);"
+                           required/>
+                    <div id="errLast"></div>
+                </div>
+                <div class="form-group">
+                    <label for="password"><span class="req"><img class="navbar-toggler-icon"
+                                                                 src="/images/lock.png"></span> Password: </label>
+                    <input required type="password" class="form-control inputpass" minlength="4"
+                           maxlength="16" id="pass1" oninput="validatePassword(this.value)"/>
+                    <span id="passwordMessage" class="passwordMessage"></span>
+                    <br>
+                    <label for="password"><span class="req"><img class="navbar-toggler-icon"
+                                                                 src="/images/lock.png"></span> Password Confirm:
+                    </label>
+                    <input required type="password" class="form-control inputpass" minlength="4"
+                           maxlength="16" id="pass2" onkeyup="checkPass(); return false;"/>
+                    <span id="confirmMessage" class="confirmMessage"></span>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-success" type="submit" id="register" value="Register">
+                </div>
+                <div class="form-group">
+                    <hr>
+                    <label>Already have an account? Proceed to <a href="/login" style="color: blue">Log in</a></label>
+                </div>
+
+                <div class="navbar fixed-bottom navbar-expand-sm" style="background-color: #6c757d">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <br>
+        <p>Please, fill all the fields with the right values!</p>
+    </div>
+</div>
+
+</body>
+<script th:src="@{/js/register.js}"></script>
+</html>
