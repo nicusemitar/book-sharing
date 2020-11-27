@@ -1,5 +1,6 @@
 package com.endava.booksharing.service;
 
+
 import com.endava.booksharing.api.dto.UserRegistrationResponseDto;
 import com.endava.booksharing.model.User;
 import com.endava.booksharing.model.enums.RoleType;
@@ -14,14 +15,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
 import static com.endava.booksharing.TestConstants.EMAIL_PASS;
+import static com.endava.booksharing.TestConstants.PASSWORD_PASS;
+import static com.endava.booksharing.TestConstants.PASSWORD_PASS_ENCODED;
 import static com.endava.booksharing.TestConstants.USERNAME_PASS;
 import static com.endava.booksharing.utils.RoleTestUtils.ROLE_USER;
 import static com.endava.booksharing.utils.UserTestUtils.ExpectedDummyUser;
-import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
+import static com.endava.booksharing.utils.UserTestUtils.USER_ONE_BUILDER;
 import static com.endava.booksharing.utils.UserTestUtils.USER_REQUEST_DTO_PASS;
 import static com.endava.booksharing.utils.UserTestUtils.USER_RESPONSE_DTO;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -31,7 +35,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
@@ -40,6 +43,9 @@ public class UserServiceTest {
 
     @Mock
     private RoleRepository roleRepository;
+
+    @Mock
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @InjectMocks
     private UserService userService;
@@ -78,7 +84,9 @@ public class UserServiceTest {
 
         when(userRepository.existsUserByUsernameOrEmail(USERNAME_PASS, EMAIL_PASS)).thenReturn(false);
         when(roleRepository.getRoleByRoleType(RoleType.USER)).thenReturn(Optional.of(ROLE_USER()));
-        when(userRepository.save(any(User.class))).thenReturn(USER_ONE());
+        when(userRepository.save(any(User.class))).thenReturn(USER_ONE_BUILDER());
+        when(bCryptPasswordEncoder.encode(PASSWORD_PASS)).thenReturn(PASSWORD_PASS_ENCODED);
+
 
         final UserRegistrationResponseDto ACTUAL_RESPONSE_USER = userService.saveUser(USER_REQUEST_DTO_PASS);
 

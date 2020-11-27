@@ -11,6 +11,8 @@ import com.endava.booksharing.utils.exceptions.NotFoundException;
 import com.endava.booksharing.utils.exceptions.UserCredentialsExceptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+    @Qualifier("bCryptPasswordEncoder")
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Transactional
     public UserRegistrationResponseDto saveUser(UserRegistrationRequestDto userRegistrationRequestDto) {
         log.info("Saving user with username [{}]", userRegistrationRequestDto.getUsername());
@@ -38,6 +43,7 @@ public class UserService {
             }
             User user = mapUserRequestDtoToUser.apply(userRegistrationRequestDto);
             setDefaultRoleToUser(user);
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             user = userRepository.save(user);
             return mapUserToUserResponseDto.apply(user);
         } catch (NotFoundException e) {

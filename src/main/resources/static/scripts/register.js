@@ -56,7 +56,7 @@ function Validate(txt) {
     }
 }
 
-function emailValidate(email) {
+function emailValidation(email) {
     const regMail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+\.)+([a-zA-Z]{2,3})$/;
 
     if (regMail.test(email) === false) {

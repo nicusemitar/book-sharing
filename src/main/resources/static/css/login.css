@@ -1,0 +1,40 @@
+#formContent {
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    background-color: #f9d29d;
+    background-image: linear-gradient(315deg, #f9d29d 0%, #ffd8cb 74%);
+    padding: 30px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    text-align: center;
+
+}
+
+.input-group{
+    display: flex;
+    justify-content: center;
+}
+
+body{
+    background: url('/images/booksbib.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+.btn-primary{
+    background-color: #fce043;
+    background-image: linear-gradient(315deg, #fce043 0%, #fb7ba2 74%);
+    border: none;
+    color: black;
+}
+
+.alert {
+    padding: 0.75rem 5.25rem;
+}
+

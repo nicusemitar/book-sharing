@@ -32,7 +32,7 @@
                     <label for="email"><span class="req"><img class="navbar-toggler-icon"
                                                               src="/images/email.png"> </span> Email Address: </label>
                     <input class="form-control" autocomplete="off" required type="text" id="email"
-                           oninput="emailValidate(this.value);"/>
+                           oninput="emailValidation(this.value);"/>
                     <div class="status" id="status"></div>
                 </div>
                 <div class="form-group">
@@ -81,5 +81,5 @@
 </div>
 
 </body>
-<script th:src="@{/js/register.js}"></script>
+<script th:src="@{/scripts/register.js}"></script>
 </html>
