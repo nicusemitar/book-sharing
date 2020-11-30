@@ -8,7 +8,14 @@ import java.time.LocalDate;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestConstants {
+
     public static final long ID_ONE = 1L;
+    public static final LocalDate ASSIGN_DATE = LocalDate.of(2020, 9, 3);
+    public static final LocalDate DUE_DATE = LocalDate.of(2020, 9, 13);
+    public static final String ASSIGN_DATE_AS_STRING = "2020-09-03";
+    public static final String DUE_DATE_AS_STRING = "2020-09-13";
+    public static final String BOOK_TITLE_ONE = "Frankenstein-Test";
+
     public static final long ID_TWO = 2L;
     public static final String USERNAME_FAIL = "..endava";
     public static final String USERNAME_PASS = "endava2";
