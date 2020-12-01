@@ -1,6 +1,7 @@
 package com.endava.booksharing.service;
 
 import com.endava.booksharing.api.dto.BookResponseDto;
+import com.endava.booksharing.api.dto.PageableBooksResponseDto;
 import com.endava.booksharing.model.Book;
 import com.endava.booksharing.repository.BookRepository;
 import com.endava.booksharing.repository.TagsRepository;
@@ -13,21 +14,26 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Collections;
 import java.util.Optional;
 
+import static com.endava.booksharing.TestConstants.BOOK_TITLE_ONE;
 import static com.endava.booksharing.TestConstants.ID_ONE;
 import static com.endava.booksharing.TestConstants.ID_TWO;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_ONE;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_ONE_UPDATED;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_PAGE;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_TWO;
 import static com.endava.booksharing.utils.BookTestUtils.DELETED_BOOK;
 import static com.endava.booksharing.utils.BookTestUtils.DELETED_BOOK_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.DELETE_BOOK_REQUEST_DTO;
+import static com.endava.booksharing.utils.BookTestUtils.PAGEABLE_BOOKS_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.TO_UPDATE_BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.UPDATED_BOOK_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED;
@@ -170,5 +176,16 @@ public class BookServiceTest {
         verify(tagsRepository).findAll();
         verify(userDetailsService).getCurrentUser();
         verify(bookRepository).save(any(Book.class));
+    }
+
+        @Test
+    public void shouldReturnAllPageableBooksResponseDtoByTitle() {
+        when(bookRepository.findAll(any(Specification.class), any(Pageable.class))).thenReturn(BOOK_PAGE);
+
+        PageableBooksResponseDto expectedPageableBooksResponseDto = PAGEABLE_BOOKS_RESPONSE_DTO;
+        PageableBooksResponseDto actualPageableBooksResponseDto = bookService.getBooks(BOOK_TITLE_ONE, 0, 15, "title");
+
+        assertEquals(expectedPageableBooksResponseDto, actualPageableBooksResponseDto);
+        verify(bookRepository).findAll(any(Specification.class), any(Pageable.class));
     }
 }

@@ -2,7 +2,9 @@ package com.endava.booksharing.service;
 
 import com.endava.booksharing.api.dto.BookRequestDto;
 import com.endava.booksharing.api.dto.BookResponseDto;
+import com.endava.booksharing.api.dto.BooksResponseDto;
 import com.endava.booksharing.api.dto.DeleteBookRequestDto;
+import com.endava.booksharing.api.dto.PageableBooksResponseDto;
 import com.endava.booksharing.model.Book;
 import com.endava.booksharing.model.Tags;
 import com.endava.booksharing.repository.BookRepository;
@@ -11,6 +13,9 @@ import com.endava.booksharing.utils.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +24,13 @@ import java.util.List;
 
 import static com.endava.booksharing.utils.mappers.BookMapper.mapBookRequestDtoToBook;
 import static com.endava.booksharing.utils.mappers.BookMapper.mapBookToBookResponseDto;
+import static com.endava.booksharing.utils.mappers.BookMapper.mapBookToBooksResponseDto;
+import static com.endava.booksharing.utils.mappers.BookMapper.mapBooksResponseDtoPageToPageableBooksResponseDto;
 import static com.endava.booksharing.utils.mappers.BookMapper.setDeletedBookValues;
 import static com.endava.booksharing.utils.mappers.BookMapper.setUserAndTagsForBook;
 import static com.endava.booksharing.utils.mappers.BookMapper.updateFromBookRequestDtoToBook;
 import static com.endava.booksharing.utils.mappers.TagsMapper.mapTagsRequestDtoToTags;
+import static com.endava.booksharing.utils.specifications.BookSpec.bookHasTitleLikeSpec;
 import static java.lang.String.format;
 
 @Service
@@ -88,5 +96,13 @@ public class BookService {
         toBeUpdatedBook = bookRepository.save(toBeUpdatedBook);
 
         return mapBookToBookResponseDto.apply(toBeUpdatedBook);
+    }
+
+    public PageableBooksResponseDto getBooks(String find, int page, int size, String sort) {
+        Page<BooksResponseDto> booksResponseDtoPage = bookRepository.findAll(bookHasTitleLikeSpec(find),
+                PageRequest.of(page, size, Sort.by(sort)))
+                .map(mapBookToBooksResponseDto);
+
+        return mapBooksResponseDtoPageToPageableBooksResponseDto.apply(booksResponseDtoPage);
     }
 }
