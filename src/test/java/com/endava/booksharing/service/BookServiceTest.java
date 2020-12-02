@@ -6,17 +6,20 @@ import com.endava.booksharing.repository.BookRepository;
 import com.endava.booksharing.repository.TagsRepository;
 import com.endava.booksharing.utils.exceptions.NotFoundException;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Collections;
 import java.util.Optional;
 
 import static com.endava.booksharing.TestConstants.ID_ONE;
+import static com.endava.booksharing.TestConstants.ID_TWO;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_ONE;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_ONE_UPDATED;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_REQUEST_DTO;
@@ -27,6 +30,10 @@ import static com.endava.booksharing.utils.BookTestUtils.DELETED_BOOK_RESPONSE_D
 import static com.endava.booksharing.utils.BookTestUtils.DELETE_BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.TO_UPDATE_BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.UPDATED_BOOK_RESPONSE_DTO;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED_RESPONSE_DTO;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_NOT_DELETED;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_NOT_DELETED_RESPONSE_DTO;
 import static com.endava.booksharing.utils.TagsTestUtils.DEFAULT_TAG;
 import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -51,9 +58,40 @@ public class BookServiceTest {
     @InjectMocks
     private BookService bookService;
 
+    @BeforeEach
+    void setUp() {
+        ReflectionTestUtils.setField(bookService, "messageBookNotFound",
+                "Book with id %s was not found in the database");
+    }
+
     @AfterEach
     void tearDown() {
         Mockito.verifyNoMoreInteractions(bookRepository, tagsRepository);
+    }
+
+    @Test
+    public void shouldReturnBookThatIsDeleted() {
+        when(bookRepository.findById(ID_ONE)).thenReturn(Optional.of(BOOK_DELETED));
+
+        assertEquals(bookService.getBook(ID_ONE), BOOK_DELETED_RESPONSE_DTO);
+
+        verify(bookRepository).findById(ID_ONE);
+    }
+
+    @Test
+    public void shouldReturnBookThatIsNotDeleted() {
+        when(bookRepository.findById(ID_TWO)).thenReturn(Optional.of(BOOK_NOT_DELETED));
+
+        assertEquals(bookService.getBook(ID_TWO), BOOK_NOT_DELETED_RESPONSE_DTO);
+
+        verify(bookRepository).findById(ID_TWO);
+    }
+
+    @Test
+    public void shouldNotReturnBook() {
+        assertThrows(NotFoundException.class, () -> bookService.getBook(ID_ONE));
+
+        verify(bookRepository).findById(ID_ONE);
     }
 
     @Test

@@ -2,7 +2,6 @@ package com.endava.booksharing.utils.mappers;
 
 import com.endava.booksharing.api.dto.BookRequestDto;
 import com.endava.booksharing.api.dto.BookResponseDto;
-import com.endava.booksharing.api.dto.TagsRequestDto;
 import com.endava.booksharing.model.Author;
 import com.endava.booksharing.model.Book;
 import com.endava.booksharing.model.Tags;
@@ -12,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;

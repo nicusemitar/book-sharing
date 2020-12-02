@@ -1,0 +1,38 @@
+.bookInfo {
+    font-size: 1.3em;
+    color: white;
+    text-shadow: 2px 2px #171717;
+    background-color: #2f4353;
+    background-image: linear-gradient(315deg, #2f4353 0%, #d2ccc4 74%);
+}
+.review {
+    font-size: 1.3em;
+    color: white;
+    text-shadow: 2px 2px #171717;
+    background-image: linear-gradient(315deg, #2f4353, #d2ccc4);
+}
+.form-control {
+    font-size: 1.1em;
+}
+.reviews {
+    color: black;
+    font-size: 1em;
+    text-shadow: none;
+}
+.assignBtn {
+    bottom: 15px;
+    right: 30px;
+}
+.form-control {
+    resize: none;
+}
+.alert {
+    text-shadow: none;
+    background-color: rgba(255, 46, 46, 0.45);
+    border-color: #c00;
+}
+.table {
+    color: white;
+    text-shadow: 2px 2px #171717;
+    border: none;
+}

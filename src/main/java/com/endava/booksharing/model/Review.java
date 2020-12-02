@@ -1,7 +1,10 @@
 package com.endava.booksharing.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,6 +21,9 @@ import javax.persistence.FetchType;
 @Entity
 @Data
 @Table(name = "t_review")
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Review {
 
     @Id

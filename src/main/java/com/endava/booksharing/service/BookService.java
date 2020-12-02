@@ -10,6 +10,7 @@ import com.endava.booksharing.repository.TagsRepository;
 import com.endava.booksharing.utils.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ import static com.endava.booksharing.utils.mappers.BookMapper.setDeletedBookValu
 import static com.endava.booksharing.utils.mappers.BookMapper.setUserAndTagsForBook;
 import static com.endava.booksharing.utils.mappers.BookMapper.updateFromBookRequestDtoToBook;
 import static com.endava.booksharing.utils.mappers.TagsMapper.mapTagsRequestDtoToTags;
+import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +34,18 @@ public class BookService {
     private final TagsRepository tagsRepository;
     private final UserDetailsServiceImpl userDetailsService;
     private final ZoneId zoneId = ZoneId.of("Europe/Bucharest");
+
+    @Value("${message.book.not-found}")
+    private String messageBookNotFound;
+
+    @Transactional(readOnly = true)
+    public BookResponseDto getBook(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(() -> {
+            log.warn("Book with with id [{}] was not found in database", id);
+            return new NotFoundException(format(messageBookNotFound, id));
+        });
+        return mapBookToBookResponseDto.apply(book);
+    }
 
     @Transactional
     public BookResponseDto saveBook(BookRequestDto bookRequestDto) {
