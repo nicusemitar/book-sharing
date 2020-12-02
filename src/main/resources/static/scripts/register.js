@@ -89,7 +89,6 @@ $("#register").on("click", () => {
             data: JSON.stringify(userObject()),
             contentType: "application/json",
             success: function (result) {
-                document.getElementById("success_tic").style.display = "block"
                 window.location.href = '/login';
             },
             error: function (result) {

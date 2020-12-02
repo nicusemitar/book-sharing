@@ -1,20 +1,32 @@
 package com.endava.booksharing.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.ManyToMany;
-import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.Set;
 
 @Entity
+@Data
 @Table(name = "t_tag")
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Tags {
 
     @Id
@@ -26,12 +38,14 @@ public class Tags {
     @Column(name = "tag_name")
     private String tagName;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "book_tag",
-            joinColumns = { @JoinColumn(name = "tag_id") },
-            inverseJoinColumns = { @JoinColumn(name = "book_id") }
+            name = "t_book_tag",
+            joinColumns = {@JoinColumn(name = "tag_id")},
+            inverseJoinColumns = {@JoinColumn(name = "book_id")}
     )
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Book> book;
 
 }
