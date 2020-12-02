@@ -1,10 +1,12 @@
 package com.endava.booksharing.utils;
 
+
 import com.endava.booksharing.model.Role;
 import com.endava.booksharing.model.enums.RoleType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,4 +23,8 @@ public class RoleTestUtils {
         role.setRoleType(RoleType.USER);
         return role;
     }
+
+    public static final Set<Role> AUTHORITES = new HashSet<>(Arrays.asList(
+            Role.builder().roleType(RoleType.ADMIN).build()
+            , Role.builder().roleType(RoleType.USER).build()));
 }

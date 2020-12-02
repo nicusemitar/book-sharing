@@ -1,12 +1,24 @@
 package com.endava.booksharing.utils;
 
+
 import com.endava.booksharing.api.dto.UserRegistrationRequestDto;
 import com.endava.booksharing.api.dto.UserRegistrationResponseDto;
 import com.endava.booksharing.model.User;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import static com.endava.booksharing.TestConstants.*;
+import static com.endava.booksharing.TestConstants.EMAIL_FAIL;
+import static com.endava.booksharing.TestConstants.EMAIL_PASS;
+import static com.endava.booksharing.TestConstants.PASSWORD_FAIL;
+import static com.endava.booksharing.TestConstants.PASSWORD_PASS;
+import static com.endava.booksharing.TestConstants.USERNAME_FAIL;
+import static com.endava.booksharing.TestConstants.USERNAME_PASS;
+import static com.endava.booksharing.TestConstants.USER_ID;
+import static com.endava.booksharing.TestConstants.USER_ONE_PASSWORD;
+import static com.endava.booksharing.TestConstants.USER_ONE_PASSWORD_ENCODED;
+import static com.endava.booksharing.TestConstants.USER_ONE_USERNAME;
+import static com.endava.booksharing.utils.RoleTestUtils.AUTHORITES;
 import static com.endava.booksharing.utils.RoleTestUtils.USER_ROLES;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -41,8 +53,17 @@ public class UserTestUtils {
             .username(USERNAME_PASS)
             .email(EMAIL_PASS)
             .build();
+    public static final User USER_ONE =
+            User.builder()
+                    .id(USER_ID)
+                    .username(USER_ONE_USERNAME)
+                    .password(USER_ONE_PASSWORD)
+                    .userRoles(AUTHORITES)
+                    .build();
+    public static final UserDetails USER_DETAILS =
+            new org.springframework.security.core.userdetails.User(USER_ONE.getUsername(), USER_ONE_PASSWORD_ENCODED, AUTHORITES);
 
-    public static User USER_ONE() {
+    public static User USER_ONE_BUILDER() {
         return User.builder().username(USERNAME_PASS).email(EMAIL_PASS).build();
     }
 
