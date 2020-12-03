@@ -1,44 +1,39 @@
 package com.endava.booksharing.controller;
 
 
+import com.endava.booksharing.service.UserDetailsServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
-import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@AutoConfigureMockMvc
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@WebMvcTest(LoginController.class)
+@ExtendWith(SpringExtension.class)
 public class LoginControllerTest {
-    @Autowired
-    private MockMvc mvc;
 
     @Autowired
-    private TestRestTemplate template;
+    private MockMvc mockMvc;
 
-
-    @Test
-    public void shouldBeUnauthenticated() throws Exception {
-        mvc.perform(get("/homepage"))
-                .andExpect(redirectedUrl("http://localhost/login"));
-    }
+    @MockBean
+    private UserDetailsServiceImpl userDetailsService;
 
     @Test
-    public void givenAuthRequestOnPrivateServiceShouldSucceedWith200() throws Exception {
-        ResponseEntity<String> result = template.withBasicAuth(USER_ONE.getUsername(), USER_ONE.getPassword())
-                .getForEntity("/homepage", String.class);
-        assertEquals(HttpStatus.OK, result.getStatusCode());
+    void shouldReturnLoginPage() throws Exception {
+
+        mockMvc.perform(get("/login"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("login"));
     }
 
 }

@@ -3,7 +3,6 @@ package com.endava.booksharing.service;
 
 import com.endava.booksharing.repository.RoleRepository;
 import com.endava.booksharing.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
