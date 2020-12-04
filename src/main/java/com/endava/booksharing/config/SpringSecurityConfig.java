@@ -32,16 +32,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(staticResources).permitAll()
                 .antMatchers("/register", "/users").permitAll()
-                .antMatchers("/all-books").hasAuthority("USER")
+                .antMatchers("/all-books","/books").hasAuthority("USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/all-books")
+                .defaultSuccessUrl("/all-books",true)
                 .failureForwardUrl("/login?error")
                 .and()
                 .logout().logoutSuccessUrl("/login").permitAll()
-                .permitAll().and().csrf().disable();
+                .permitAll().and().httpBasic().and().csrf().disable();
     }
 
     @Autowired

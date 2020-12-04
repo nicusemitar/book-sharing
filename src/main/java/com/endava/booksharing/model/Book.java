@@ -1,15 +1,35 @@
 package com.endava.booksharing.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Data
 @Table(name = "t_book")
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
 
     @Id
@@ -24,7 +44,7 @@ public class Book {
 
     @Column
     @NotNull
-    private int pages;
+    private Long pages;
 
     @Column
     private String description;
@@ -41,7 +61,14 @@ public class Book {
     @Column(name = "deleted_why")
     private String deletedWhy;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade =
+                    {
+                            CascadeType.DETACH,
+                            CascadeType.MERGE,
+                            CascadeType.REFRESH,
+                            CascadeType.PERSIST
+                    })
     @JoinColumn(name = "author_id")
     private Author author;
 
@@ -52,6 +79,16 @@ public class Book {
     @OneToOne
     private User deletedBy;
 
-    @ManyToMany(mappedBy = "book")
-    private Set<Tags> tags;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade =
+                    {
+                            CascadeType.DETACH,
+                            CascadeType.MERGE,
+                            CascadeType.REFRESH,
+                            CascadeType.PERSIST
+                    })
+    @JoinTable(name = "t_book_tag",
+            inverseJoinColumns = @JoinColumn(name = "tag_id"),
+            joinColumns = @JoinColumn(name = "book_id"))
+    private Set<Tags> tags = new HashSet<>();
 }
