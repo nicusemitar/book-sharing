@@ -6,6 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @PropertySource("classpath:postgres.properties")
+@PropertySource("classpath:messages.properties")
 public class BookSharingApplication {
 
     public static void main(String[] args) {

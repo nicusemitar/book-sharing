@@ -25,7 +25,7 @@ public class BooksControllerTest {
     private UserDetailsServiceImpl userDetailsService;
 
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = "USER")
     void shouldReturnAllBooksPage() throws Exception {
         mockMvc.perform(get("/all-books"))
                 .andDo(print())

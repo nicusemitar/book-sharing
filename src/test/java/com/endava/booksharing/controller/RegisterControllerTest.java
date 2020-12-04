@@ -1,11 +1,12 @@
 package com.endava.booksharing.controller;
 
 
+import com.endava.booksharing.service.UserDetailsServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -15,13 +16,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@AutoConfigureMockMvc
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+
+@WebMvcTest(RegisterController.class)
 @ExtendWith(SpringExtension.class)
 class RegisterControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private UserDetailsServiceImpl userDetailsService;
 
     @Test
     void shouldReturnRegisterPage() throws Exception {
