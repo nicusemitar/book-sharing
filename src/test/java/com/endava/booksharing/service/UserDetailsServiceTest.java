@@ -76,5 +76,4 @@ public class UserDetailsServiceTest {
         });
         SecurityContextHolder.clearContext();
     }
-
 }

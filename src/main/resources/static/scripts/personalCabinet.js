@@ -4,7 +4,7 @@ $(document).ready(() => {
 
 function getAssignedBooks() {
     $.ajax({
-        url: "/assignments/currentuser",
+        url: "/assignments/current-user",
         method: "GET",
         success: response => {
             displayAssignedBooks(response);
