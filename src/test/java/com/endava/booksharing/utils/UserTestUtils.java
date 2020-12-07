@@ -18,6 +18,9 @@ import static com.endava.booksharing.TestConstants.USER_ID;
 import static com.endava.booksharing.TestConstants.USER_ONE_PASSWORD;
 import static com.endava.booksharing.TestConstants.USER_ONE_PASSWORD_ENCODED;
 import static com.endava.booksharing.TestConstants.USER_ONE_USERNAME;
+import static com.endava.booksharing.TestConstants.USER_TWO_USERNAME;
+import static com.endava.booksharing.TestConstants.USER_TWO_PASSWORD;
+import static com.endava.booksharing.TestConstants.ID_TWO;
 import static com.endava.booksharing.utils.RoleTestUtils.AUTHORITES;
 import static com.endava.booksharing.utils.RoleTestUtils.USER_ROLES;
 
@@ -58,6 +61,13 @@ public class UserTestUtils {
                     .id(USER_ID)
                     .username(USER_ONE_USERNAME)
                     .password(USER_ONE_PASSWORD)
+                    .userRoles(AUTHORITES)
+                    .build();
+    public static final User USER_TWO =
+            User.builder()
+                    .id(ID_TWO)
+                    .username(USER_TWO_USERNAME)
+                    .password(USER_TWO_PASSWORD)
                     .userRoles(AUTHORITES)
                     .build();
     public static final UserDetails USER_DETAILS =

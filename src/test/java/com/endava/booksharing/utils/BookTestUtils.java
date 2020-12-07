@@ -10,23 +10,83 @@ import org.mockito.internal.util.collections.Sets;
 
 import java.util.Collections;
 
-import static com.endava.booksharing.TestConstants.AUTHOR_FIRST_NAME;
-import static com.endava.booksharing.TestConstants.AUTHOR_LAST_NAME;
-import static com.endava.booksharing.TestConstants.BOOK_DESCRIPTION;
-import static com.endava.booksharing.TestConstants.BOOK_LANGUAGE;
-import static com.endava.booksharing.TestConstants.BOOK_PAGES;
-import static com.endava.booksharing.TestConstants.BOOK_TITLE;
-import static com.endava.booksharing.TestConstants.BOOK_TITLE_UPDATED;
-import static com.endava.booksharing.TestConstants.DEFAULT_DATE;
-import static com.endava.booksharing.TestConstants.ID_ONE;
-import static com.endava.booksharing.TestConstants.USER_ONE_USERNAME;
+import static com.endava.booksharing.TestConstants.*;
 import static com.endava.booksharing.utils.AuthorTestUtils.AUTHOR_ONE;
 import static com.endava.booksharing.utils.TagsTestUtils.DEFAULT_TAG;
 import static com.endava.booksharing.utils.TagsTestUtils.TAGS_REQUEST_DTO;
 import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
+import static com.endava.booksharing.utils.UserTestUtils.USER_TWO;
+import static com.endava.booksharing.TestConstants.ID_ONE;
+import static com.endava.booksharing.TestConstants.BOOK_TITLE;
+import static com.endava.booksharing.TestConstants.BOOK_PAGES;
+import static com.endava.booksharing.TestConstants.BOOK_DESCRIPTION;
+import static com.endava.booksharing.TestConstants.BOOK_ADDED_AT_DATE;
+import static com.endava.booksharing.TestConstants.BOOK_LANGUAGE;
+import static com.endava.booksharing.TestConstants.BOOK_DELETED_AT_DATE;
+import static com.endava.booksharing.TestConstants.BOOK_DELETED_WHY;
+import static com.endava.booksharing.TestConstants.ID_TWO;
+import static com.endava.booksharing.TestConstants.BOOK_ADDED_AT;
+import static com.endava.booksharing.TestConstants.AUTHOR_FIRST_NAME;
+import static com.endava.booksharing.TestConstants.AUTHOR_LAST_NAME;
+import static com.endava.booksharing.TestConstants.USER_ONE_USERNAME;
+import static com.endava.booksharing.TestConstants.BOOK_DELETED_AT;
+import static com.endava.booksharing.TestConstants.USER_TWO_USERNAME;
+import static com.endava.booksharing.utils.AuthorTestUtils.AUTHOR_ONE;
+import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
+import static com.endava.booksharing.utils.UserTestUtils.USER_TWO;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BookTestUtils {
+    public static final Book BOOK_DELETED = Book
+            .builder()
+            .id(ID_ONE)
+            .title(BOOK_TITLE)
+            .pages(BOOK_PAGES)
+            .description(BOOK_DESCRIPTION)
+            .addedAt(BOOK_ADDED_AT_DATE)
+            .bookLanguage(BOOK_LANGUAGE)
+            .deletedAt(BOOK_DELETED_AT_DATE)
+            .deletedWhy(BOOK_DELETED_WHY)
+            .author(AUTHOR_ONE)
+            .user(USER_ONE)
+            .deletedBy(USER_ONE)
+            .build();
+    public static final Book BOOK_NOT_DELETED = Book
+            .builder()
+            .id(ID_TWO)
+            .title(BOOK_TITLE)
+            .pages(BOOK_PAGES)
+            .description(BOOK_DESCRIPTION)
+            .addedAt(BOOK_ADDED_AT_DATE)
+            .bookLanguage(BOOK_LANGUAGE)
+            .author(AUTHOR_ONE)
+            .user(USER_TWO)
+            .build();
+    public static final BookResponseDto BOOK_DELETED_RESPONSE_DTO = BookResponseDto
+            .builder()
+            .id(ID_ONE)
+            .title(BOOK_TITLE)
+            .pages(BOOK_PAGES)
+            .description(BOOK_DESCRIPTION)
+            .language(BOOK_LANGUAGE)
+            .addedAt(BOOK_ADDED_AT)
+            .author(AUTHOR_FIRST_NAME + " " + AUTHOR_LAST_NAME)
+            .addedBy(USER_ONE_USERNAME)
+            .deletedBy(USER_ONE_USERNAME)
+            .deletedWhy(BOOK_DELETED_WHY)
+            .deletedDate(BOOK_DELETED_AT)
+            .build();
+    public static final BookResponseDto BOOK_NOT_DELETED_RESPONSE_DTO = BookResponseDto
+            .builder()
+            .id(ID_TWO)
+            .title(BOOK_TITLE)
+            .pages(BOOK_PAGES)
+            .description(BOOK_DESCRIPTION)
+            .language(BOOK_LANGUAGE)
+            .addedAt(BOOK_ADDED_AT)
+            .author(AUTHOR_FIRST_NAME + " " + AUTHOR_LAST_NAME)
+            .addedBy(USER_TWO_USERNAME)
+            .build();
     public static final BookResponseDto BOOK_RESPONSE_DTO = BookResponseDto.builder()
             .author(AUTHOR_FIRST_NAME + " " + AUTHOR_LAST_NAME)
             .title(BOOK_TITLE)

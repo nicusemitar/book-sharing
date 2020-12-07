@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Book Info</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/book.css}">
+    <script th:src="@{/scripts/book.js}"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <img th:src="@{/images/logo.png}" height="60px" width="180px" alt="Logo"/>
+</nav>
+<div class="bookInfo container mt-5 rounded">
+    <div class="row">
+        <div class="col-4 py-3">
+            <img th:src="@{/images/book-cover.jpg}" class="img-fluid w-100 rounded"
+                 alt="Book image">
+        </div>
+        <div class="col-8 pt-1">
+            <div class="col-12">
+                <h1 class="text-center font-weight-bold" id="title"></h1>
+                <div class="row d-flex pt-4">
+                    <div class="col-12 font-weight-bold">
+                        <table class="table">
+                            <tr id="book-author"></tr>
+                            <tr id="book-language"></tr>
+                            <tr id="book-pages"></tr>
+                            <tr id="book-description"></tr>
+                            <tr sec:authorize="hasAuthority('ADMIN')" id="book-added-by"></tr>
+                            <tr sec:authorize="hasAuthority('ADMIN')" id="book-added-at"></tr>
+                            <tr sec:authorize="hasAuthority('ADMIN')" id="book-deleted-by"></tr>
+                            <tr sec:authorize="hasAuthority('ADMIN')" id="book-deleted-why"></tr>
+                            <tr sec:authorize="hasAuthority('ADMIN')" id="book-deleted-date"></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="review container mt-3 rounded">
+    <div class="row mt-3 d-flex justify-content-center">
+        <div class="col-12">
+            <h1 class="text-center pt-2">Reviews</h1>
+        </div>
+        <div class="my-4 w-75">
+            <div class="form-group">
+                <label for="text-review">Share your opinion about this book with others:</label>
+                <textarea class="form-control" id="text-review" maxlength="2048" rows="5"></textarea>
+                <div class="mt-2" id="invalid-review"></div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button class="addBtn btn btn-dark btn-lg" onclick="addReview()">Add Review</button>
+            </div>
+        </div>
+    </div>
+    <div class="reviews row d-flex justify-content-center mb-5 mt-2 text-wrap" id="reviews">
+    </div>
+</div>
+</body>
+</html>

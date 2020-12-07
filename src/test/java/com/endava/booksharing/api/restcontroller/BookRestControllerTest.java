@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -16,14 +15,16 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.endava.booksharing.TestConstants.ID_ONE;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_NOT_DELETED_RESPONSE_DTO;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.DELETE_BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.TO_UPDATE_BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.UPDATED_BOOK_RESPONSE_DTO;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,6 +43,32 @@ public class BookRestControllerTest {
     private BookService bookService;
 
     private Gson gson = new Gson();
+
+    @Test
+    @WithMockUser
+    public void shouldReturnNotDeletedBookDetails() throws Exception {
+        when(bookService.getBook(ID_ONE)).thenReturn(BOOK_NOT_DELETED_RESPONSE_DTO);
+
+        mockMvc.perform(get("/books/{id}", ID_ONE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(gson.toJson(Response.build(BOOK_NOT_DELETED_RESPONSE_DTO))));
+        verify(bookService).getBook(ID_ONE);
+    }
+
+    @Test
+    @WithMockUser
+    public void shouldReturnDeletedBookDetails() throws Exception {
+        when(bookService.getBook(ID_ONE)).thenReturn(BOOK_DELETED_RESPONSE_DTO);
+
+        mockMvc.perform(get("/books/{id}", ID_ONE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(gson.toJson(Response.build(BOOK_DELETED_RESPONSE_DTO))));
+        verify(bookService).getBook(ID_ONE);
+    }
 
     @Test
     @WithMockUser(authorities = "USER")

@@ -40,6 +40,7 @@ class UserRestControllerTest {
     private UserService userService;
 
     private Gson gson = new Gson();
+
     @Test
     void shouldSaveUser() throws Exception {
         when(userService.saveUser(USER_REQUEST_DTO_PASS)).thenReturn(USER_RESPONSE_DTO);
