@@ -57,6 +57,7 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @EqualsAndHashCode.Exclude
     private Set<Role> userRoles;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

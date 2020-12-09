@@ -1,6 +1,5 @@
 package com.endava.booksharing;
 
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +15,16 @@ public class TestConstants {
     public static final String ASSIGN_DATE_AS_STRING = "2020-09-03";
     public static final String DUE_DATE_AS_STRING = "2020-09-13";
     public static final String BOOK_TITLE_ONE = "Frankenstein-Test";
+    public static final String BOOK_TITLE_TWO = "Crime and punishment";
+    public static final String AUTHOR_FIRST_NAME_ONE = "Lev";
+    public static final String AUTHOR_FIRST_NAME_TWO = "Fyodor";
+    public static final String AUTHOR_LAST_NAME_ONE = "Tolstoy";
+    public static final String AUTHOR_LAST_NAME_TWO = "Dostoevsky";
+    public static final String AUTHOR_FULL_NAME_ONE = "Lev Tolstoy";
+    public static final String AUTHOR_FULL_NAME_TWO = "Fyodor Dostoevsky";
+    public static final String RUSSIAN_LANGUAGE = "russian";
+    public static final Long BOOK_PAGES_NUMBER_ONE = 500L;
+    public static final LocalDate ADDED_AT_DATE = LocalDate.of(2020, 1, 1);
 
     public static final String USERNAME_FAIL = "..endava";
     public static final String USERNAME_PASS = "endava2";
@@ -32,7 +41,7 @@ public class TestConstants {
     public static final String USER_ONE_PASSWORD = "useronepass";
     public static final String USER_TWO_USERNAME = "usernamewo";
     public static final String USER_TWO_PASSWORD = "usertwopass";
-    public static final Long USER_ID = 1l;
+    public static final Long USER_ID = 1L;
 
     public static final String REVIEW_TEXT_CORRECT = "Good book";
 
@@ -53,3 +62,4 @@ public class TestConstants {
     public static final LocalDate DEFAULT_DATE = LocalDate.of(2020,12,1);
 
 }
+

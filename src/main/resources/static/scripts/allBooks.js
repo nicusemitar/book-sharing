@@ -92,9 +92,9 @@ function limitNumberOfShownPages(totalPages, currentPage) {
 $("#search-key").on("keyup", function () {
     let key = $(this).val();
     $.ajax({
-        url: "/books/filter",
+        url: "/books",
         method: "GET",
-        data: {search: key},
+        data: {find: key},
         success: response => {
             displayBooks(response.books);
             displaySearchPages(response.totalPages, response.currentPage + 1);
@@ -126,9 +126,9 @@ function displaySearchPages(totalPages, currentPage) {
 function goToSearchPage(i) {
     let key = $("#search-key").val();
     $.ajax({
-        url: "/books/filter",
+        url: "/books",
         method: "GET",
-        data: {page: i - 1, search: key},
+        data: {page: i - 1, find: key},
         success: response => {
             displayBooks(response.books);
             displaySearchPages(response.totalPages, response.currentPage + 1);
@@ -138,3 +138,8 @@ function goToSearchPage(i) {
         }
     })
 }
+
+$("#books-placeholder").on("click", ".shadow", function () {
+    let id = this.querySelector(".user-id").value;
+    window.location.href = `/book/${id}`;
+})

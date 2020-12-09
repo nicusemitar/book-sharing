@@ -1,6 +1,5 @@
 package com.endava.booksharing.model;
 
-
 import com.endava.booksharing.model.enums.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
-
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.List;
-
 
 @Entity
 @Data

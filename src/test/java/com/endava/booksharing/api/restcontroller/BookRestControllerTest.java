@@ -15,16 +15,21 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.endava.booksharing.TestConstants.ID_ONE;
-import static com.endava.booksharing.utils.BookTestUtils.BOOK_NOT_DELETED_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED_RESPONSE_DTO;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_NOT_DELETED_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.DELETE_BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.TO_UPDATE_BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.UPDATED_BOOK_RESPONSE_DTO;
+import static com.endava.booksharing.utils.BooksServiceTestUtils.PAGEABLE_BOOKS_RESPONSE_DTO;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -110,5 +115,19 @@ public class BookRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(gson.toJson(Response.build(UPDATED_BOOK_RESPONSE_DTO))));
+    }
+
+    @Test
+    @WithMockUser(authorities = "USER")
+    public void shouldReturnJsonWithPageableBooksResponseDto() throws Exception {
+        when(bookService.getBooks(anyString(), anyInt(), anyInt(), anyString())).thenReturn(PAGEABLE_BOOKS_RESPONSE_DTO);
+
+        mockMvc.perform(get("/books"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(gson.toJson(PAGEABLE_BOOKS_RESPONSE_DTO)));
+
+        verify(bookService).getBooks("", 0, 15, "title");
     }
 }

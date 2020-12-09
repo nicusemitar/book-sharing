@@ -90,5 +90,5 @@ public class Book {
     @JoinTable(name = "t_book_tag",
             inverseJoinColumns = @JoinColumn(name = "tag_id"),
             joinColumns = @JoinColumn(name = "book_id"))
-    private Set<Tags> tags = new HashSet<>();
+    private Set<Tags> tags;
 }
