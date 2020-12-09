@@ -58,10 +58,11 @@ public class TestConstants {
     public static final String BOOK_ADDED_AT = "2020-02-12";
     public static final LocalDate BOOK_ADDED_AT_DATE = LocalDate.of(2020, 2, 12);
     public static final String BOOK_LANGUAGE = "English";
+
     public static final String BOOK_DELETED_AT = "2020-08-12";
     public static final LocalDate BOOK_DELETED_AT_DATE = LocalDate.of(2020, 8, 12);
     public static final String BOOK_DELETED_WHY = "Forbidden content";
-
+    public static final String TAG_BUSY = "BUSY";
     public static final String TAG_ONE = "science";
     public static final TagsType TAGS_TYPE_ONE = TagsType.valueOf("CUSTOM");
     public static final String TAG_TYPE_NAME_ONE = "CUSTOM";

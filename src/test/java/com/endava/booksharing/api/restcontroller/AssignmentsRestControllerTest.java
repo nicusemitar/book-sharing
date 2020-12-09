@@ -60,9 +60,9 @@ public class AssignmentsRestControllerTest {
 
     @Test
     @WithMockUser(authorities = "USER")
-    void shouldGetAssignmentsByUserId() throws Exception {
+    void shouldGetAssignmentsByUser() throws Exception {
         when(userDetailsService.getCurrentUser()).thenReturn(USER_ONE);
-        when(assignmentsService.getAssignmentsByUserId(ID_ONE)).
+        when(assignmentsService.getAssignmentsByUser()).
                 thenReturn(Collections.singletonList(ASSIGNMENTS_RESPONSE_DTO));
 
         mockMvc.perform(get("/assignments/current-user"))
@@ -70,6 +70,20 @@ public class AssignmentsRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(gson.toJson(Collections.singletonList(ASSIGNMENTS_RESPONSE_DTO))));
+    }
+
+    @Test
+    @WithMockUser(authorities = "USER")
+    void shouldAssignBook() throws Exception {
+        when(userDetailsService.getCurrentUser()).thenReturn(USER_ONE);
+        when(assignmentsService.saveAssigmentForCurrentUserForBookWithID(ID_ONE)).
+                thenReturn(ASSIGNMENTS_RESPONSE_DTO);
+
+        mockMvc.perform(post("/assignments/{bookId}/assign",ID_ONE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(gson.toJson(ASSIGNMENTS_RESPONSE_DTO)));
     }
 
     @Test
