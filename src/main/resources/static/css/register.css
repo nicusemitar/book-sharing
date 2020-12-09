@@ -10,29 +10,24 @@
     -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     text-align: left;
-
 }
-
 .input-group{
     display: flex;
     justify-content: center;
 }
-
 body{
-    background: url('/images/book.jpg') no-repeat center center fixed;
+    background: url('../images/booksbib.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 }
-
 .btn-success{
     background-color: #fce043;
     background-image: linear-gradient(315deg, #fce043 0%, #fb7ba2 74%);
     border: none;
     color: black;
 }
-
 label small {
     color: #678 !important;
 }
@@ -40,7 +35,6 @@ span.req {
     color:maroon;
     font-size: 112%;
 }
-
 /* Modal Content */
 .modal-content {
     -webkit-border-radius: 10px 10px 10px 10px;
@@ -59,7 +53,6 @@ span.req {
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     text-align: right;
 }
-
 /* The Close Button */
 .close {
     color: #aaaaaa;
@@ -67,7 +60,6 @@ span.req {
     font-size: 28px;
     font-weight: bold;
 }
-
 .close:hover,
 .close:focus {
     color: #000;

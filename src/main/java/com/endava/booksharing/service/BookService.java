@@ -7,6 +7,7 @@ import com.endava.booksharing.api.dto.DeleteBookRequestDto;
 import com.endava.booksharing.api.dto.PageableBooksResponseDto;
 import com.endava.booksharing.model.Book;
 import com.endava.booksharing.model.Tags;
+import com.endava.booksharing.model.enums.StatusType;
 import com.endava.booksharing.repository.BookRepository;
 import com.endava.booksharing.repository.TagsRepository;
 import com.endava.booksharing.utils.exceptions.NotFoundException;
@@ -19,8 +20,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 
 import static com.endava.booksharing.utils.mappers.BookMapper.mapBookRequestDtoToBook;
 import static com.endava.booksharing.utils.mappers.BookMapper.mapBookToBookResponseDto;
@@ -41,18 +42,22 @@ public class BookService {
     private final BookRepository bookRepository;
     private final TagsRepository tagsRepository;
     private final UserDetailsServiceImpl userDetailsService;
-    private final ZoneId zoneId = ZoneId.of("Europe/Bucharest");
 
-    @Value("${message.book.not-found}")
-    private String messageBookNotFound;
+    @Value("${message.book.not-found-or-deleted}")
+    private String messageBookNotFoundOrDeleted;
 
     @Transactional(readOnly = true)
     public BookResponseDto getBook(Long id) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> {
-            log.warn("Book with with id [{}] was not found in database", id);
-            return new NotFoundException(format(messageBookNotFound, id));
+        Book book = bookRepository.findByIdAndBookStatusIsNot(id, StatusType.DELETED).orElseThrow(() -> {
+            log.warn("Book with with id [{}] was not found in the database or is deleted", id);
+            return new NotFoundException(format(messageBookNotFoundOrDeleted, id));
         });
         return mapBookToBookResponseDto.apply(book);
+    }
+
+    @Transactional
+    public Optional<Book> checkIfBookIsNotDeleted(Long id) {
+        return bookRepository.findByIdAndBookStatusIsNot(id, StatusType.DELETED);
     }
 
     @Transactional

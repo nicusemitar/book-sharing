@@ -34,20 +34,17 @@
         </div>
         <div class="col-8 pt-1">
             <div class="col-12">
-                <h1 class="text-center font-weight-bold" id="title"></h1>
+                <h1 class="text-center font-weight-bold pt-2" id="title"></h1>
                 <div class="row d-flex pt-4">
-                    <div class="col-12 font-weight-bold">
+                    <div class="col-12">
                         <table class="table">
                             <tr id="book-author"></tr>
                             <tr id="book-language"></tr>
                             <tr id="book-pages"></tr>
                             <tr id="book-description"></tr>
                             <tr id="book-status"></tr>
-                            <tr sec:authorize="hasAuthority('ADMIN')" id="book-added-by"></tr>
-                            <tr sec:authorize="hasAuthority('ADMIN')" id="book-added-at"></tr>
-                            <tr sec:authorize="hasAuthority('ADMIN')" id="book-deleted-by"></tr>
-                            <tr sec:authorize="hasAuthority('ADMIN')" id="book-deleted-why"></tr>
-                            <tr sec:authorize="hasAuthority('ADMIN')" id="book-deleted-date"></tr>
+                            <tr id="book-added-by"></tr>
+                            <tr id="book-added-at"></tr>
                         </table>
                     </div>
                 </div>
@@ -58,7 +55,7 @@
 <div class="review container mt-3 rounded">
     <div class="row mt-3 d-flex justify-content-center">
         <div class="col-12">
-            <h1 class="text-center pt-2">Reviews</h1>
+            <h1 class="text-center pt-3">Reviews</h1>
         </div>
         <div class="my-4 w-75">
             <div class="form-group">
@@ -67,11 +64,12 @@
                 <div class="mt-2" id="invalid-review"></div>
             </div>
             <div class="d-flex justify-content-end">
-                <button class="addBtn btn btn-dark btn-lg" onclick="addReview()">Add Review</button>
+                <button class="addBtn btn btn-primary btn-lg" onclick="addReview()">Add Review</button>
             </div>
         </div>
     </div>
-    <div class="reviews row d-flex justify-content-center mb-5 mt-2 text-wrap" id="reviews">
+    <div class="reviews row d-flex justify-content-center mb-5 mt-2 pb-4 text-wrap" id="reviews">
+        <h2 class="pb-4" id="no-review">There are no reviews for this book</h2>
     </div>
 </div>
 <div th:insert="allBooksPage :: chat-page">
@@ -79,5 +77,7 @@
 <script th:src="@{/scripts/chat.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<!--Footer-->
+<div class="jumbotron text-center" style="margin-bottom: 0"></div>
 </body>
 </html>

@@ -59,13 +59,13 @@ public class TestConstants {
     public static final String BOOK_DELETED_WHY = "Forbidden content";
 
     public static final String TAG_ONE = "science";
-    public static final String AUTHOR_FIRST_NAME = "Harry";
-    public static final String AUTHOR_LAST_NAME = "Potter";
+    public static final String AUTHOR_FIRST_NAME = "Lev";
+    public static final String AUTHOR_LAST_NAME = "Tolstoy";
     public static final String BOOK_TITLE = "Nirvana";
     public static final String BOOK_TITLE_UPDATED = "Nirvana Updated";
     public static final Long BOOK_PAGES = 120L;
     public static final String BOOK_DESCRIPTION = "This is the best book I've read in my life!";
-    public static final LocalDate DEFAULT_DATE = LocalDate.of(2020,12,1);
+    public static final LocalDate DEFAULT_DATE = LocalDate.of(2020, 12, 1);
 
     public static final String TIME_EXTEND_DESCRIPTION = "I need one more week";
     public static final LocalDate TIME_EXTEND_DATE_VALID = LocalDate.of(2020, 9, 15);

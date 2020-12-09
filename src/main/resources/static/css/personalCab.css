@@ -1,29 +1,24 @@
 .col {
     background-color: floralwhite;
 }
-
 .col-7 {
     align-content: center;
     text-align: center;
 }
-
 .col-2 {
     align-content: center;
     text-align: center;
     background-color: floralwhite;
 }
-
 .user {
     width: 100px;
     height: 85px;
     border-radius: 50%;
 }
-
 .assignedBooksHeader{
     text-align: left;
     margin-left: 410px;
 }
-
 .navbar{
     display: flex;
     justify-content: space-between;
