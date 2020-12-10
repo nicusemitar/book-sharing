@@ -3,6 +3,7 @@ package com.endava.booksharing.api.restcontroller;
 import com.endava.booksharing.api.dto.BookRequestDto;
 import com.endava.booksharing.api.dto.BookResponseDto;
 import com.endava.booksharing.api.dto.DeleteBookRequestDto;
+import com.endava.booksharing.api.dto.FilterDto;
 import com.endava.booksharing.api.exchange.Response;
 import com.endava.booksharing.service.BookService;
 import com.endava.booksharing.utils.exceptions.ExceptionsHandler;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.validation.Valid;
 
 @Data
@@ -61,7 +61,14 @@ public class BookRestController {
     }
 
     @GetMapping("/lang")
-    public ResponseEntity<Object> getAllLanguages(){
+    public ResponseEntity<Object> getAllLanguages() {
         return ResponseEntity.ok(bookService.getBooksLanguages());
+    }
+
+    @PostMapping("/filter")
+    public ResponseEntity<Object> filterBooks(FilterDto filterDto) {
+        return ResponseEntity.ok(bookService.getFilteredBooks(filterDto.getAuthorName(),
+                filterDto.getLanguage(), filterDto.getTags(), filterDto.getGenTags(), filterDto.getTagsFind(), filterDto.getStatus(),
+                filterDto.getPage(), filterDto.getSize(), filterDto.getSort()));
     }
 }

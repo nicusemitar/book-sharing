@@ -22,9 +22,11 @@ import static com.endava.booksharing.utils.BookTestUtils.BOOK_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.DELETE_BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.TO_UPDATE_BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.UPDATED_BOOK_RESPONSE_DTO;
+import static com.endava.booksharing.utils.BookTestUtils.FILTER_DTO_ONE;
 import static com.endava.booksharing.utils.BooksServiceTestUtils.PAGEABLE_BOOKS_RESPONSE_DTO;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -129,5 +131,18 @@ public class BookRestControllerTest {
                 .andExpect(content().json(gson.toJson(PAGEABLE_BOOKS_RESPONSE_DTO)));
 
         verify(bookService).getBooks("", 0, 15, "title");
+    }
+
+    @Test
+    @WithMockUser(authorities = "USER")
+    public void shouldReturnJsonWithFilteredPageableBooksResponseDto() throws Exception {
+        when(bookService.getFilteredBooks(anyString(), anyString(), anySet(),anySet(), anyString(),
+                anyString(), anyInt(), anyInt(), anyString())).thenReturn(PAGEABLE_BOOKS_RESPONSE_DTO);
+
+        mockMvc.perform(post("/books/filter")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(gson.toJson(FILTER_DTO_ONE)))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }

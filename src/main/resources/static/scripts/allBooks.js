@@ -1,4 +1,4 @@
-$(document).ready(() => {
+$(() => {
     getAllBooks();
     displayAllCategories();
 });
@@ -218,7 +218,7 @@ function filterRequest(pageNumber = 1) {
     };
 
     if (!filterApplied && request.genTags.length === 0 && request.tags.length === 0
-        && request.language === "" && request.authorName === "" && request.tagsFind === "") {
+        && request.language === "" && request.authorName === "" && request.tagsFind === "" && request.status === "") {
         alert("Apply some filters first");
     } else {
         $.ajax({
@@ -229,10 +229,10 @@ function filterRequest(pageNumber = 1) {
                 displayBooks(response.books);
                 displaySearchPages(response.totalPages, response.currentPage + 1);
                 filterApplied = true;
-                $("#reset-filters").show();
+                $("#reset-filters").css("display", "inline-block");
             },
             error: () => {
-                alert("Something gonna wrong in filter request");
+                alert("Something went wrong in filter request");
             }
         })
     }
@@ -247,6 +247,7 @@ $("#reset-filters").on("click", function () {
     });
     $("#language").val("");
     $("#authorSearch").val("");
+    $("#tagsSearch").val("")
     $("#reset-filters").hide();
     filterApplied = false;
     getAllBooks();
@@ -301,14 +302,14 @@ function displayFilterCategory(tagsType, inputType = "checkbox") {
 }
 
 function transformNameToValidForm(name) {
-      return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase().replace(/-/g, ' ');
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase().replace(/-/g, ' ');
 }
 
 function transformNameToTagName(name) {
     return name.toLowerCase().replace(/\s/g, '-');
 }
 
-function returnBookLangs(){
+function returnBookLangs() {
     let stringResponse = ""
     $.ajax({
         type: "GET",
@@ -324,9 +325,9 @@ function returnBookLangs(){
         }
     });
     return stringResponse;
-    }
+}
 
-function displaySelector(selectorName, values, withFieldAll = true){
+function displaySelector(selectorName, values, withFieldAll = true) {
     let placeholder = `<label for="${selectorName}"><h6 class="filter-header">${transformNameToValidForm(selectorName)}</h6></label>
                         <select class="custom-select" id="${selectorName}">`
 

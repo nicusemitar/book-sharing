@@ -70,6 +70,8 @@ public class TestConstants {
     public static final String TAG_TYPE_NAME_ONE = "CUSTOM";
     public static final String AUTHOR_FIRST_NAME = "Lev";
     public static final String AUTHOR_LAST_NAME = "Tolstoy";
+    public static final String TAG_TWO = "adventure";
+    public static final String TAG_THREE = "captivating";
     public static final String BOOK_TITLE = "Nirvana";
     public static final String BOOK_TITLE_UPDATED = "Nirvana Updated";
     public static final Long BOOK_PAGES = 120L;
@@ -83,4 +85,8 @@ public class TestConstants {
     public static final String TIME_EXTEND_DATE_EQUAL_WITH_DUE_DATE_AS_STRING = "2020-9-13";
     public static final String TIME_EXTEND_DATE_SMALLER_THAN_DUE_DATE_AS_STRING = "2020-9-5";
     public static final String TIME_EXTEND_DATE_GREATER_THAN_ASSIGN_DATE_PLUS_30_DAYS_AS_STRING = "2020-10-3";
+
+    public static final String SORT_ONE = "title";
+    public static final int PAGE_ZERO = 0;
+    public static final int SIZE = 15;
 }

@@ -61,11 +61,11 @@
 
                     <label for="sortSelect">Sort by</label>
                     <select class="custom-select on-page-select" id="sortSelect">
-                        <option value="title">Book Title</option>
+                        <option value="title" selected>Book Title</option>
                         <option value="author_id">Authors</option>
                         <option value="user_id">Users</option>
                         <option value="pages">Pages</option>
-                        <option value="addedAt">New</option>
+                        <option value="addedAt">Most Recent</option>
                     </select>
 
                     <label for="itemsNumber" class="display-items-number">Displaying items</label>
@@ -91,10 +91,10 @@
                 </table>
 
                 <h6 class="filter-header available-header">Availability</h6>
-                <label><input type="radio" value="" name="availability" class=" filter-box">
+                <label><input type="radio" value="" name="availability">
                     All</label>
                 <br>
-                <input type="radio" id="available" value="FREE" name="availability" class="filter-box">
+                <input type="radio" id="available" value="FREE" name="availability">
                 <label for="available">Available</label>
                 <br>
                 <label for="authorSearch" class="filter-header">Find by author</label>
