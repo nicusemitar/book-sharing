@@ -51,8 +51,6 @@ public class ReviewServiceTest {
 
     @BeforeEach
     void setUp() {
-        ReflectionTestUtils.setField(reviewService, "messageUserNotFound",
-                "User with username %s was not found in the database");
         ReflectionTestUtils.setField(reviewService, "messageBookNotFound",
                 "Book with id %s was not found in the database");
     }
@@ -94,6 +92,7 @@ public class ReviewServiceTest {
 
         verify(userDetailsService).getCurrentUser();
         verify(bookRepository).findById(ID_ONE);
+        verify(reviewRepository).save(REVIEW_ONE_NO_ID);
     }
 
     @Test

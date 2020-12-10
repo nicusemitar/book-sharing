@@ -1,20 +1,27 @@
 package com.endava.booksharing.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.OneToOne;
+import java.time.LocalDate;
 
 @Entity
 @Data
 @Table(name = "t_request")
-public class TimeExtendRequest {
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
+public class TimeExtend {
 
     @Id
     @SequenceGenerator(name = "request_id_generator", sequenceName = "seq_requests", allocationSize = 1)
@@ -25,9 +32,8 @@ public class TimeExtendRequest {
     private String description;
 
     @OneToOne
-    private Book book;
+    private Assignments assignment;
 
-    @OneToOne
-    private User user;
-
+    @Column
+    private LocalDate requestedDate;
 }

@@ -8,8 +8,12 @@ import lombok.NoArgsConstructor;
 import java.util.Collections;
 import java.util.List;
 
-import static com.endava.booksharing.TestConstants.*;
+import static com.endava.booksharing.TestConstants.ID_ONE;
+import static com.endava.booksharing.TestConstants.ASSIGN_DATE;
+import static com.endava.booksharing.TestConstants.DUE_DATE;
+import static com.endava.booksharing.TestConstants.BOOK_TITLE_ONE;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_ONE;
+import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AssignmentsTestUtils {
@@ -28,6 +32,15 @@ public class AssignmentsTestUtils {
             .assignDate(ASSIGN_DATE)
             .dueDate(DUE_DATE)
             .book(BOOK_ONE)
+            .build();
+
+    public static final Assignments ASSIGNMENTS_TWO = Assignments
+            .builder()
+            .id(ID_ONE)
+            .assignDate(ASSIGN_DATE)
+            .dueDate(DUE_DATE)
+            .book(BOOK_ONE)
+            .user(USER_ONE)
             .build();
 
     public static List<Assignments> assignmentsList = Collections.singletonList(ASSIGNMENTS_ONE);

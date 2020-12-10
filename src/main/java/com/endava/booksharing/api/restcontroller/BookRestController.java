@@ -2,7 +2,6 @@ package com.endava.booksharing.api.restcontroller;
 
 import com.endava.booksharing.api.dto.BookRequestDto;
 import com.endava.booksharing.api.dto.BookResponseDto;
-import com.endava.booksharing.api.dto.BookResponseDto;
 import com.endava.booksharing.api.dto.DeleteBookRequestDto;
 import com.endava.booksharing.api.exchange.Response;
 import com.endava.booksharing.service.BookService;

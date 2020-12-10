@@ -12,8 +12,8 @@ public class TestConstants {
     public static final Long ID_TWO = 2L;
     public static final LocalDate ASSIGN_DATE = LocalDate.of(2020, 9, 3);
     public static final LocalDate DUE_DATE = LocalDate.of(2020, 9, 13);
-    public static final String ASSIGN_DATE_AS_STRING = "2020-09-03";
     public static final String DUE_DATE_AS_STRING = "2020-09-13";
+
     public static final String BOOK_TITLE_ONE = "Frankenstein-Test";
     public static final String BOOK_TITLE_TWO = "Crime and punishment";
     public static final String AUTHOR_FIRST_NAME_ONE = "Lev";
@@ -39,7 +39,7 @@ public class TestConstants {
     public static final String USER_ONE_PASSWORD_ENCODED = "$2a$10$iboRMYI5B8PR4t0Y2ldWguGuQ4kxStmQwgfKhOruroj.oJvoeoWW6";
     public static final String USER_ONE_USERNAME = "usernameone";
     public static final String USER_ONE_PASSWORD = "useronepass";
-    public static final String USER_TWO_USERNAME = "usernamewo";
+    public static final String USER_TWO_USERNAME = "usernametwo";
     public static final String USER_TWO_PASSWORD = "usertwopass";
     public static final Long USER_ID = 1L;
 
@@ -61,5 +61,11 @@ public class TestConstants {
     public static final String BOOK_DESCRIPTION = "This is the best book I've read in my life!";
     public static final LocalDate DEFAULT_DATE = LocalDate.of(2020,12,1);
 
+    public static final String TIME_EXTEND_DESCRIPTION = "I need one more week";
+    public static final LocalDate TIME_EXTEND_DATE_VALID = LocalDate.of(2020, 9, 15);
+    public static final String TIME_EXTEND_DATE_VALID_AS_STRING = "2020-09-15";
+    public static final String TIME_EXTEND_DATE_VALID_REQUEST_AS_STRING = "2020-9-15";
+    public static final String TIME_EXTEND_DATE_EQUAL_WITH_DUE_DATE_AS_STRING = "2020-9-13";
+    public static final String TIME_EXTEND_DATE_SMALLER_THAN_DUE_DATE_AS_STRING = "2020-9-5";
+    public static final String TIME_EXTEND_DATE_GREATER_THAN_ASSIGN_DATE_PLUS_30_DAYS_AS_STRING = "2020-10-3";
 }
-

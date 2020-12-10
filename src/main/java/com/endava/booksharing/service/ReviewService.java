@@ -30,9 +30,6 @@ public class ReviewService {
     private final BookRepository bookRepository;
     private final UserDetailsServiceImpl userDetailsService;
 
-    @Value("${message.user.not-found}")
-    private String messageUserNotFound;
-
     @Value("${message.book.not-found}")
     private String messageBookNotFound;
 
