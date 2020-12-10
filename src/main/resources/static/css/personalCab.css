@@ -24,6 +24,10 @@
     margin-left: 410px;
 }
 
+.navbar{
+    display: flex;
+    justify-content: space-between;
+}
 
 
 
