@@ -9,7 +9,8 @@ import static com.endava.booksharing.TestConstants.REVIEW_TEXT_CORRECT;
 import static com.endava.booksharing.TestConstants.ID_TWO;
 import static com.endava.booksharing.TestConstants.USER_ONE_USERNAME;
 import static com.endava.booksharing.TestConstants.USER_TWO_USERNAME;
-import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED_ONE;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED_ONE;
 import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
 import static com.endava.booksharing.utils.UserTestUtils.USER_TWO;
 
@@ -18,20 +19,20 @@ public class ReviewTestUtils {
             .builder()
             .id(ID_ONE)
             .textReview(REVIEW_TEXT_CORRECT)
-            .book(BOOK_DELETED)
+            .book(BOOK_DELETED_ONE)
             .user(USER_ONE)
             .build();
     public static final Review REVIEW_TWO = Review
             .builder()
             .id(ID_TWO)
             .textReview(REVIEW_TEXT_CORRECT)
-            .book(BOOK_DELETED)
+            .book(BOOK_DELETED_ONE)
             .user(USER_TWO)
             .build();
     public static final Review REVIEW_ONE_NO_ID = Review
             .builder()
             .textReview(REVIEW_TEXT_CORRECT)
-            .book(BOOK_DELETED)
+            .book(BOOK_DELETED_ONE)
             .user(USER_ONE)
             .build();
     public static final ReviewResponseDto REVIEW_RESPONSE_DTO_ONE = ReviewResponseDto

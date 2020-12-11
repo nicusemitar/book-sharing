@@ -1,5 +1,6 @@
 package com.endava.booksharing;
 
+import com.endava.booksharing.model.enums.StatusType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -44,6 +45,8 @@ public class TestConstants {
     public static final String USER_TWO_USERNAME = "usernametwo";
     public static final String USER_TWO_PASSWORD = "usertwopass";
     public static final String SESSION = "simpSessionAttributes";
+    public static final StatusType STATUS_FREE = StatusType.FREE;
+    public static final StatusType STATUS_DELETED = StatusType.DELETED;
     public static final Long USER_ID = 1L;
 
     public static final String REVIEW_TEXT_CORRECT = "Good book";

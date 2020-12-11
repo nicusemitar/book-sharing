@@ -8,6 +8,7 @@ import com.endava.booksharing.api.dto.PageableBooksResponseDto;
 import com.endava.booksharing.model.Author;
 import com.endava.booksharing.model.Book;
 import com.endava.booksharing.model.Tags;
+import com.endava.booksharing.model.enums.StatusType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mockito.internal.util.collections.Sets;
@@ -46,6 +47,8 @@ import static com.endava.booksharing.TestConstants.BOOK_TITLE_UPDATED;
 import static com.endava.booksharing.TestConstants.DEFAULT_DATE;
 import static com.endava.booksharing.TestConstants.ID_ONE;
 import static com.endava.booksharing.TestConstants.ID_TWO;
+import static com.endava.booksharing.TestConstants.STATUS_DELETED;
+import static com.endava.booksharing.TestConstants.STATUS_FREE;
 import static com.endava.booksharing.TestConstants.USER_ONE_USERNAME;
 import static com.endava.booksharing.TestConstants.USER_TWO_USERNAME;
 import static com.endava.booksharing.utils.TagsTestUtils.DEFAULT_TAG;
@@ -69,7 +72,7 @@ public class BookTestUtils {
             .books(Collections.EMPTY_SET)
             .build();
 
-      public static final Book BOOK_DELETED = Book
+    public static final Book BOOK_DELETED_ONE = Book
             .builder()
             .id(ID_ONE)
             .title(BOOK_TITLE)
@@ -79,8 +82,9 @@ public class BookTestUtils {
             .bookLanguage(BOOK_LANGUAGE)
             .deletedAt(BOOK_DELETED_AT_DATE)
             .deletedWhy(BOOK_DELETED_WHY)
-            .author(AUTHOR_ONE)
+            .author(AUTHOR_TWO)
             .user(USER_ONE)
+            .bookStatus(STATUS_DELETED)
             .deletedBy(USER_ONE)
             .build();
     public static final Book BOOK_NOT_DELETED = Book
@@ -91,7 +95,8 @@ public class BookTestUtils {
             .description(BOOK_DESCRIPTION)
             .addedAt(BOOK_ADDED_AT_DATE)
             .bookLanguage(BOOK_LANGUAGE)
-            .author(AUTHOR_ONE)
+            .bookStatus(STATUS_FREE)
+            .author(AUTHOR_TWO)
             .user(USER_TWO)
             .build();
     public static final BookResponseDto BOOK_DELETED_RESPONSE_DTO = BookResponseDto
@@ -102,8 +107,9 @@ public class BookTestUtils {
             .description(BOOK_DESCRIPTION)
             .language(BOOK_LANGUAGE)
             .addedAt(BOOK_ADDED_AT)
-            .author(AUTHOR_FIRST_NAME + " " + AUTHOR_LAST_NAME)
+            .author(AUTHOR_FIRST_NAME_TWO + " " + AUTHOR_LAST_NAME_TWO)
             .addedBy(USER_ONE_USERNAME)
+            .status(STATUS_DELETED.toString())
             .deletedBy(USER_ONE_USERNAME)
             .deletedWhy(BOOK_DELETED_WHY)
             .deletedDate(BOOK_DELETED_AT)
@@ -116,7 +122,8 @@ public class BookTestUtils {
             .description(BOOK_DESCRIPTION)
             .language(BOOK_LANGUAGE)
             .addedAt(BOOK_ADDED_AT)
-            .author(AUTHOR_FIRST_NAME + " " + AUTHOR_LAST_NAME)
+            .author(AUTHOR_FIRST_NAME_TWO + " " + AUTHOR_LAST_NAME_TWO)
+            .status(STATUS_FREE.toString())
             .addedBy(USER_TWO_USERNAME)
             .build();
     public static final BookResponseDto BOOK_RESPONSE_DTO = BookResponseDto.builder()
@@ -157,6 +164,7 @@ public class BookTestUtils {
             .pages(BOOK_PAGES)
             .tags(Sets.newSet(DEFAULT_TAG))
             .description(BOOK_DESCRIPTION)
+            .bookStatus(STATUS_FREE)
             .id(ID_ONE)
             .build();
 
@@ -169,6 +177,7 @@ public class BookTestUtils {
             .description(BOOK_DESCRIPTION)
             .addedAt(DEFAULT_DATE)
             .user(USER_ONE)
+            .bookStatus(STATUS_FREE)
             .id(ID_ONE)
             .build();
 
@@ -179,17 +188,19 @@ public class BookTestUtils {
             .pages(BOOK_PAGES)
             .tags(Sets.newSet(DEFAULT_TAG))
             .description(BOOK_DESCRIPTION)
+            .bookStatus(STATUS_FREE)
             .id(ID_ONE)
             .build();
 
     public static final Book DELETED_BOOK = Book.builder()
             .title(BOOK_TITLE)
-            .author(AUTHOR_ONE)
+            .author(AUTHOR_TWO)
             .bookLanguage(BOOK_LANGUAGE)
             .pages(BOOK_PAGES)
             .tags(Sets.newSet(DEFAULT_TAG))
             .description(BOOK_DESCRIPTION)
             .id(ID_ONE)
+            .bookStatus(STATUS_DELETED)
             .deletedAt(DEFAULT_DATE)
             .deletedWhy(BOOK_DESCRIPTION)
             .deletedBy(USER_ONE)
@@ -199,8 +210,9 @@ public class BookTestUtils {
             .description(BOOK_DESCRIPTION)
             .build();
     public static final BookResponseDto DELETED_BOOK_RESPONSE_DTO = BookResponseDto.builder()
-            .author(AUTHOR_FIRST_NAME + " " + AUTHOR_LAST_NAME)
+            .author(AUTHOR_FIRST_NAME_TWO + " " + AUTHOR_LAST_NAME_TWO)
             .title(BOOK_TITLE)
+            .status(STATUS_DELETED.toString())
             .deletedBy(USER_ONE_USERNAME)
             .deletedDate(DEFAULT_DATE.toString())
             .deletedWhy(BOOK_DESCRIPTION)
@@ -219,6 +231,7 @@ public class BookTestUtils {
             .bookLanguage(BOOK_LANGUAGE)
             .pages(BOOK_PAGES_NUMBER_ONE)
             .title(BOOK_TITLE_ONE)
+            .bookStatus(STATUS_FREE)
             .tags(TAGS_SET)
             .build();
 
@@ -230,6 +243,7 @@ public class BookTestUtils {
             .pages(BOOK_PAGES_NUMBER_ONE)
             .title(BOOK_TITLE_TWO)
             .tags(TAGS_SET)
+            .bookStatus(STATUS_FREE)
             .build();
 
     public static final BooksResponseDto BOOKS_RESPONSE_DTO_ONE = BooksResponseDto.builder()
@@ -237,6 +251,7 @@ public class BookTestUtils {
             .title(BOOK_TITLE_ONE)
             .authorName(AUTHOR_FULL_NAME_ONE)
             .language(BOOK_LANGUAGE)
+            .status(STATUS_FREE.toString())
             .tags(TAGS_STRING_SET)
             .build();
 
@@ -245,6 +260,7 @@ public class BookTestUtils {
             .title(BOOK_TITLE_TWO)
             .authorName(AUTHOR_FULL_NAME_TWO)
             .language(BOOK_LANGUAGE)
+            .status(STATUS_FREE.toString())
             .tags(TAGS_STRING_SET)
             .build();
 

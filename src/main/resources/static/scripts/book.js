@@ -33,6 +33,7 @@ function displayBook(book) {
         let placeholderAuthor = `<th>Author:</th><td>${book.data.author}</td>`;
         let placeholderLanguage = `<th>Language:</th><td>${book.data.language}</td>`;
         let placeholderNrPages= `<th>Number of Pages:</th><td>${book.data.pages}</td>`;
+        let placeholderStatus=`<th>Status:</th><td>${book.data.status}</td>`
         let placeholderDescription = `<th>Description:</th><td>${book.data.description}</td>`;
         let placeholderAddedBy = `<th>Added by:</th><td>${book.data.addedBy}</td>`;
         let placeholderAddedAt = `<th>Added at:</th><td>${book.data.addedAt}</td>`;
@@ -51,6 +52,7 @@ function displayBook(book) {
         $("#book-deleted-by").html(placeholderDeletedBy);
         $("#book-deleted-why").html(placeholderDeletedWhy);
         $("#book-deleted-date").html(placeholderDeletedDate);
+        $("#book-status").html(placeholderStatus);
     }
 }
 

@@ -21,4 +21,5 @@ public class BookResponseDto {
     private String deletedBy;
     private String deletedWhy;
     private String deletedDate;
+    private String status;
 }
