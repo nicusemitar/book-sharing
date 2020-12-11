@@ -25,6 +25,7 @@ public class TestConstants {
     public static final String RUSSIAN_LANGUAGE = "russian";
     public static final Long BOOK_PAGES_NUMBER_ONE = 500L;
     public static final LocalDate ADDED_AT_DATE = LocalDate.of(2020, 1, 1);
+    public static final String URL = "/topic/public";
 
     public static final String USERNAME_FAIL = "..endava";
     public static final String USERNAME_PASS = "endava2";
@@ -37,10 +38,12 @@ public class TestConstants {
     public static final String PASSWORD_FAIL = "test";
 
     public static final String USER_ONE_PASSWORD_ENCODED = "$2a$10$iboRMYI5B8PR4t0Y2ldWguGuQ4kxStmQwgfKhOruroj.oJvoeoWW6";
+    public static final String DEFAULT_USERNAME = "username";
     public static final String USER_ONE_USERNAME = "usernameone";
     public static final String USER_ONE_PASSWORD = "useronepass";
     public static final String USER_TWO_USERNAME = "usernametwo";
     public static final String USER_TWO_PASSWORD = "usertwopass";
+    public static final String SESSION = "simpSessionAttributes";
     public static final Long USER_ID = 1L;
 
     public static final String REVIEW_TEXT_CORRECT = "Good book";

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8">
     <title>Book Sharing</title>
@@ -12,11 +12,12 @@
             integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/allBooks.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/chat.css}">
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-    <img th:src="@{/images/logo.png}" alt="logo" height="60px" width="180px"/>
+    <a href="/all-books"><img th:src="@{/images/logo.png}" alt="logo" height="60px" width="180px"/></a>
     <!-- Search form -->
     <div class="input-group md-form form-sm form-2 pl-0" style="width: 30%; margin: 0 auto;">
         <input class="form-control my-0 py-1 orangered-border" id="search-key" type="text" placeholder="Search book"
@@ -26,6 +27,16 @@
                 <i class="fa fa-search text-grey" aria-hidden="true"></i>
             </span>
         </div>
+    </div>
+    <div class="dropdown">
+        <button id="btn-upgrade" type="button" data-toggle="dropdown">
+            <div><span id="name" sec:authentication="principal.username"></span></div>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+            <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/personal-cabinet">Personal
+                Cabinet</a></li>
+            <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a></li>
+        </ul>
     </div>
 </nav>
 
@@ -65,9 +76,38 @@
         <div class="col"></div>
     </div>
 </div>
+
+<div th:fragment="chat-page">
+    <button class="open-button" onclick="openForm()" id="open-button" type="submit">Chat</button>
+    <div id="chat-page" class="hidden">
+        <div class="chat-container">
+            <div class="chat-header" id="chat-header" onclick="closeForm()">
+                <h5>Hide chat...</h5>
+            </div>
+            <div class="connecting">Connecting...
+            </div>
+            <br><br>
+            <ul id="messageArea">
+
+            </ul>
+            <form id="messageForm" name="messageForm" nameForm="messageForm">
+                <div class="form-group">
+                    <div class="input-group clearfix">
+                        <input type="text" id="message" placeholder="Type a message..." autocomplete="off"
+                               class="form-control"/>
+                        <button type="submit" class="primary">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!--Footer-->
 <div class="jumbotron text-center" style="margin-bottom: 0"></div>
 <!--JS Script-->
 <script th:src="@{/scripts/allBooks.js}"></script>
+<script th:src="@{/scripts/chat.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </body>
 </html>
