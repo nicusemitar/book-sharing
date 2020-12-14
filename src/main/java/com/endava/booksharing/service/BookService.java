@@ -110,4 +110,8 @@ public class BookService {
 
         return mapBooksResponseDtoPageToPageableBooksResponseDto.apply(booksResponseDtoPage);
     }
+    
+    public List<Object> getBooksLanguages(){
+        return bookRepository.findBookLanguage();
+    }
 }

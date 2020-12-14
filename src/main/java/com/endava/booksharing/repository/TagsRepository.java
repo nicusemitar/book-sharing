@@ -10,6 +10,5 @@ import java.util.List;
 @Repository
 public interface TagsRepository extends JpaRepository<Tags, Long> {
     List<Tags> findAllByTagTypeEquals(TagsType tagType);
-
     List<Tags> findAllByTagNameContaining(String tagName);
 }
