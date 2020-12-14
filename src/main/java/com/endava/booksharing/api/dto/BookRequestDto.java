@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.util.List;
 
 @Data
@@ -17,10 +15,11 @@ import java.util.List;
 public class BookRequestDto {
     @NotNull
     @NotEmpty
-    @Pattern(regexp = "(?i)[A-z]([- ',.a-z]{5,40}[a-z])", message = "Title should not contain invalid characters!")
+    @Pattern(regexp = "(?i)[A-z0-9]([- ',.A-z0-9]{0,40}[A-z0-9])$", message = "Title should not contain invalid characters!")
     private String title;
 
-    @NotNull
+    @Min(1)
+    @Max(5000)
     private Long pages;
 
     @NotEmpty
@@ -29,17 +28,17 @@ public class BookRequestDto {
 
     @NotNull
     @NotEmpty
-    @Pattern(regexp = "^[a-zA-Z]*$",message = "Language field should not contain numbers")
+    @Pattern(regexp = "^[a-zA-Z]{1,30}$", message = "Language field should not contain numbers")
     private String bookLanguage;
 
     @NotNull
     @NotEmpty
-    @Pattern(regexp = "(?i)[a-z]([- ',.a-z]{0,23}[a-z])",message = "Invalid author first name")
+    @Pattern(regexp = "(?i)[A-z]([- ',.A-z]{0,23}[A-z])$", message = "Invalid author first name")
     private String authorFirstName;
 
     @NotNull
     @NotEmpty
-    @Pattern(regexp = "(?i)[a-z]([- ',.a-z]{0,23}[a-z])",message = "Invalid author last name")
+    @Pattern(regexp = "(?i)[A-z]([- ',.A-z]{0,23}[A-z])$", message = "Invalid author last name")
     private String authorLastName;
 
     private List<TagsRequestDto> tagList;

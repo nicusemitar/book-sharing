@@ -28,18 +28,98 @@
 <div class="container-fluid" style="margin-top: -25px">
     <div class="row">
         <div class="col-2"><br></div>
-        <div class="col-7"><br></div>
-        <div class="col-1"><br></div>
-        <div class="col"><br></div>
+        <div class="col-8"><br></div>
+<!--        <div class="col-1"><br></div>-->
+<!--        <div class="col"><br></div>-->
     </div>
 
     <div class="row">
-        <div class="col-2 left">
+        <div class="col-2 ">
             <h3>Personal Cabinet</h3>
             <br>
             <img class="user" th:src="@{/images/user-icon.jpg}"/>
+            <br>
+            <br>
+            <br>
+            <button class="added-books" data-toggle="modal" data-target="#exampleModal2">
+                Share Your Book
+            </button>
+            <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="addbook modal fade" id="exampleModal2" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+<!--            <div class="modal" id="myModal">-->
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>ADD NEW BOOK </h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="txt-title"><span class="req"></span> Book Title </label>
+                            <input autocomplete="off" class="form-control add" id="txt-title"
+                                   oninput="validateTitle(this.value);"
+                                   required
+                                   type="text"/>
+                            <div id="errLast-title"></div>
+                        </div>
+                        <div class="form-group first-last-name">
+                            <label for="txt-first-name"><span class="req"></span> Author first name </label>
+                            <input autocomplete="off" class="form-control add" id="txt-first-name"
+                                   oninput="validateFirstName(this.value);"
+                                   required
+                                   type="text"/>
+                            <div class="error-messages" id="errLast-first-name"></div>
+                        </div>
+
+                        <div class="form-group first-last-name">
+                            <label for="txt-last-name"><span class="req"></span> Author last name </label>
+                            <input autocomplete="off" class="form-control add" id="txt-last-name"
+                                   oninput="validateLastName(this.value);"
+                                   required
+                                   type="text"/>
+                            <div class="error-messages" id="errLast-last-name"></div>
+                        </div>
+                        <br>
+                        <div class="form-group language-pages">
+                            <label for="txt-language"><span class="req"></span> Language </label>
+                            <input autocomplete="off" class="form-control add" id="txt-language"
+                                   oninput="validateLanguage(this.value);"
+                                   required
+                                   type="text"/>
+                            <div class="error-messages" id="errLast-language"></div>
+                        </div>
+
+                        <div class="form-group language-pages">
+                            <label for="txt-pages"><span class="req"></span> Pages </label>
+                            <input autocomplete="off" class="form-control add" id="txt-pages"
+                                   oninput="validatePages(this.value);"
+                                   required
+                                   type="number"/>
+                            <div class="error-messages" id="errLast-pages"></div>
+                        </div>
+
+                        <p>Tags</p>
+                        <div class="form-group tags-input"  data-name="tags-input"></div>
+
+                        <div class="form-group description-div">
+                            <label for="txt-description"><span class="req"></span> Description </label>
+                            <textarea autocomplete="off" class="form-control add" id="txt-description"
+                                      oninput="validateDescription(this.value);"
+                                      required
+                                      style="height: 60px" type="text"></textarea>
+                            <div class="error-messages" id="errLast-description"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer-add-book">
+                        <button class="button-submit close-button " data-dismiss="modal">Close</button>
+                        <button class="button-submit" id="submit-add-book"  >Add Book</button>
+                    </div>
+                </div>
+<!--            </div>-->
         </div>
-        <div class="col-7">
+            </div>
+        </div>
+
+        <div class="col-8 main-content">
             <h4 class="assignedBooksHeader">Assigned books</h4>
             <br>
             <div class="assignedBooks">
@@ -50,21 +130,21 @@
                 </table>
             </div>
         </div>
-        <div class="col-1"></div>
-        <div class="col"></div>
+<!--        <div class="col-1"></div>-->
+<!--        <div class="col"></div>-->
     </div>
 
     <div class="row">
-        <div class="col-2"><br></div>
-        <div class="col-7">
+        <div class="col-2 "><br></div>
+        <div class="col-8">
             <!--Pagination-->
             <div id="pagination-placeholder">
                 <ul class="pagination justify-content-center" style="margin:20px 0">
                 </ul>
             </div>
         </div>
-        <div class="col-1"><br></div>
-        <div class="col"><br></div>
+<!--        <div class="col-1"><br></div>-->
+<!--        <div class="col"><br></div>-->
     </div>
 </div>
 <div th:insert="allBooksPage :: chat-page">
@@ -94,7 +174,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Extend <br> reason</span>
                     </div>
-                    <textarea class="form-control" id="textArea"></textarea>
+                    <textarea class="form-control add" id="textArea"></textarea>
                 </div>
             </div>
             <div class="mt-2" id="invalidReason"></div>
@@ -119,9 +199,11 @@
     </div>
 </div>
 
+
 <!--Footer-->
 <div class="jumbotron text-center" style="margin-bottom:0"></div>
 <!--JS Script-->
+
 <script th:src="@{/scripts/personalCabinet.js}"></script>
 <script th:src="@{/scripts/chat.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
