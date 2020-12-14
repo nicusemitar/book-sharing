@@ -20,6 +20,7 @@
     <div class="dropdown"><button id="btn-upgrade" type="button" data-toggle="dropdown"><div><span id="name" sec:authentication="principal.username"></span> </div></button>
         <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
             <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/all-books">HomePage</a></li>
+            <li sec:authorize="hasAuthority('ADMIN')" role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/admin-page">AdminPage</a></li>
             <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a></li>
         </ul>
     </div>

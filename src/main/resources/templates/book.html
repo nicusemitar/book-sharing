@@ -22,6 +22,7 @@
         <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
             <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/all-books">HomePage</a></li>
             <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/personal-cabinet">Personal Cabinet</a></li>
+            <li sec:authorize="hasAuthority('ADMIN')" role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/admin-page">AdminPage</a></li>
             <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a></li>
         </ul>
     </div>

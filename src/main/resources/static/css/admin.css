@@ -1,0 +1,90 @@
+.btn {
+    background-image: linear-gradient(to left, #e74c3c, #e67e22);
+    color: white;
+    border: none;
+    outline: none;
+}
+
+.btn:hover {
+    position: relative;
+    bottom: 1px;
+    box-shadow: 1px 1px 4px lightslategray;
+}
+
+.modal-header {
+    background-image: linear-gradient(315deg, #f9d29d 0%, #ffd8cb 74%);
+}
+
+.modal-body {
+    font-size: 1.1em;
+}
+
+.btn-primary {
+    outline: none;
+    background: none;
+    color: black;
+    border: 2px solid black;
+    transition: color 0.2s linear;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    outline: none;
+    color: white;
+    background-image: linear-gradient(315deg, #fce043 0%, #fb7ba2 74%);
+    border: 2px solid black;
+}
+
+.modal-body p {
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.col {
+    background-color: floralwhite;
+}
+
+.col-7 {
+    align-content: center;
+    text-align: center;
+}
+
+.col-2 {
+    align-content: center;
+    text-align: center;
+    background-color: floralwhite;
+}
+
+.user {
+    width: 100px;
+    height: 85px;
+    border-radius: 50%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+#messageSuccess {
+    display: none;
+    color: green;
+}
+
+#messageError {
+    display: none;
+    color: red;
+}
+
+img#successImage, img#errorImage {
+    width: 79px;
+    border-style: none;
+}
+
+.page-item.active .page-link {
+    background-image: linear-gradient(to left, #e74c3c, #e67e22);
+    border: none;
+}
+
+.page-link {
+    color: black;
+}
