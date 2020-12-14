@@ -5,15 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class TimeExtendResponseDto {
-    private Long requestId;
-    private String username;
-    private Long bookId;
-    private String description;
-    private String dueDate;
-    private String requestedDate;
+public class PageableTimeExtendResponseDto {
+    private long totalItems;
+    private int totalPages;
+    private int currentPage;
+    private List<TimeExtendResponseDto> timeExtendResponseDtoList;
 }

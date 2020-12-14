@@ -21,12 +21,16 @@ import java.time.LocalDate;
 import java.util.Collections;
 
 import static com.endava.booksharing.TestConstants.ID_ONE;
+import static com.endava.booksharing.TestConstants.INVALID_ID;
 import static com.endava.booksharing.utils.AssignmentsTestUtils.ASSIGNMENTS_RESPONSE_DTO;
+import static com.endava.booksharing.utils.TimeExtendTestUtils.PAGEABLE_TIME_EXTEND_RESPONSE_DTO;
 import static com.endava.booksharing.utils.TimeExtendTestUtils.TIME_EXTEND_REQUEST_DTO;
 import static com.endava.booksharing.utils.TimeExtendTestUtils.TIME_EXTEND_RESPONSE_DTO;
 import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -70,7 +74,7 @@ public class AssignmentsRestControllerTest {
 
     @Test
     @WithMockUser
-    public void shouldAddTimeExtend() throws Exception {
+    void shouldAddTimeExtend() throws Exception {
         when(timeExtendService.save(TIME_EXTEND_REQUEST_DTO, ID_ONE)).thenReturn(TIME_EXTEND_RESPONSE_DTO);
 
         mockMvc.perform(post("/assignments/{id}/extends", ID_ONE)
@@ -82,5 +86,40 @@ public class AssignmentsRestControllerTest {
                 .andExpect(content().json(gson.toJson(Response.build(TIME_EXTEND_RESPONSE_DTO))));
 
         verify(timeExtendService).save(TIME_EXTEND_REQUEST_DTO, ID_ONE);
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    void shouldReturnJsonWithPageableTimeExtendRequestResponseDto() throws Exception {
+        when(timeExtendService.getAllRequests(anyInt(), anyInt())).thenReturn(PAGEABLE_TIME_EXTEND_RESPONSE_DTO);
+
+        mockMvc.perform(get("/assignments/extends"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(gson.toJson(PAGEABLE_TIME_EXTEND_RESPONSE_DTO)));
+
+        verify(timeExtendService).getAllRequests(anyInt(), anyInt());
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    void shouldDeleteRequest() throws Exception {
+
+        mockMvc.perform(delete("/assignments/extends/{id}", ID_ONE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(gson.toJson(Response.build("Request with id " + ID_ONE + " was declined"))));
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    void shouldThrowExceptionOnReturnJsonWithPageableTimeExtendRequestResponseDto() throws Exception {
+
+        mockMvc.perform(get("/assignments/extends").param("page", String.valueOf(INVALID_ID)))
+                .andDo(print())
+                .andExpect(status().isBadGateway())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 }

@@ -11,6 +11,7 @@ public class TestConstants {
 
     public static final Long ID_ONE = 1L;
     public static final Long ID_TWO = 2L;
+    public static final Long INVALID_ID = -1L;
     public static final LocalDate ASSIGN_DATE = LocalDate.of(2020, 9, 3);
     public static final LocalDate DUE_DATE = LocalDate.of(2020, 9, 13);
     public static final String DUE_DATE_AS_STRING = "2020-09-13";
@@ -48,6 +49,8 @@ public class TestConstants {
     public static final StatusType STATUS_FREE = StatusType.FREE;
     public static final StatusType STATUS_DELETED = StatusType.DELETED;
     public static final Long USER_ID = 1L;
+    public static final int PAGE_ONE = 0;
+    public static final int SIZE_ONE = 15;
 
     public static final String REVIEW_TEXT_CORRECT = "Good book";
 

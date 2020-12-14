@@ -1,12 +1,30 @@
 .col-9 {
     align-content: center;
     text-align: center;
+    padding-left: 150px;
+}
+
+.main-content {
+    position: relative;
+    width: auto;
+    height: auto;
+    left: 15%;
+    top: 0%;
+    margin-left: -300px;
+    margin-bottom: 374px;
 }
 
 .col-2 {
     align-content: center;
     text-align: center;
     margin-left: 3%;
+}
+
+.user {
+    width: 100px;
+    height: 85px;
+    border-radius: 50%;
+    border: 0px;
 }
 
 .assignedBooksHeader {
@@ -17,6 +35,12 @@
     text-align: center;
     magrin-left: 15%;
 }
+
+.requests h4{
+    text-align: left;
+    margin-left: 40%;
+}
+
 
 .added-books {
     outline: none;
@@ -177,6 +201,12 @@
     border-top: 3px solid #708090;
 }
 
+.modal-header {
+    background-image: linear-gradient(315deg, #f9d29d 0%, #ffd8cb 74%);
+    justify-content: center;
+    padding: 2rem;
+}
+
 .modal-body {
     padding: 2rem;
 }
@@ -188,7 +218,6 @@
 .input-group-text {
     text-transform: uppercase;
     background-image: linear-gradient(315deg, #fce043 0%, #fb7ba2 74%);
-    /*background-image: linear-gradient(to left, #e74c3c, #e67e22);*/
     color: white;
     width: 101px;
     justify-content: center;

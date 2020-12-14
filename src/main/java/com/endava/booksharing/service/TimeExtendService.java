@@ -1,5 +1,6 @@
 package com.endava.booksharing.service;
 
+import com.endava.booksharing.api.dto.PageableTimeExtendResponseDto;
 import com.endava.booksharing.api.dto.TimeExtendRequestDto;
 import com.endava.booksharing.api.dto.TimeExtendResponseDto;
 import com.endava.booksharing.model.Assignments;
@@ -12,12 +13,17 @@ import com.endava.booksharing.utils.exceptions.RequestedDateException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import static com.endava.booksharing.utils.mappers.TimeExtendMapper.mapTimeExtendRequestDtoPageToPageableTimeExtendResponseDto;
 import static com.endava.booksharing.utils.mappers.TimeExtendMapper.mapTimeExtendRequestDtoToTimeExtend;
 import static com.endava.booksharing.utils.mappers.TimeExtendMapper.mapTimeExtendToTimeExtendResponseDto;
 import static java.lang.String.format;
@@ -58,6 +64,21 @@ public class TimeExtendService {
                     userDetailsService.getCurrentUser().getUsername(), assignmentId);
             throw new AccessDeniedException("You don't have permission to request extend time for this assignment!");
         }
+    }
+
+    public PageableTimeExtendResponseDto getAllRequests(int page, int size) {
+        log.info("Getting all time extend requests from database");
+
+        Page<TimeExtendResponseDto> timeExtendResponseDtoPage = timeExtendRepository.findAll(
+                PageRequest.of(page, size))
+                .map(mapTimeExtendToTimeExtendResponseDto);
+        return mapTimeExtendRequestDtoPageToPageableTimeExtendResponseDto.apply(timeExtendResponseDtoPage);
+    }
+
+    public void deleteRequest(Long id) {
+        log.info("Deleting the request with id [{}]", id);
+
+        timeExtendRepository.deleteById(id);
     }
 
     public void checkIfRequestedDateIsGreaterThanAssignmentDueDate(LocalDate requestedDate, LocalDate dueDate,

@@ -1,5 +1,6 @@
 $(document).ready(() => {
     getReviews();
+    getAllRequests();
 });
 
 function getReviews() {
@@ -83,13 +84,13 @@ function displayPages(totalPages, currentPage) {
     for (let i = 1; i <= totalPages; i++) {
         if (i < currentPage) {
             placeholder +=
-                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" href="" onclick="goToPage(${i})">${i}</a></li>`;
+                `<li class="page-item" id="page${i}" value="${i}"><button class="page-link" href="" onclick="goToPage(${i})">${i}</button></li>`;
         } else if (i === currentPage) {
             placeholder +=
-                `<li class="page-item active" id="page${i}" value="${i}"><a class="page-link" href="" onclick="goToPage(${i})">${i}</a></li>`;
+                `<li class="page-item active" id="page${i}" value="${i}"><button class="page-link" href="" onclick="goToPage(${i})">${i}</button></li>`;
         } else if (i > currentPage) {
             placeholder +=
-                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" href="" onclick="goToPage(${i})">${i}</a></li>`;
+                `<li class="page-item" id="page${i}" value="${i}"><button class="page-link" href="" onclick="goToPage(${i})">${i}</button></li>`;
         }
     }
     $("#pagination-placeholder ul").html(placeholder);
@@ -121,4 +122,125 @@ function limitNumberOfShownPages(totalPages, currentPage) {
             return index === j
         }).hide();
     }
+}
+
+
+let requestList;
+
+function getAllRequests() {
+    $.ajax({
+        url: "/assignments/extends",
+        method: "GET",
+        success: response => {
+            requestList = response.timeExtendResponseDtoList;
+            displayRequests(response.timeExtendResponseDtoList, response.currentPage);
+            displayPagesRequest(response.totalPages, response.currentPage + 1);
+        },
+        error: () => {
+            alert("Something went wrong")
+        }
+    })
+}
+
+function displayRequests(requests, currentPage) {
+    if (requests.length > 0) {
+        let placeholder = "";
+        let elementNr = currentPage * 8;
+
+        $.each(requests, (index, requests) => {
+            placeholder +=
+                `<tr>
+                    <th scope="row">${index + 1}</th>
+                    <td>${requests.username}</td>
+                    <td>${requests.bookId}</td>
+                    <td class="description">${requests.description}</td>
+                    <td>${requests.dueDate}</td>
+                    <td class="requestedDate">${requests.requestedDate}</td>
+                    <td><button class="button-option update" id="update" type="button" value="${requests.requestId}" data-toggle="modal" data-target="#exampleModal">APPROVE</button></td>
+                    <td><button class="button-option delete" id="delete" type="button" value="${requests.requestId}" data-toggle="modal" data-target="#exampleModal">DECLINE</button></td>
+                 </tr>`
+        });
+        $("#request-placeholder tbody").html(placeholder);
+    }
+
+    $(".delete").on("click", function () {
+        let id = this.value;
+        $("#modalForSubmitAndError").css("display", "block");
+        $("#modalForAccept").css("display", "none");
+        $("#submit").unbind('click').on("click", function () {
+            $.ajax({
+                url: `/assignments/extends/${id}`,
+                method: "DELETE",
+                success: response => {
+                    window.location.href = `/admin-page`;
+                },
+                error: () => {
+                    alert("Something went wrong")
+                }
+            })
+        });
+    });
+
+    $(".update").on("click", function () {
+        let id = parseInt(this.value, 10);
+        let request;
+        request = requestList.filter(function (e) {
+            return e.requestId === id;
+        });
+
+        const requestObject = () => {
+            return {
+                description: request[0].description,
+                requestedDate: request[0].requestedDate
+            };
+        };
+
+        $("#modalForAccept").css("display", "block");
+        $("#modalForSubmitAndError").css("display", "none");
+        $("#submit").unbind('click').on("click", function () {
+            $.ajax({
+                url: `/assignments/extends/${id}`,
+                method: "POST",
+                data: JSON.stringify(requestObject()),
+                contentType: "application/json",
+                success: response => {
+                    window.location.href = `/admin-page`;
+                },
+                error: () => {
+                    alert("Something went wrong!")
+                }
+            })
+        });
+    });
+}
+
+function displayPagesRequest(totalPages, currentPage) {
+    let placeholder = "";
+    for (let i = 1; i <= totalPages; i++) {
+        if (i < currentPage) {
+            placeholder +=
+                `<li class="page-item" id="page${i}" value="${i}"><button class="page-link" onclick="goToPageRequest(${i})">${i}</button></li>`;
+        } else if (i === currentPage) {
+            placeholder +=
+                `<li class="page-item active" id="page${i}" value="${i}"><button class="page-link" onclick="goToPageRequest(${i})">${i}</button></li>`;
+        } else if (i > currentPage) {
+            placeholder +=
+                `<li class="page-item" id="page${i}" value="${i}"><button class="page-link" onclick="goToPageRequest(${i})">${i}</button></li>`;
+        }
+    }
+    $("#pagination-placeholder-request ul").html(placeholder);
+    limitNumberOfShownPages(totalPages, currentPage);
+}
+
+
+function goToPageRequest(i) {
+    $.ajax({
+        url: "/assignments/extends",
+        method: "GET",
+        data: {page: i - 1},
+        success: response => {
+            displayRequests(response.timeExtendResponseDtoList, response.currentPage);
+            displayPagesRequest(response.totalPages, response.currentPage + 1);
+        }
+    })
 }

@@ -34,4 +34,15 @@ public class PersonalCabinetControllerTest {
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
                 .andExpect(view().name("personalCab"));
     }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    void shouldReturnAdminPage() throws Exception {
+
+        mockMvc.perform(get("/admin-page"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("admin"));
+    }
 }

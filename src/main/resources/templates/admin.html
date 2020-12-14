@@ -13,6 +13,7 @@
             src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/admin.css}" type="text/css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/chat.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
 </head>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <a href="/all-books"><img th:src="@{/images/logo.png}" alt="logo" height="60px" width="180px"/></a>
@@ -60,10 +61,34 @@
             <div class="col-9">
                 <div id="accordion">
                     <div class="card">
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                             data-parent="#accordion">
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body">
+                                <div class="requests" sec:authorize="hasAuthority('ADMIN')">
+                                    <br>
+                                    <h4>Active Time Extend Requests</h4>
+                                    <br>
+                                    <table class="table" id="request-placeholder">
+                                        <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Username</th>
+                                            <th scope="col">Book Id</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Due date</th>
+                                            <th scope="col">New due date</th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
 
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="pagination-placeholder-request">
+                                    <ul class="pagination">
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -107,6 +132,29 @@
             <div class="col-2"><br></div>
             <div class="col-9"><br></div>
             <div class="col-1"><br></div>
+        </div>
+
+        <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">EXTEND TIME REQUEST</h5>
+                    </div>
+                    <div class="modal-body" id="modalForSubmitAndError">
+                        <h3>Are you sure you want to decline this request?</h3>
+                    </div>
+                    <div class="modal-body" id="modalForAccept">
+                        <h3>Are you sure you want to accept this request?</h3>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="buton-submit" data-dismiss="modal" id="close" type="button">
+                            NO
+                        </button>
+                        <button class="buton-submit" id="submit"> YES</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Modal -->
