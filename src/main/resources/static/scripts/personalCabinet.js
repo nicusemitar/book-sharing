@@ -25,6 +25,7 @@ function displayAssignedBooks(assignments) {
                 `<td id="book${index}">
                     <div class="shadow p-4 mb-4 bg-white" style="width: 250px; margin: 25px">
                         <input class='user-id' type='hidden' value='${assignments.id}'>
+                        <input class='book-id' type='hidden' value='${assignments.bookId}'>
                         <img src="/images/book-image.jpg" style="width: 100%; padding: 10%" align="center">
                         <p align="center">
                             ${assignments.bookName}<br>
@@ -44,3 +45,11 @@ function displayAssignedBooks(assignments) {
         $("#assignedBooks").html("<p>No Assigned Books.</p>");
     }
 }
+
+$("#books-table").on("click", ".shadow", function (e) {
+    if (e.target !== this) {
+        return;
+    }
+    let id = this.querySelector(".book-id").value;
+    window.location.href = `/book/${id}`;
+})

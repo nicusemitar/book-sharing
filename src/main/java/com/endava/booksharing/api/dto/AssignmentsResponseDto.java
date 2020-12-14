@@ -16,4 +16,5 @@ public class AssignmentsResponseDto {
     private LocalDate assignDate;
     private LocalDate dueDate;
     private String bookName;
+    private Long bookId;
 }
