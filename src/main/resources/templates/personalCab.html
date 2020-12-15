@@ -30,11 +30,11 @@
             <div><span id="name" sec:authentication="principal.username"></span></div>
         </button>
         <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-            <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/all-books">HomePage</a>
+            <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/all-books">Home Page</a>
             </li>
             <li sec:authorize="hasAuthority('ADMIN')" role="presentation" class="presentation"><a role="menuitem"
                                                                                                   tabindex="-1"
-                                                                                                  href="/admin-page">AdminPage</a>
+                                                                                                  href="/admin-page">Admin Page</a>
             </li>
             <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a></li>
         </ul>
@@ -172,7 +172,7 @@
                 </div>
             </div>
             <div class="col-9">
-                <h4 class="assignedBooksHeader">My assigned books</h4>
+                <h4 class="assignedBooksHeader" style="">My assigned books</h4>
                 <!--Books placeholder-->
                 <div class="clearfix" id="books-placeholder">
 

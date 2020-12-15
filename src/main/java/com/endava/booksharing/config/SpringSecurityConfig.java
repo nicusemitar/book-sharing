@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,14 +33,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(staticResources).permitAll()
                 .antMatchers("/register", "/users").permitAll()
-                .antMatchers("/all-books","/books","/personal-cabinet","/assignments","/extends").hasAuthority("USER")
+                .antMatchers("/all-books", "/books", "/personal-cabinet","/assignments" , "/assignments/current-user","/extends").hasAuthority("USER")
                 .antMatchers("/admin-page","/assignments/extends/**").hasAuthority("ADMIN")
                 .antMatchers("/book/").hasAnyAuthority()
+                .antMatchers(HttpMethod.DELETE, "/reviews/**", "/admin-page").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/all-books",true)
+                .defaultSuccessUrl("/all-books", true)
                 .failureForwardUrl("/login?error")
                 .and()
                 .logout().logoutSuccessUrl("/login").permitAll()

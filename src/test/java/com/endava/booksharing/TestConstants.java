@@ -52,6 +52,8 @@ public class TestConstants {
     public static final Long USER_ID = 1L;
     public static final int PAGE_ONE = 0;
     public static final int SIZE_ONE = 15;
+    public static final int PAGE_TWO = 0;
+    public static final int SIZE_TWO = 8;
 
     public static final String REVIEW_TEXT_CORRECT = "Good book";
 

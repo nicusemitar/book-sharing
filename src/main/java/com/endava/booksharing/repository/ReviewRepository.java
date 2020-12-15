@@ -12,4 +12,5 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("FROM Review r JOIN r.book b WHERE b.id = :bookId ORDER BY r.id DESC")
     List<Review> getAllReviewsByBookIdDesc(@Param("bookId") Long bookId);
+
 }
