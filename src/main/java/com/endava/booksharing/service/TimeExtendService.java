@@ -1,5 +1,6 @@
 package com.endava.booksharing.service;
 
+import com.endava.booksharing.api.dto.AssignmentsResponseDto;
 import com.endava.booksharing.api.dto.PageableTimeExtendResponseDto;
 import com.endava.booksharing.api.dto.TimeExtendRequestDto;
 import com.endava.booksharing.api.dto.TimeExtendResponseDto;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -24,6 +26,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.endava.booksharing.utils.mappers.TimeExtendMapper.mapTimeExtendRequestDtoPageToPageableTimeExtendResponseDto;
+import static com.endava.booksharing.utils.mappers.AssignmentsMapper.mapAssignmentsToAssignmentsResponseDto;
 import static com.endava.booksharing.utils.mappers.TimeExtendMapper.mapTimeExtendRequestDtoToTimeExtend;
 import static com.endava.booksharing.utils.mappers.TimeExtendMapper.mapTimeExtendToTimeExtendResponseDto;
 import static java.lang.String.format;
@@ -39,6 +42,9 @@ public class TimeExtendService {
 
     @Value("${message.assignment.not-found}")
     private String messageAssignmentNotFound;
+
+    @Value("${message.request.not-found}")
+    private String timeExtendRequestNotFound;
 
     public TimeExtendResponseDto save(TimeExtendRequestDto timeExtendRequestDto, Long assignmentId) {
         log.info("Saving request extend time for assigment with: id [{}]", assignmentId);
@@ -93,4 +99,38 @@ public class TimeExtendService {
             throw new RequestedDateException("Requested date is greater than 30 days since assigned date!");
         }
     }
+
+    @Transactional
+    public List<AssignmentsResponseDto> acceptRequest(Long id, TimeExtendRequestDto timeExtendRequestDto) {
+        TimeExtend timeExtend = timeExtendRepository.findById(id).orElseThrow(
+                () -> {
+                    log.warn("Time extend request with id [{}] was not found in the database", id);
+                    return new NotFoundException(format(timeExtendRequestNotFound, id));
+                }
+        );
+        Assignments assignments = assignmentsRepository.findById(timeExtend.getAssignment().getId()).orElseThrow(
+                () -> {
+                    log.warn("Assignment with id [{}] was not found in the database", timeExtend.getAssignment().getId());
+                    return new NotFoundException(format(messageAssignmentNotFound, timeExtend.getAssignment().getId()));
+                }
+        );
+        log.info("Updating the due date for the assignment with id [{}]",assignments.getId());
+
+        List<Assignments> activeAndWaitingAssignments = assignmentsRepository.getActiveAndWaitingAssignmentsByBookId(assignments.getBook().getId());
+        int difference = LocalDate.parse(timeExtendRequestDto.getRequestedDate()).compareTo(assignments.getDueDate());
+        assignments.setDueDate(assignments.getDueDate().plusDays(difference));
+        activeAndWaitingAssignments.stream().filter(assignments1 -> !assignments1.getId().equals(assignments.getId()))
+                .forEach(assignments1 ->
+                        {
+                            assignments1.setAssignDate(assignments1.getAssignDate().plusDays(difference));
+                            assignments1.setDueDate(assignments1.getDueDate().plusDays(difference));
+                        }
+                );
+        List<AssignmentsResponseDto> assignmentsResponseDtos = assignmentsRepository.saveAll(activeAndWaitingAssignments)
+                .stream().map(mapAssignmentsToAssignmentsResponseDto).collect(Collectors.toList());
+        timeExtendRepository.deleteById(id);
+
+        return assignmentsResponseDtos;
+    }
+
 }

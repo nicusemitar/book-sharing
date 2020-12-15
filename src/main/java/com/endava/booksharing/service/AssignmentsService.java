@@ -139,5 +139,4 @@ public class AssignmentsService {
                         book.setBookStatus(StatusType.FREE));
         bookRepository.saveAll(books);
     }
-
 }

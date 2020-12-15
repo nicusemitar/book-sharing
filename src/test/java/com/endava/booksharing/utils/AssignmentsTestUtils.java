@@ -11,12 +11,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.endava.booksharing.TestConstants.TIME_EXTEND_DATE_VALID;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_ONE;
 import static com.endava.booksharing.TestConstants.BOOK_TITLE;
 import static com.endava.booksharing.TestConstants.ID_ONE;
 import static com.endava.booksharing.TestConstants.ASSIGN_DATE;
 import static com.endava.booksharing.TestConstants.DUE_DATE;
 import static com.endava.booksharing.TestConstants.BOOK_TITLE_ONE;
-import static com.endava.booksharing.utils.BookTestUtils.BOOK_ONE;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_THREE;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_TWO;
 import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
@@ -30,6 +31,14 @@ public class AssignmentsTestUtils {
             .id(ID_ONE)
             .assignDate(ASSIGN_DATE)
             .dueDate(DUE_DATE)
+            .bookName(BOOK_TITLE_ONE)
+            .build();
+
+    public static final AssignmentsResponseDto ASSIGNMENTS_RESPONSE_DTO_UPDATED = AssignmentsResponseDto
+            .builder()
+            .id(ID_ONE)
+            .assignDate(ASSIGN_DATE)
+            .dueDate(TIME_EXTEND_DATE_VALID)
             .bookName(BOOK_TITLE_ONE)
             .build();
 
@@ -51,6 +60,7 @@ public class AssignmentsTestUtils {
             .build();
 
     public static List<Assignments> assignmentsList = Collections.singletonList(ASSIGNMENTS_ONE);
+
 
     public static final AssignmentsResponseDto ASSIGNMENTS_RESPONSE_DTO_TWO = AssignmentsResponseDto
             .builder()

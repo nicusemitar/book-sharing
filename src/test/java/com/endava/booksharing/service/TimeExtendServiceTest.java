@@ -1,5 +1,7 @@
 package com.endava.booksharing.service;
 
+import com.endava.booksharing.api.dto.AssignmentsResponseDto;
+import com.endava.booksharing.model.Assignments;
 import com.endava.booksharing.api.dto.PageableTimeExtendResponseDto;
 import com.endava.booksharing.api.dto.TimeExtendRequestDto;
 import com.endava.booksharing.api.dto.TimeExtendResponseDto;
@@ -8,6 +10,7 @@ import com.endava.booksharing.repository.TimeExtendRepository;
 import com.endava.booksharing.utils.exceptions.AccessDeniedException;
 import com.endava.booksharing.utils.exceptions.NotFoundException;
 import com.endava.booksharing.utils.exceptions.RequestedDateException;
+import com.sun.xml.bind.v2.model.core.ID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +26,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.endava.booksharing.TestConstants.ID_ONE;
+import static com.endava.booksharing.utils.AssignmentsTestUtils.*;
+import static com.endava.booksharing.utils.TimeExtendTestUtils.*;
 import static com.endava.booksharing.TestConstants.PAGE_ONE;
 import static com.endava.booksharing.TestConstants.SIZE_ONE;
 import static com.endava.booksharing.utils.AssignmentsTestUtils.ASSIGNMENTS_TWO;
@@ -65,6 +70,8 @@ public class TimeExtendServiceTest {
     void setUp() {
         ReflectionTestUtils.setField(timeExtendService, "messageAssignmentNotFound",
                 "Assignment with id %s was not found in the database");
+        ReflectionTestUtils.setField(timeExtendService, "timeExtendRequestNotFound",
+                "Time extend request with id %s was not found in the database");
     }
 
     @AfterEach
@@ -180,6 +187,45 @@ public class TimeExtendServiceTest {
     public void shouldDeleteRequests() {
         timeExtendService.deleteRequest(ID_ONE);
 
+        verify(timeExtendRepository).deleteById(ID_ONE);
+    }
+
+    @Test
+    void shouldThrowRequestNotFoundOnAccept(){
+        when(timeExtendRepository.findById(ID_ONE)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> timeExtendService.acceptRequest(ID_ONE,TIME_EXTEND_REQUEST_DTO));
+
+        verify(timeExtendRepository).findById(ID_ONE);
+    }
+
+    @Test
+    void shouldThrowAssignmentNotFoundOnAccept(){
+        when(timeExtendRepository.findById(ID_ONE)).thenReturn(Optional.of(TIME_EXTEND_ONE));
+        when(assignmentsRepository.findById(ID_ONE)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> timeExtendService.acceptRequest(ID_ONE,TIME_EXTEND_REQUEST_DTO));
+
+        verify(timeExtendRepository).findById(ID_ONE);
+        verify(assignmentsRepository).findById(ID_ONE);
+    }
+
+    @Test
+    void shouldAcceptRequest(){
+        List<AssignmentsResponseDto> expectedList = Collections.singletonList(ASSIGNMENTS_RESPONSE_DTO_UPDATED);
+        when(timeExtendRepository.findById(ID_ONE)).thenReturn(Optional.of(TIME_EXTEND_TWO));
+        when(assignmentsRepository.findById(ID_ONE)).thenReturn(Optional.of(ASSIGNMENTS_ONE));
+        when(assignmentsRepository.getActiveAndWaitingAssignmentsByBookId(ID_ONE)).thenReturn(Collections.singletonList(ASSIGNMENTS_ONE));
+        when(assignmentsRepository.saveAll(any())).thenReturn(Collections.singletonList(ASSIGNMENTS_ONE));
+
+        List<AssignmentsResponseDto> actualList = timeExtendService.acceptRequest(ID_ONE, TIME_EXTEND_REQUEST_DTO_TWO);
+
+        assertEquals(expectedList.get(0).getDueDate(),actualList.get(0).getDueDate());
+
+        verify(timeExtendRepository).findById(ID_ONE);
+        verify(assignmentsRepository).findById(ID_ONE);
+        verify(assignmentsRepository).saveAll(any());
+        verify(assignmentsRepository).getActiveAndWaitingAssignmentsByBookId(ID_ONE);
         verify(timeExtendRepository).deleteById(ID_ONE);
     }
 }
