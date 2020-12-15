@@ -24,6 +24,7 @@ import java.util.Optional;
 import static com.endava.booksharing.TestConstants.BOOK_TITLE_ONE;
 import static com.endava.booksharing.TestConstants.ID_ONE;
 import static com.endava.booksharing.TestConstants.ID_TWO;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED_ONE;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_ONE;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_ONE_UPDATED;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_PAGE;
@@ -36,7 +37,6 @@ import static com.endava.booksharing.utils.BookTestUtils.DELETE_BOOK_REQUEST_DTO
 import static com.endava.booksharing.utils.BookTestUtils.PAGEABLE_BOOKS_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.TO_UPDATE_BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.UPDATED_BOOK_RESPONSE_DTO;
-import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_NOT_DELETED;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_NOT_DELETED_RESPONSE_DTO;
@@ -77,7 +77,7 @@ public class BookServiceTest {
 
     @Test
     public void shouldReturnBookThatIsDeleted() {
-        when(bookRepository.findById(ID_ONE)).thenReturn(Optional.of(BOOK_DELETED));
+        when(bookRepository.findById(ID_ONE)).thenReturn(Optional.of(BOOK_DELETED_ONE));
 
         assertEquals(bookService.getBook(ID_ONE), BOOK_DELETED_RESPONSE_DTO);
 
@@ -115,7 +115,8 @@ public class BookServiceTest {
                 () -> assertEquals(expectedResponseDto.getAuthor(), actualResponseDto.getAuthor()),
                 () -> assertEquals(expectedResponseDto.getDeletedDate(),expectedResponseDto.getDeletedDate()),
                 () -> assertEquals(expectedResponseDto.getDeletedWhy(),actualResponseDto.getDeletedWhy()),
-                () -> assertEquals(expectedResponseDto.getDeletedBy(),actualResponseDto.getDeletedBy())
+                () -> assertEquals(expectedResponseDto.getDeletedBy(),actualResponseDto.getDeletedBy()),
+                () -> assertEquals(expectedResponseDto.getStatus(), actualResponseDto.getStatus())
         );
 
         verify(userDetailsService).getCurrentUser();

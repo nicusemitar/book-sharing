@@ -8,6 +8,7 @@ import com.endava.booksharing.model.Author;
 import com.endava.booksharing.model.Book;
 import com.endava.booksharing.model.Tags;
 import com.endava.booksharing.model.User;
+import com.endava.booksharing.model.enums.StatusType;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,7 @@ public class BookMapper {
     public static void setUserAndTagsForBook(User user, Set<Tags> tags, Book book) {
         book.setUser(user);
         book.setTags(tags);
+        book.setBookStatus(StatusType.FREE);
     }
 
     public static void setDeletedBookValues(User user, String deletedWhy, Book book) {
@@ -65,6 +67,7 @@ public class BookMapper {
             .pages(book.getPages())
             .description(book.getDescription())
             .language(book.getBookLanguage())
+            .status(book.getBookStatus().toString())
             .addedAt(book.getAddedAt() != null ? book.getAddedAt().toString() : null)
             .author(book.getAuthor().getFirstName() + " " + (book.getAuthor().getLastName()))
             .addedBy(book.getUser() != null ? book.getUser().getUsername() : null)
@@ -78,6 +81,7 @@ public class BookMapper {
             .title(book.getTitle())
             .authorName(book.getAuthor().getFirstName() + " " + book.getAuthor().getLastName())
             .language(book.getBookLanguage())
+            .status(book.getBookStatus().toString())
             .tags(book.getTags().stream().map(Tags::getTagName).collect(Collectors.toSet()))
             .build();
 

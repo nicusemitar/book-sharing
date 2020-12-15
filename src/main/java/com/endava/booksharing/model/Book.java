@@ -1,5 +1,6 @@
 package com.endava.booksharing.model;
 
+import com.endava.booksharing.model.enums.StatusType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -51,6 +54,10 @@ public class Book {
 
     @Column(name = "added_at")
     private LocalDate addedAt;
+
+    @Column(name = "book_status")
+    @Enumerated(EnumType.STRING)
+    private StatusType bookStatus;
 
     @Column(name = "book_language")
     private String bookLanguage;

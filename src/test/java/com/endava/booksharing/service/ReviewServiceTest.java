@@ -18,7 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.endava.booksharing.TestConstants.ID_ONE;
-import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED_ONE;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED_ONE;
 import static com.endava.booksharing.utils.ReviewTestUtils.REVIEW_ONE;
 import static com.endava.booksharing.utils.ReviewTestUtils.REVIEW_TWO;
 import static com.endava.booksharing.utils.ReviewTestUtils.REVIEW_RESPONSE_DTO_ONE;
@@ -85,7 +86,7 @@ public class ReviewServiceTest {
     @Test
     public void shouldSaveReview() {
         when(userDetailsService.getCurrentUser()).thenReturn(USER_ONE);
-        when(bookRepository.findById(ID_ONE)).thenReturn(Optional.of(BOOK_DELETED));
+        when(bookRepository.findById(ID_ONE)).thenReturn(Optional.of(BOOK_DELETED_ONE));
         when(reviewRepository.save(REVIEW_ONE_NO_ID)).thenReturn(REVIEW_ONE);
 
         assertEquals(reviewService.save(REVIEW_REQUEST_DTO, ID_ONE), REVIEW_RESPONSE_DTO_ONE);

@@ -15,5 +15,6 @@ public class BooksResponseDto {
     private String title;
     private String authorName;
     private String language;
+    private String status;
     private Set<String> tags;
 }
