@@ -16,5 +16,6 @@ public class AssignmentsMapper {
                     .assignDate(assignments.getAssignDate())
                     .dueDate(assignments.getDueDate())
                     .bookName(assignments.getBook().getTitle())
+                    .bookId(assignments.getBook().getId())
                     .build();
 }
