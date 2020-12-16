@@ -14,6 +14,7 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 import static com.endava.booksharing.TestConstants.DEFAULT_USERNAME;
@@ -74,7 +75,7 @@ public class WebSocketEventListenerTest {
 
     @Test
     void shouldHandleWebSocketDisconnectListener() throws Exception {
-        byte[] payload = new ObjectMapper().writeValueAsBytes(SAMPLE_MESSAGE);
+        byte[] payload = new ObjectMapper().writeValueAsBytes(Collections.singletonList(SAMPLE_MESSAGE));
         currentUserAttributes.put(DEFAULT_USERNAME, DEFAULT_USERNAME);
         sessionAttributes.put(SESSION, currentUserAttributes);
 

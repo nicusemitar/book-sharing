@@ -1,7 +1,7 @@
 package com.endava.booksharing.controller;
 
-import com.endava.booksharing.model.ChatMessage;
-import com.endava.booksharing.model.enums.MessageType;
+import com.endava.booksharing.api.dto.ChatMessageDto;
+import com.endava.booksharing.service.ChatService;
 import com.endava.booksharing.service.UserDetailsServiceImpl;
 import com.endava.booksharing.utils.TestAnnotationMethodHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,51 +10,50 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.SubscribableChannel;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessageType;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.support.SimpAnnotationMethodMessageHandler;
-import org.springframework.messaging.simp.stomp.StompCommand;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.messaging.support.AbstractSubscribableChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import static com.endava.booksharing.utils.ChatMessageUtils.SAMPLE_MESSAGE;
+import static com.endava.booksharing.utils.ChatMessageUtils.SAMPLE_MESSAGE_DTO;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ChatController.class)
-public class ChatControllerTest {
+class ChatControllerTest {
 
     @Mock
     private TestAnnotationMethodHandler annotationMethodHandler;
 
     @MockBean
-    private UserDetailsServiceImpl userDetailsService;
+    private ChatService chatService;
 
     @InjectMocks
+    @Autowired
     private ChatController controller;
+
+    @MockBean
+    private UserDetailsServiceImpl userDetailsService;
 
     @BeforeEach
     public void setup() {
         this.annotationMethodHandler.registerHandler(controller);
-        this.annotationMethodHandler.setDestinationPrefixes(Arrays.asList("/app"));
+        this.annotationMethodHandler.setDestinationPrefixes(Collections.singletonList("/app"));
         this.annotationMethodHandler.setMessageConverter(new MappingJackson2MessageConverter());
         this.annotationMethodHandler.setApplicationContext(new StaticApplicationContext());
         this.annotationMethodHandler.afterPropertiesSet();
@@ -62,7 +61,9 @@ public class ChatControllerTest {
 
     @Test
     void shouldSendMessageToWebSocket() throws Exception {
-        byte[] payload = new ObjectMapper().writeValueAsBytes(SAMPLE_MESSAGE);
+        when(chatService.saveMessage(SAMPLE_MESSAGE_DTO)).thenReturn(Collections.singletonList(SAMPLE_MESSAGE_DTO));
+
+        byte[] payload = new ObjectMapper().writeValueAsBytes(Collections.singletonList(SAMPLE_MESSAGE));
 
         SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.CONNECT);
         headerAccessor.setDestination("/app/chat.sendMessage");
@@ -73,17 +74,20 @@ public class ChatControllerTest {
 
         this.annotationMethodHandler.handleMessage(message);
 
-        ChatMessage actual = this.controller.sendMessage(SAMPLE_MESSAGE);
+        List<ChatMessageDto> actual = this.controller.sendMessage(SAMPLE_MESSAGE_DTO);
 
         assertAll(
-                () -> assertEquals(SAMPLE_MESSAGE.getSender(), actual.getSender()),
-                () -> assertEquals(SAMPLE_MESSAGE.getContent(), actual.getContent()),
-                () -> assertEquals(SAMPLE_MESSAGE.getType(), actual.getType())
+                () -> assertEquals(SAMPLE_MESSAGE.getSender(), actual.get(0).getSender()),
+                () -> assertEquals(SAMPLE_MESSAGE.getContent(), actual.get(0).getContent()),
+                () -> assertEquals(SAMPLE_MESSAGE.getType().toString(), actual.get(0).getType())
         );
+
+        verify(chatService).saveMessage(SAMPLE_MESSAGE_DTO);
     }
 
     @Test
     void shouldAddUserToWebSocket() throws Exception {
+        when(chatService.addUserToChat(SAMPLE_MESSAGE_DTO)).thenReturn(Collections.singletonList(SAMPLE_MESSAGE_DTO));
 
         byte[] payload = new ObjectMapper().writeValueAsBytes(SAMPLE_MESSAGE);
 
@@ -96,13 +100,15 @@ public class ChatControllerTest {
 
         this.annotationMethodHandler.handleMessage(message);
 
-        ChatMessage actual = this.controller.addUser(SAMPLE_MESSAGE, headerAccessor);
+        List<ChatMessageDto> actual = this.controller.addUser(SAMPLE_MESSAGE_DTO, headerAccessor);
 
         assertAll(
-                () -> assertEquals(SAMPLE_MESSAGE.getSender(), actual.getSender()),
-                () -> assertEquals(SAMPLE_MESSAGE.getContent(), actual.getContent()),
-                () -> assertEquals(SAMPLE_MESSAGE.getType(), actual.getType())
+                () -> assertEquals(SAMPLE_MESSAGE.getSender(), actual.get(0).getSender()),
+                () -> assertEquals(SAMPLE_MESSAGE.getContent(), actual.get(0).getContent()),
+                () -> assertEquals(SAMPLE_MESSAGE.getType().toString(), actual.get(0).getType())
         );
+
+        verify(chatService).addUserToChat(SAMPLE_MESSAGE_DTO);
     }
 
 }
