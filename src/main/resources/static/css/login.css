@@ -10,31 +10,24 @@
     -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     text-align: center;
-
 }
-
 .input-group{
     display: flex;
     justify-content: center;
 }
-
 body{
-    background: url('/images/booksbib.jpg') no-repeat center center fixed;
+    background: url('../images/booksbib.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 }
-
-
 .btn-primary{
     background-color: #fce043;
     background-image: linear-gradient(315deg, #fce043 0%, #fb7ba2 74%);
     border: none;
     color: black;
 }
-
 .alert {
     padding: 0.75rem 5.25rem;
 }
-

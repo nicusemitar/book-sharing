@@ -41,6 +41,7 @@ public class ReviewService {
                 .collect(toList());
     }
 
+    @Transactional
     public ReviewResponseDto save(ReviewRequestDto reviewRequestDto, Long bookId) {
         log.info("Saving review for book with: id [{}]", bookId);
         User user = userDetailsService.getCurrentUser();

@@ -27,9 +27,6 @@ function getReviews(id) {
 function displayBook(book) {
     if (book !== null) {
         let placeholderTitle = `${book.data.title}`;
-        let placeholderDeletedBy = "";
-        let placeholderDeletedWhy = "";
-        let placeholderDeletedDate = "";
         let placeholderAuthor = `<th>Author:</th><td>${book.data.author}</td>`;
         let placeholderLanguage = `<th>Language:</th><td>${book.data.language}</td>`;
         let placeholderNrPages= `<th>Number of Pages:</th><td>${book.data.pages}</td>`;
@@ -37,22 +34,14 @@ function displayBook(book) {
         let placeholderDescription = `<th>Description:</th><td>${book.data.description}</td>`;
         let placeholderAddedBy = `<th>Added by:</th><td>${book.data.addedBy}</td>`;
         let placeholderAddedAt = `<th>Added at:</th><td>${book.data.addedAt}</td>`;
-        if (book.data.deletedBy !== null || book.data.deletedWhy !== null || book.data.deletedDate !== null) {
-            placeholderDeletedBy = `<th>Deleted by:</th><td>${book.data.deletedBy}</td>`;
-            placeholderDeletedWhy = `<th>The reason for deletion:</th><td>${book.data.deletedWhy}</td>`;
-            placeholderDeletedDate = `<th>Deleted Date:</th><td>${book.data.deletedDate}</td>`;
-        }
         $("#title").html(placeholderTitle);
         $("#book-author").html(placeholderAuthor);
         $("#book-language").html(placeholderLanguage);
         $("#book-pages").html(placeholderNrPages);
         $("#book-description").html(placeholderDescription);
+        $("#book-status").html(placeholderStatus);
         $("#book-added-by").html(placeholderAddedBy);
         $("#book-added-at").html(placeholderAddedAt);
-        $("#book-deleted-by").html(placeholderDeletedBy);
-        $("#book-deleted-why").html(placeholderDeletedWhy);
-        $("#book-deleted-date").html(placeholderDeletedDate);
-        $("#book-status").html(placeholderStatus);
     }
 }
 
@@ -69,9 +58,8 @@ function displayReviews(reviews) {
                 </div>
                 `;
         });
+        $("#no-review").css("display", "none");
         $("#reviews").html(placeholder);
-    } else {
-        $("#reviews").html("<h2 class=\"pb-4\">There are no reviews for this book</h2>");
     }
 }
 
@@ -105,6 +93,7 @@ function displayReview(review) {
                 </div>
             </div>
             `;
+        $("#no-review").css("display", "none");
         $("#reviews").prepend(placeholder);
     }
 }

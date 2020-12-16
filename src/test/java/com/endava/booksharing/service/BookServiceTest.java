@@ -3,6 +3,7 @@ package com.endava.booksharing.service;
 import com.endava.booksharing.api.dto.BookResponseDto;
 import com.endava.booksharing.api.dto.PageableBooksResponseDto;
 import com.endava.booksharing.model.Book;
+import com.endava.booksharing.model.enums.StatusType;
 import com.endava.booksharing.repository.BookRepository;
 import com.endava.booksharing.repository.TagsRepository;
 import com.endava.booksharing.utils.exceptions.NotFoundException;
@@ -24,7 +25,8 @@ import java.util.Optional;
 import static com.endava.booksharing.TestConstants.BOOK_TITLE_ONE;
 import static com.endava.booksharing.TestConstants.ID_ONE;
 import static com.endava.booksharing.TestConstants.ID_TWO;
-import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED_ONE;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_NOT_DELETED;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_NOT_DELETED_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_ONE;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_ONE_UPDATED;
 import static com.endava.booksharing.utils.BookTestUtils.BOOK_PAGE;
@@ -37,9 +39,6 @@ import static com.endava.booksharing.utils.BookTestUtils.DELETE_BOOK_REQUEST_DTO
 import static com.endava.booksharing.utils.BookTestUtils.PAGEABLE_BOOKS_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.TO_UPDATE_BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.UPDATED_BOOK_RESPONSE_DTO;
-import static com.endava.booksharing.utils.BookTestUtils.BOOK_DELETED_RESPONSE_DTO;
-import static com.endava.booksharing.utils.BookTestUtils.BOOK_NOT_DELETED;
-import static com.endava.booksharing.utils.BookTestUtils.BOOK_NOT_DELETED_RESPONSE_DTO;
 import static com.endava.booksharing.utils.TagsTestUtils.DEFAULT_TAG;
 import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -66,8 +65,8 @@ public class BookServiceTest {
 
     @BeforeEach
     void setUp() {
-        ReflectionTestUtils.setField(bookService, "messageBookNotFound",
-                "Book with id %s was not found in the database");
+        ReflectionTestUtils.setField(bookService, "messageBookNotFoundOrDeleted",
+                "Book with id %s was not found in the database or is deleted");
     }
 
     @AfterEach
@@ -76,28 +75,23 @@ public class BookServiceTest {
     }
 
     @Test
-    public void shouldReturnBookThatIsDeleted() {
-        when(bookRepository.findById(ID_ONE)).thenReturn(Optional.of(BOOK_DELETED_ONE));
-
-        assertEquals(bookService.getBook(ID_ONE), BOOK_DELETED_RESPONSE_DTO);
-
-        verify(bookRepository).findById(ID_ONE);
-    }
-
-    @Test
     public void shouldReturnBookThatIsNotDeleted() {
-        when(bookRepository.findById(ID_TWO)).thenReturn(Optional.of(BOOK_NOT_DELETED));
+        when(bookRepository.findByIdAndBookStatusIsNot(ID_TWO, StatusType.DELETED))
+                .thenReturn(Optional.of(BOOK_NOT_DELETED));
 
         assertEquals(bookService.getBook(ID_TWO), BOOK_NOT_DELETED_RESPONSE_DTO);
 
-        verify(bookRepository).findById(ID_TWO);
+        verify(bookRepository).findByIdAndBookStatusIsNot(ID_TWO, StatusType.DELETED);
     }
 
     @Test
     public void shouldNotReturnBook() {
+        when(bookRepository.findByIdAndBookStatusIsNot(ID_ONE, StatusType.DELETED))
+                .thenReturn(Optional.empty());
+
         assertThrows(NotFoundException.class, () -> bookService.getBook(ID_ONE));
 
-        verify(bookRepository).findById(ID_ONE);
+        verify(bookRepository).findByIdAndBookStatusIsNot(ID_ONE, StatusType.DELETED);
     }
 
     @Test
@@ -113,9 +107,9 @@ public class BookServiceTest {
         assertAll(
                 () -> assertEquals(expectedResponseDto.getTitle(), actualResponseDto.getTitle()),
                 () -> assertEquals(expectedResponseDto.getAuthor(), actualResponseDto.getAuthor()),
-                () -> assertEquals(expectedResponseDto.getDeletedDate(),expectedResponseDto.getDeletedDate()),
-                () -> assertEquals(expectedResponseDto.getDeletedWhy(),actualResponseDto.getDeletedWhy()),
-                () -> assertEquals(expectedResponseDto.getDeletedBy(),actualResponseDto.getDeletedBy()),
+                () -> assertEquals(expectedResponseDto.getDeletedDate(), actualResponseDto.getDeletedDate()),
+                () -> assertEquals(expectedResponseDto.getDeletedWhy(), actualResponseDto.getDeletedWhy()),
+                () -> assertEquals(expectedResponseDto.getDeletedBy(), actualResponseDto.getDeletedBy()),
                 () -> assertEquals(expectedResponseDto.getStatus(), actualResponseDto.getStatus())
         );
 
@@ -171,7 +165,7 @@ public class BookServiceTest {
         assertAll(
                 () -> assertEquals(expectedResponseDto.getAuthor(), actualResponseDto.getAuthor()),
                 () -> assertEquals(expectedResponseDto.getTitle(), actualResponseDto.getTitle()),
-                () -> assertEquals(expectedResponseDto.getAddedBy(),actualResponseDto.getAddedBy())
+                () -> assertEquals(expectedResponseDto.getAddedBy(), actualResponseDto.getAddedBy())
         );
 
         verify(tagsRepository).findAll();
@@ -179,7 +173,7 @@ public class BookServiceTest {
         verify(bookRepository).save(any(Book.class));
     }
 
-        @Test
+    @Test
     public void shouldReturnAllPageableBooksResponseDtoByTitle() {
         when(bookRepository.findAll(any(Specification.class), any(Pageable.class))).thenReturn(BOOK_PAGE);
 
