@@ -19,11 +19,18 @@ function getAllBooks() {
 function displayBooks(books) {
     let columnNumber = 0;
     let placeholder = `<tr>`;
+    let st;
     $.each(books, (index, book) => {
+        if(book.status === "FREE"){
+            st = '<img src = "/images/free.png" class = "img-for-status" width="50px" height="50px">';
+        }else {
+            st = '<img src = "/images/busy.png" class = "img-for-status" width="50px" height="50px">';
+        }
         placeholder +=
             `<td id="book${index}">
                     <div class="shadow p-4 mb-4 bg-white" style="width: 200px; margin: 50px">
                         <input class='user-id' type='hidden' value='${book.id}'>
+                        ${st}
                         <img src="/images/book-image.jpg" style="width: 100%; padding: 10%" align="center">
                         <p align="center">
                             ${book.title}<br>

@@ -34,6 +34,8 @@ function displayBook(book) {
         let placeholderDescription = `<th>Description:</th><td>${book.data.description}</td>`;
         let placeholderAddedBy = `<th>Added by:</th><td>${book.data.addedBy}</td>`;
         let placeholderAddedAt = `<th>Added at:</th><td>${book.data.addedAt}</td>`;
+        let assignButton = '<th><button id = "assign-button" class="btn btn-primary btn-lg">Assign to me</button></th>';
+        let waitingAssignButton = '<th><button id = "assign-button" class="btn btn-primary btn-lg">Get in line</button></th>';
         $("#title").html(placeholderTitle);
         $("#book-author").html(placeholderAuthor);
         $("#book-language").html(placeholderLanguage);
@@ -42,6 +44,12 @@ function displayBook(book) {
         $("#book-status").html(placeholderStatus);
         $("#book-added-by").html(placeholderAddedBy);
         $("#book-added-at").html(placeholderAddedAt);
+
+        if(book.data.status == "FREE"){
+            $("#assignButton").html(assignButton);
+        }else{
+            $("#assignButton").html(waitingAssignButton);
+        }
     }
 }
 

@@ -12,3 +12,9 @@
 .col-8 {
     align-content: center;
 }
+.img-for-status {
+    /* float: left; */
+    position: absolute;
+    clear: both;
+    transform: translateX(-45px);
+}
