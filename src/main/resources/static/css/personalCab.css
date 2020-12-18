@@ -1,32 +1,121 @@
-.col {
-    background-color: floralwhite;
-}
-
-.col-7 {
+.col-8 {
     align-content: center;
     text-align: center;
+    padding-left: 150px;
+}
+
+.main-content {
+    position: relative;
+    width: auto;
+    height: auto;
+    left: 15%;
+    top: 0%;
+    margin-left: -300px;
+    margin-bottom: 374px;
 }
 
 .col-2 {
     align-content: center;
     text-align: center;
-    background-color: floralwhite;
+    width: 100%;
+    background-color: #f9d29d;
+    min-width: 188px;
 }
 
 .user {
     width: 100px;
     height: 85px;
     border-radius: 50%;
+    border: 0px;
 }
 
 .assignedBooksHeader {
-    text-align: left;
-    margin-left: 410px;
+    text-align: center;
+    margin-left: -190px;
+}
+
+#books-table {
+    text-align: center;
+    magrin-left: 15%;
+}
+
+.added-books {
+    outline: none;
+    width: auto;
+    color: black;
+    text-transform: uppercase;
+    padding: 10px 30px;
+    margin-top: 4px;
+    font-size: 16px;
+    transition: color 0.2s linear;
+    position: relative;
+    margin-right: 23px;
+    background-image: linear-gradient(315deg, #fce043 0%, #fb7ba2 74%);
+    border: 2px solid black;
+}
+
+.modal-header {
+    background-image: linear-gradient(315deg, #f9d29d 0%, #ffd8cb 74%);
+    display: -ms-flexbox;
+    -ms-flex-align: start;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    border-bottom: 1px solid #dee2e6;
+    display: block;
+}
+
+.modal-content {
+    top: 50px;
+    position: absolute;
+    left: 0;
+    text-align: center;
+}
+
+.add{
+    left: 37%;
 }
 
 .navbar {
     display: flex;
     justify-content: space-between;
+}
+
+.modal-footer-add-book {
+    border-top: 3px solid #708090;
+    background-color: white;
+    display: flex;
+    height: 80px;
+    justify-content: center;
+}
+
+/*New style begin*/
+.button-submit {
+    outline: none;
+    background: none;
+    color: black;
+    border: 2px solid black;
+    text-transform: uppercase;
+    padding: 10px 30px;
+    min-width: 175px;
+    margin-top: 13px;
+    font-size: 16px;
+    transition: color 0.2s linear;
+    position: relative;
+    margin-right: 23px;
+    margin-left: 23px;
+    height: 50px;
+}
+
+.button-submit:hover {
+    outline: none;
+    color: white;
+    background-image: linear-gradient(315deg, #fce043 0%, #fb7ba2 74%);
+    border: 2px solid black;
+}
+
+/*New style end*/
+.first-last-name {
+    display: inline-block;
 }
 
 #extend-open {
@@ -110,12 +199,6 @@
     border-top: 3px solid #708090;
 }
 
-.modal-header {
-    background-image: linear-gradient(315deg, #f9d29d 0%, #ffd8cb 74%);
-    justify-content: center;
-    padding: 2rem;
-}
-
 .modal-body {
     padding: 2rem;
 }
@@ -137,11 +220,12 @@
     height: 125px;
 }
 
-.form-control {
+.form-control.add {
     border: 3px solid #708090;
     resize: none;
     border-radius: 10px;
     color: #171717;
+    height: 30px;
 }
 
 .calendar-assign {
@@ -220,4 +304,73 @@ img#succesImage, img#errorImage {
 
 .alert {
     margin-bottom: 20px;
+}
+
+.language-pages {
+    display: inline-block;
+}
+
+.form-group {
+    margin-bottom: 0rem;
+}
+
+.error-messages {
+    display: inline-block;
+}
+
+.pages-and-language {
+    justify-content: center;
+}
+
+.container-fluid {
+    width: 100%;
+    height: 100%;
+}
+
+/*TAGS BELOW*/
+.tags-input {
+    border: 0;
+    outline: 0;
+    padding: 0.5em 0.1em;
+    border: 3px solid #708090;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.tags-input .tag {
+    font-size: 85%;
+    padding: 0.5em 0.75em;
+    margin: 0.25em 0.1em;
+    display: inline-block;
+    background-color: orange;
+    transition: all 0.1s linear;
+    cursor: pointer;
+}
+
+.tags-input .tag:hover {
+    background-color: coral;
+    color: white;
+}
+
+.tags-input .tag .close1::after {
+    content: 'x';
+    font-weight: bold;
+    display: inline-block;
+    transform: scale(1.4);
+    margin-left: 0.75em;
+}
+
+tags-input .tag .close1:hover::after {
+    color: red
+}
+
+.tags-input .main-input {
+    border: 0;
+    outline: 0;
+    padding: 0.5em 0.1em;
+}
+
+textarea.form-control {
+    border-radius: 5px;
+    border: 3px solid #708090;
 }

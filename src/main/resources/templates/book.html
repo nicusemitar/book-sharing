@@ -13,7 +13,6 @@
             src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/chat.css}">
     <link rel="stylesheet" th:href="@{/css/book.css}">
-    <script th:src="@{/scripts/book.js}"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4" style="justify-content: space-between">
@@ -48,6 +47,18 @@
                             <tr id="book-added-at"></tr>
                             <tr id = "assignButton"></tr>
                         </table>
+                        <div class="common-update-delete-buttons">
+                            <div class="update-delete-buttons">
+                                <button class="update-delete-buttons btn btn-primary btn-lg" id="update-modal-button"
+                                        sec:authorize="hasAuthority('ADMIN')" data-toggle="modal" data-target="#update-modal">Update Content
+                                </button>
+                            </div>
+                            <div class="update-delete-buttons">
+                                <button class="update-delete-buttons btn btn-primary btn-lg" id="delete-button-modal"
+                                        sec:authorize="hasAuthority('ADMIN')" data-toggle="modal" data-target="#delete-modal">Delete Book
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -74,6 +85,99 @@
         <h2 class="pb-4" id="no-review">There are no reviews for this book</h2>
     </div>
 </div>
+<!--Modal for Delete Book-->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="addbook modal fade" id="delete-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4>Why do you want to delete the book?</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group ">
+                <label for="txt-delete-description"><span class="req"></span> Reason </label>
+                <textarea autocomplete="off" class="form-control" id="txt-delete-description"
+                          oninput="validateDescription(this.value);"
+                          required
+                          style="height: 60px" type="text"></textarea>
+            </div>
+            <div class="error-messages" id="errLast-description"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="button-submit" id="close-delete-modal" data-dismiss="modal">Close</button>
+            <button class="button-submit" id="submit-delete">Delete Book</button>
+        </div>
+    </div>
+</div>
+</div>
+<!--Modal for Update Book-->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="addbook modal fade" id="update-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5>UPDATE BOOK</h5>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="title"><span class="req"></span> Book Title </label>
+                <input autocomplete="on" class="form-control" id="txt-title"
+                       oninput="validateTitle(this.value);"
+                       required
+                       type="text"/>
+                <div id="errLast-title"></div>
+            </div>
+            <div class="form-group first-last-name">
+                <label for="txt-first-name"><span class="req"></span> Author first name </label>
+                <input autocomplete="off" class="form-control" id="txt-first-name"
+                       oninput="validateFirstName(this.value);"
+                       required
+                       type="text"/>
+                <div class="error-messages" id="errLast-first-name"></div>
+            </div>
+
+            <div class="form-group first-last-name">
+                <label for="txt-last-name"><span class="req"></span> Author last name </label>
+                <input autocomplete="off" class="form-control" id="txt-last-name"
+                       oninput="validateLastName(this.value);"
+                       required
+                       type="text"/>
+                <div class="error-messages" id="errLast-last-name"></div>
+            </div>
+            <br>
+            <div class="form-group language-pages">
+                <label for="txt-language"><span class="req"></span> Language </label>
+                <input autocomplete="off" class="form-control" id="txt-language"
+                       oninput="validateLanguage(this.value);"
+                       required
+                       type="text"/>
+                <div class="error-messages" id="errLast-language"></div>
+            </div>
+
+            <div class="form-group language-pages">
+                <label for="txt-pages"><span class="req"></span> Pages </label>
+                <input autocomplete="off" class="form-control" id="txt-pages"
+                       oninput="validatePages(this.value);"
+                       required
+                       type="number"/>
+                <div class="error-messages" id="errLast-pages"></div>
+            </div>
+            <div class="form-group ">
+                <label for="txt-description"><span class="req"></span> Description </label>
+                <textarea autocomplete=" " class="form-control" id="txt-description"
+                          required
+                          style="height: 60px" type="text"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="button-submit" id="close-update-modal" data-dismiss="modal">Close</button>
+            <button class="button-submit" id="submit-update">Update Book</button>
+        </div>
+</div>
+    </div>
+</div>
+
+<script th:src="@{/scripts/book.js}"></script>
 <div th:insert="allBooksPage :: chat-page">
 </div>
 <script th:src="@{/scripts/chat.js}"></script>
