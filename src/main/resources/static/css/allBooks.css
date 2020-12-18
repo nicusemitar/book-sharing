@@ -3,18 +3,30 @@
     border-top-left-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
 }
+
 .input-group.md-form.form-sm.form-2 input.orangered-border {
     border: 1px solid orangered;
 }
+
 .col {
     background-color: gainsboro;
 }
+
 .col-8 {
     align-content: center;
 }
+
 .img-for-status {
-    /* float: left; */
     position: absolute;
     clear: both;
     transform: translateX(-45px);
+}
+
+.page-item.active .page-link {
+    background-image: linear-gradient(to left, #e74c3c, #e67e22);
+    border: none;
+}
+
+.page-link {
+    color: black;
 }
