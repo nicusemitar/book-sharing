@@ -130,7 +130,6 @@ public class BookServiceTest {
 
         when(bookRepository.findById(ID_ONE)).thenReturn(Optional.of(BOOK_ONE));
         when(bookRepository.save(any(Book.class))).thenReturn(BOOK_ONE_UPDATED);
-        when(tagsRepository.findAll()).thenReturn(Collections.singletonList(DEFAULT_TAG));
 
         final BookResponseDto actualResponseDto = bookService.updateBook(ID_ONE, TO_UPDATE_BOOK_REQUEST_DTO);
 
@@ -141,16 +140,13 @@ public class BookServiceTest {
 
         verify(bookRepository).findById(ID_ONE);
         verify(bookRepository).save(any(Book.class));
-        verify(tagsRepository).findAll();
     }
 
     @Test
     void shouldThrowBookNotFoundOnUpdate() {
-        when(tagsRepository.findAll()).thenReturn(Collections.EMPTY_LIST);
         when(bookRepository.findById(ID_ONE)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> bookService.updateBook(ID_ONE, BOOK_REQUEST_DTO));
 
-        verify(tagsRepository).findAll();
+        assertThrows(NotFoundException.class, () -> bookService.updateBook(ID_ONE, BOOK_REQUEST_DTO));
     }
 
     @Test

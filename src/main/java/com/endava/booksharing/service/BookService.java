@@ -66,7 +66,8 @@ public class BookService {
         final List<Tags> tagsFromDatabase = tagsRepository.findAll();
 
         Book book = mapBookRequestDtoToBook.apply(bookRequestDto);
-        setUserAndTagsForBook(userDetailsService.getCurrentUser(), mapTagsRequestDtoToTags(bookRequestDto.getTagList(), tagsFromDatabase), book);
+        setUserAndTagsForBook(userDetailsService.getCurrentUser(), mapTagsRequestDtoToTags(bookRequestDto.getTagList(),
+                tagsFromDatabase), book);
         book = bookRepository.save(book);
 
         return mapBookToBookResponseDto.apply(book);
@@ -90,14 +91,13 @@ public class BookService {
     @Transactional
     public BookResponseDto updateBook(Long bookId, BookRequestDto bookRequestDto) {
         log.info("Updating the records for book with id [{}]", bookId);
-        final List<Tags> tagsFromDatabase = tagsRepository.findAll();
 
         Book toBeUpdatedBook = bookRepository.findById(bookId).orElseThrow(
                 () -> {
                     log.warn("Book with id [{}] is not present in database", bookId);
                     return new NotFoundException("Book with id" + bookId + " was not found in database");
                 });
-        updateFromBookRequestDtoToBook(toBeUpdatedBook, bookRequestDto, tagsFromDatabase);
+        updateFromBookRequestDtoToBook(toBeUpdatedBook, bookRequestDto);
         toBeUpdatedBook = bookRepository.save(toBeUpdatedBook);
 
         return mapBookToBookResponseDto.apply(toBeUpdatedBook);

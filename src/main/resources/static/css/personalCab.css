@@ -373,12 +373,12 @@ main {
 
 /*TAGS BELOW*/
 .tags-input {
-    border: 0;
     outline: 0;
     padding: 0.5em 0.1em;
     border: 3px solid #708090;
     border-radius: 5px;
     display: inline-block;
+    width: 220px;
 }
 
 .tags-input .tag {
@@ -417,6 +417,81 @@ tags-input .tag .close1:hover::after {
 textarea.form-control {
     border-radius: 5px;
     border: 3px solid #708090;
+}
+
+textarea {
+    resize: none;
+}
+
+.bootstrap-select > .dropdown-toggle.bs-placeholder, .bootstrap-select > .dropdown-toggle.bs-placeholder:hover,
+.bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .bootstrap-select > .dropdown-toggle.bs-placeholder:active, .btn-light {
+    border: 3px solid #708090;
+    resize: none;
+    border-radius: 10px;
+    color: #171717;
+    height: 30px;
+    padding-bottom: 30px;
+    width: auto;
+    min-width: 218px;
+}
+
+.btn-light:not(:disabled):not(.disabled).active, .btn-light:not(:disabled):not(.disabled):active,
+.show > .btn-light.dropdown-toggle {
+    color: #171717;
+    border: 3px solid #708090;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.btn-light:hover, .btn-light:focus {
+    color: #212529;
+    border: 3px solid #708090;
+    background-color: white;
+    border-radius: 10px;
+}
+
+div.dropdown-menu.show {
+    border: 1px solid #708090;
+    border-radius: 5%;
+    background-image: none;
+}
+
+ul.dropdown-menu.inner.show a {
+    color: black;
+}
+
+ul.dropdown-menu.inner.show {
+    background-image: none;
+}
+
+.dropdown-item:hover {
+    background-color: orange;
+}
+
+#error-content {
+    color: red;
+    display: none;
+    font-size: 1.1em;
+}
+
+#success-content {
+    color: green;
+    display: none;
+    font-size: 1.1em;
+}
+
+.modal-body p {
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+img#error-image, img#success-image {
+    width: 79px;
+    border-style: none;
+}
+
+.select-one {
+    display: inline-block;
 }
 
 .clearfix {

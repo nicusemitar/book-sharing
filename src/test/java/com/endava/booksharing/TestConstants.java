@@ -1,6 +1,7 @@
 package com.endava.booksharing;
 
 import com.endava.booksharing.model.enums.StatusType;
+import com.endava.booksharing.model.enums.TagsType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -62,6 +63,8 @@ public class TestConstants {
     public static final String BOOK_DELETED_WHY = "Forbidden content";
 
     public static final String TAG_ONE = "science";
+    public static final TagsType TAGS_TYPE_ONE = TagsType.valueOf("CUSTOM");
+    public static final String TAG_TYPE_NAME_ONE = "CUSTOM";
     public static final String AUTHOR_FIRST_NAME = "Lev";
     public static final String AUTHOR_LAST_NAME = "Tolstoy";
     public static final String BOOK_TITLE = "Nirvana";

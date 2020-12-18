@@ -11,6 +11,11 @@
     <script crossorigin="anonymous"
             integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
             src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css"/>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/personalCab.css}" type="text/css">
     <link sec:authorize="hasAuthority('ADMIN')" rel="stylesheet" type="text/css" th:href="@{/css/notification.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/chat.css}">
@@ -53,8 +58,7 @@
                 <div class="list-group">
                     <a href="" class="list-group-item list-group-item-action" data-toggle="modal"
                        data-target="#exampleModal2"
-                       style="width: 100%">Share
-                        your book</a>
+                       style="width: 100%" onclick="openGeneralContent()">Share your book</a>
                     <a href="/all-books" class="list-group-item list-group-item-action" style="width: 100%">Home
                         page</a>
                     <a href="/logout" class="list-group-item list-group-item-action" style="width: 100%">Log out</a>
@@ -69,7 +73,7 @@
                             <div class="modal-header">
                                 <h5>ADD NEW BOOK </h5>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body" id="general-content">
                                 <div class="form-group">
                                     <label for="txt-title"><span class="req"></span> Book Title </label>
                                     <input autocomplete="off" class="form-control add" id="txt-title"
@@ -87,7 +91,7 @@
                                     <div class="error-messages" id="errLast-first-name"></div>
                                 </div>
 
-                                <div class="form-group first-last-name">
+                                <div class="form-group first-last-name pt-2">
                                     <label for="txt-last-name"><span class="req"></span> Author last name </label>
                                     <input autocomplete="off" class="form-control add" id="txt-last-name"
                                            oninput="validateLastName(this.value);"
@@ -114,17 +118,50 @@
                                     <div class="error-messages" id="errLast-pages"></div>
                                 </div>
 
-                                <p>Tags</p>
+                                <p>Tags</p>* Use "," to add new tag<br>
                                 <div class="form-group tags-input" data-name="tags-input"></div>
 
-                                <div class="form-group description-div">
+                                <div class="form-group py-2">
+                                    <label for="genre">Genres</label><br>
+                                    <select class="selectpicker" multiple data-live-search="true" id="genre"
+                                            onchange="validateGenres(this.value);" title="Choose genres...">
+                                    </select><br>
+                                    <div class="error-messages" id="errGenre"></div>
+                                </div>
+                                <div class="row d-flex justify-content-center">
+                                    <div class="form-group select-one py-2">
+                                        <label for="binding">Binding</label><br>
+                                        <select class="selectpicker" id="binding"
+                                                onchange="validateBinding(this.value);"
+                                                title="Choose binding...">
+                                        </select><br>
+                                        <div class="error-messages" id="errBinding"></div>
+                                    </div>
+
+                                    <div class="form-group select-one py-2">
+                                        <label for="quality">Quality</label><br>
+                                        <select class="selectpicker" id="quality"
+                                                onchange="validateQuality(this.value);"
+                                                title="Choose quality...">
+                                        </select><br>
+                                        <div class="error-messages" id="errQuality"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group description-div pt-2">
                                     <label for="txt-description"><span class="req"></span> Description </label>
                                     <textarea autocomplete="off" class="form-control add" id="txt-description"
-                                              oninput="validateDescription(this.value);"
-                                              required
+                                              required oninput="validateDescription(this.value);"
                                               style="height: 60px" type="text"></textarea>
-                                    <div class="error-messages" id="errLast-description"></div>
+                                    <div class="error-messages" id="errDescription"></div>
                                 </div>
+                            </div>
+                            <div class="modal-body" id="error-content">
+                                <img id="error-image" th:src="@{/images/error.png}">
+                                <p>Oops, an error occurred!<br>Please try again later!</p>
+                            </div>
+                            <div class="modal-body" id="success-content">
+                                <img id="success-image" th:src="@{/images/check.png}">
+                                <p>Book was saved successfully!</p>
                             </div>
                             <div class="modal-footer-add-book">
                                 <button class="button-submit close-button" data-dismiss="modal">Close</button>

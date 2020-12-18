@@ -1,5 +1,6 @@
 package com.endava.booksharing.model;
 
+import com.endava.booksharing.model.enums.TagsType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,8 @@ import lombok.ToString;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,6 +41,10 @@ public class Tags {
     @Column(name = "tag_name")
     private String tagName;
 
+    @Column(name = "tag_type")
+    @Enumerated(EnumType.STRING)
+    private TagsType tagType;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "t_book_tag",
@@ -47,5 +54,4 @@ public class Tags {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Book> book;
-
 }
