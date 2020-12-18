@@ -1,0 +1,398 @@
+.top {
+    margin-top: 30px;
+}
+
+.container {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    margin: -40px auto 0;
+}
+
+.ghost {
+    width: 50%;
+    height: 53%;
+    left: 25%;
+    top: 10%;
+    position: absolute;
+    border-radius: 50% 50% 0 0;
+    background: white;
+    border: 1px solid black;
+    border-bottom: none;
+    animation: float 2s ease-out infinite;
+}
+
+.ghost-copy {
+    width: 50%;
+    height: 53%;
+    left: 25%;
+    top: 10%;
+    position: absolute;
+    border-radius: 50% 50% 0 0;
+    background: #EDEDED;;
+    border: 1px solid #BFC0C0;
+    border-bottom: none;
+    animation: float 2s ease-out infinite;
+    z-index: 0;
+}
+
+
+.face {
+    position: absolute;
+    width: 100%;
+    height: 60%;
+    top: 20%;
+}
+
+.eye, .eye-right {
+    position: absolute;
+    background: #585959;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    top: 40%;
+}
+
+.eye {
+    left: 25%;
+}
+
+.eye-right {
+    right: 25%;
+}
+
+.mouth {
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    width: 10px;
+    height: 10px;
+    border: 3px solid;
+    border-radius: 50%;
+    border-color: transparent #585959 #585959 transparent;
+    transform: rotate(45deg);
+}
+
+.one, .two, .three, .four {
+    position: absolute;
+    background: white;
+    border: 1px solid black;
+    top: 85%;
+    width: 26%;
+    height: 23%;
+    z-index: 0;
+}
+
+.one {
+    border-radius: 0 0 100% 30%;
+    left: -1px;
+}
+
+.two {
+    left: 23%;
+    border-radius: 0 0 50% 50%;
+}
+
+.three {
+    left: 50%;
+    border-radius: 0 0 50% 50%;
+}
+
+.four {
+    left: 74.5%;
+    border-radius: 0 0 30% 100%;
+}
+
+.shadow {
+    position: absolute;
+    width: 30%;
+    height: 7%;
+    background: #BFC0C0;
+    left: 35%;
+    top: 80%;
+    border-radius: 50%;
+    animation: scale 2s infinite;
+}
+
+@keyframes scale {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+    50% {
+        transform: translateY(15px);
+    }
+}
+
+.bottom {
+    margin-top: 10px;
+}
+
+h1 {
+    font-family: "Helvetica Neue", Helvetica;
+    color: darkorange;
+    text-align: center;
+    font-size: 9em;
+    margin: 0;
+    text-shadow: -1px 0 #BFC0C0, 0 1px #BFC0C0, 1px 0 #BFC0C0, 0 -1px #BFC0C0;
+}
+
+h3 {
+    font-family: "Helvetica Neue", Helvetica;
+    font-size: 2em;
+    text-transform: uppercase;
+    text-align: center;
+    color: darkorange;
+    margin-top: -20px;
+    font-weight: 900;
+}
+
+p {
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica;
+    color: #585959;
+    font-size: .6em;
+    margin-top: -20px;
+    text-transform: uppercase;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.btn {
+    background: #EDEDED;
+    padding: 15px 20px;
+    margin: 5px;
+    font-family: "Helvetica Neue", Helvetica;
+    text-transform: uppercase;
+    font-size: .6em;
+    letter-spacing: 1px;
+    outline: none;
+    background: none;
+    border: 2px solid black;
+    color: black;
+    min-width: 175px;
+    transition: color 0.2s linear;
+    position: relative;
+}
+
+.btn:hover {
+    outline: none;
+    color: white;
+    background-image: linear-gradient(315deg, #fce043 0%, #fb7ba2 74%);
+    border: 2px solid black;
+    transition: all .4s ease-out;
+}
+
+.col {
+    background-color: floralwhite;
+}
+
+.col-8 {
+    align-content: center;
+    text-align: center;
+}
+
+.col-2 {
+    align-content: center;
+    text-align: center;
+    background-color: floralwhite;
+}
+
+.user {
+    width: 100px;
+    height: 85px;
+    border-radius: 50%;
+}
+
+.assignedBooksHeader {
+    text-align: left;
+    margin-left: 50%;
+}
+
+.requests h4 {
+    text-align: left;
+    margin-left: 40%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    min-height: 9%;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.container-fluid {
+    min-height: 77%;
+}
+
+.jumbotron {
+    min-height: 14%;
+}
+
+.main {
+    min-height: 77vh;
+}
+
+.box {
+    height: 100px;
+    margin: 0 10px;
+    overflow: hidden;
+    position: relative;
+    transform: rotateZ(270deg) scale(1.05);
+    width: 100px;
+}
+
+.box:nth-of-type(2) {
+    left: -28px;
+    transform: rotateX(-180deg) rotateY(180deg) rotateZ(270deg) scale(1.05);
+}
+
+.box span {
+    animation: loader 4.8s infinite both;
+    display: block;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+.box span:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.box span:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.box span:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.box span:nth-child(4) {
+    animation-delay: 0.8s;
+}
+
+.box span:nth-child(5) {
+    animation-delay: 1s;
+}
+
+.box span:nth-child(6) {
+    animation-delay: 1.2s;
+}
+
+.box span::after {
+    background: #fff;
+    border-radius: 50%;
+    content: "";
+    left: 50%;
+    padding: 6px;
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+}
+
+@keyframes loader {
+    0% {
+        opacity: 0;
+        transform: rotate(180deg);
+        animation-timing-function: ease-out;
+    }
+    5% {
+        opacity: 1;
+        transform: rotate(300deg);
+        animation-timing-function: linear;
+    }
+    30% {
+        transform: rotate(420deg);
+        animation-timing-function: ease-in-out;
+    }
+    35% {
+        transform: rotate(625deg);
+        animation-timing-function: linear;
+    }
+    70% {
+        transform: rotate(800deg);
+        animation-timing-function: ease-out;
+        opacity: 1;
+    }
+    75% {
+        opacity: 0;
+        transform: rotate(900deg);
+        animation-timing-function: ease-out;
+    }
+    76% {
+        opacity: 0;
+        transform: rotate(900deg);
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(900deg);
+    }
+}
+
+h1 {
+    text-shadow: 0 0 10px #fff;
+    animation: blink 4.8s infinite both;
+}
+
+h1:nth-of-type(2) {
+    animation: none;
+    letter-spacing: -14px;
+    margin: 0 auto;
+    opacity: 0.1;
+    padding-left: 41px;
+    position: absolute;
+    top: 50%;
+    transform: translatey(-50%);
+}
+
+@keyframes blink {
+    0%,
+    50%,
+    100% {
+        opacity: 0.2;
+    }
+    25%,
+    75% {
+        opacity: 1;
+    }
+}
+
+h5,
+p {
+    position: absolute;
+    font-family: monospace;
+}
+
+h5 {
+    top: 10%;
+    font-size: 0.4em;
+}
+
+p {
+    font-size: 0.3em;
+    bottom: 10%;
+    width: 50%;
+    text-align: center;
+}
+
+p a {
+    color: cyan;
+}
+
