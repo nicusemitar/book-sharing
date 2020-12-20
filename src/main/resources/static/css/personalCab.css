@@ -1,37 +1,16 @@
-.col-8 {
+.col-9 {
     align-content: center;
     text-align: center;
-    padding-left: 150px;
-}
-
-.main-content {
-    position: relative;
-    width: auto;
-    height: auto;
-    left: 15%;
-    top: 0%;
-    margin-left: -300px;
-    margin-bottom: 374px;
 }
 
 .col-2 {
     align-content: center;
     text-align: center;
-    width: 100%;
-    background-color: #f9d29d;
-    min-width: 188px;
-}
-
-.user {
-    width: 100px;
-    height: 85px;
-    border-radius: 50%;
-    border: 0px;
+    margin-left: 3%;
 }
 
 .assignedBooksHeader {
     text-align: center;
-    margin-left: -190px;
 }
 
 #books-table {
@@ -71,7 +50,7 @@
     text-align: center;
 }
 
-.add{
+.add {
     left: 37%;
 }
 
@@ -120,7 +99,7 @@
 
 #extend-open {
     margin-top: 22%;
-    left: 37%;
+    left: 30%;
     transform: translate(-50%, -50%);
     outline: none;
 }
@@ -130,8 +109,7 @@
     color: black;
     border: 2px solid black;
     text-transform: uppercase;
-    padding: 20px;
-    margin: 10px;
+    padding: 10px;
     cursor: pointer;
     transition: color 0.4s linear;
     position: relative;
@@ -210,6 +188,7 @@
 .input-group-text {
     text-transform: uppercase;
     background-image: linear-gradient(315deg, #fce043 0%, #fb7ba2 74%);
+    /*background-image: linear-gradient(to left, #e74c3c, #e67e22);*/
     color: white;
     width: 101px;
     justify-content: center;
@@ -235,6 +214,11 @@
     padding: 25px;
     border-radius: 10px;
     border: 3px solid #708090;
+}
+
+.list-group-item-action {
+    width: 200px;
+    color: black;
 }
 
 .calendar-assign .input-data-calendar {
@@ -300,10 +284,41 @@ img#succesImage, img#errorImage {
 .input-group > .custom-file, .input-group > .custom-select, .input-group > .form-control,
 .input-group > .form-control-plaintext {
     color: black;
+    left: 0;
 }
 
 .alert {
     margin-bottom: 20px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.jumbotron {
+    flex-shrink: 0;
+    margin-bottom: 0;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.shadow {
+    width: 240px;
+    margin-top: 2%;
+    margin-left: 5%;
+}
+
+.page-item.active .page-link {
+    background-image: linear-gradient(to left, #e74c3c, #e67e22);
+    border: none;
+}
+
+.page-link {
+    color: black;
 }
 
 .language-pages {
@@ -311,7 +326,7 @@ img#succesImage, img#errorImage {
 }
 
 .form-group {
-    margin-bottom: 0rem;
+    margin-bottom: 0;
 }
 
 .error-messages {
@@ -373,4 +388,8 @@ tags-input .tag .close1:hover::after {
 textarea.form-control {
     border-radius: 5px;
     border: 3px solid #708090;
+}
+
+.clearfix {
+    margin-left: 10%;
 }

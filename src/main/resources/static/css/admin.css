@@ -39,11 +39,7 @@
     margin-bottom: 0;
 }
 
-.col {
-    background-color: floralwhite;
-}
-
-.col-7 {
+.col-9 {
     align-content: center;
     text-align: center;
 }
@@ -51,7 +47,7 @@
 .col-2 {
     align-content: center;
     text-align: center;
-    background-color: floralwhite;
+    margin-left: 3%;
 }
 
 .user {
@@ -87,4 +83,23 @@ img#successImage, img#errorImage {
 
 .page-link {
     color: black;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.jumbotron {
+    flex-shrink: 0;
+    margin-bottom: 0;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.shadow {
+    width: 100%;
 }

@@ -15,175 +15,202 @@
     <link rel="stylesheet" th:href="@{/css/book.css}">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4" style="justify-content: space-between">
-    <a href="/all-books"><img th:src="@{/images/logo.png}" alt="logo" height="60px" width="180px"/></a>
-    <div class="dropdown"><button id="btn-upgrade" type="button" data-toggle="dropdown"><div><span id="name" sec:authentication="principal.username"></span> </div></button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-            <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/all-books">HomePage</a></li>
-            <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/personal-cabinet">Personal Cabinet</a></li>
-            <li sec:authorize="hasAuthority('ADMIN')" role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/admin-page">AdminPage</a></li>
-            <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a></li>
-        </ul>
-    </div>
-</nav>
-<div class="bookInfo container mt-5 rounded">
-    <div class="row">
-        <div class="col-4 py-3">
-            <img th:src="@{/images/book-cover.jpg}" class="img-fluid w-100 rounded"
-                 alt="Book image">
+<main>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4" style="justify-content: space-between">
+        <a href="/all-books"><img th:src="@{/images/logo.png}" alt="logo" height="60px" width="180px"/></a>
+        <div class="dropdown">
+            <button id="btn-upgrade" type="button" data-toggle="dropdown">
+                <div><span id="name" sec:authentication="principal.username"></span></div>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1"
+                                                                href="/all-books">HomePage</a></li>
+                <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/personal-cabinet">Personal
+                    Cabinet</a></li>
+                <li sec:authorize="hasAuthority('ADMIN')" role="presentation" class="presentation"><a role="menuitem"
+                                                                                                      tabindex="-1"
+                                                                                                      href="/admin-page">AdminPage</a>
+                </li>
+                <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a>
+                </li>
+            </ul>
         </div>
-        <div class="col-8 pt-1">
-            <div class="col-12">
-                <h1 class="text-center font-weight-bold pt-2" id="title"></h1>
-                <div class="row d-flex pt-4">
-                    <div class="col-12">
-                        <table class="table">
-                            <tr id="book-author"></tr>
-                            <tr id="book-language"></tr>
-                            <tr id="book-pages"></tr>
-                            <tr id="book-description"></tr>
-                            <tr id="book-status"></tr>
-                            <tr id="book-added-by"></tr>
-                            <tr id="book-added-at"></tr>
-                            <tr id = "assignButton"></tr>
-                        </table>
-                        <div class="common-update-delete-buttons">
-                            <div class="update-delete-buttons">
-                                <button class="update-delete-buttons btn btn-primary btn-lg" id="update-modal-button"
-                                        sec:authorize="hasAuthority('ADMIN')" data-toggle="modal" data-target="#update-modal">Update Content
-                                </button>
-                            </div>
-                            <div class="update-delete-buttons">
-                                <button class="update-delete-buttons btn btn-primary btn-lg" id="delete-button-modal"
-                                        sec:authorize="hasAuthority('ADMIN')" data-toggle="modal" data-target="#delete-modal">Delete Book
-                                </button>
-                            </div>
+    </nav>
+
+    <div class="bookInfo container mt-5 rounded">
+        <div class="row">
+            <div class="col-4 py-3">
+                <img th:src="@{/images/books-icon.png}" class="img-fluid w-100 rounded"
+                     alt="Book image" style="margin-top: 25%">
+            </div>
+            <div class="col-8 pt-1">
+                <div class="col-12">
+                    <h2 class="text-center font-weight-bold pt-2" id="title"></h2>
+                    <div class="row d-flex pt-4">
+                        <div class="col-12">
+                            <table class="table">
+                                <tr id="book-author"></tr>
+                                <tr id="book-language"></tr>
+                                <tr id="book-pages"></tr>
+                                <tr id="book-description"></tr>
+                                <tr id="book-status"></tr>
+                                <tr id="book-added-by"></tr>
+                                <tr id="book-added-at"></tr>
+                                <tr id="book-tags"></tr>
+                                <tr id="assignButton">
+                                    <th>
+
+                                    </th>
+                                    <td>
+                                        <div class="common-update-delete-buttons">
+                                            <div class="update-delete-buttons">
+                                                <button class="update-delete-buttons btn btn-primary btn-lg"
+                                                        id="update-modal-button"
+                                                        sec:authorize="hasAuthority('ADMIN')" data-toggle="modal"
+                                                        data-target="#update-modal">Update Content
+                                                </button>
+                                            </div>
+                                            <div class="update-delete-buttons">
+                                                <button class="update-delete-buttons btn btn-primary btn-lg"
+                                                        id="delete-button-modal"
+                                                        sec:authorize="hasAuthority('ADMIN')" data-toggle="modal"
+                                                        data-target="#delete-modal">Delete Book
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="review container mt-3 rounded">
-    <div class="row mt-3 d-flex justify-content-center">
-        <div class="col-12">
-            <h1 class="text-center pt-3">Reviews</h1>
-        </div>
-        <div class="my-4 w-75">
-            <div class="form-group">
-                <label for="text-review">Share your opinion about this book with others:</label>
-                <textarea class="form-control" id="text-review" maxlength="2048" rows="5"></textarea>
-                <div class="mt-2" id="invalid-review"></div>
+    <div class="review container mt-3 rounded">
+        <div class="row mt-3 d-flex justify-content-center">
+            <div class="col-12">
+                <h2 class="text-center pt-3">Reviews</h2>
             </div>
-            <div class="d-flex justify-content-end">
-                <button class="addBtn btn btn-primary btn-lg" onclick="addReview()">Add Review</button>
+            <div class="my-4 w-75">
+                <div class="form-group">
+                    <label for="text-review">Share your opinion about this book with others:</label>
+                    <textarea class="form-control" id="text-review" maxlength="2048" rows="5"></textarea>
+                    <div class="mt-2" id="invalid-review"></div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button class="addBtn btn btn-primary btn-lg" onclick="addReview()">Add Review</button>
+                </div>
+            </div>
+        </div>
+        <div class="reviews row d-flex justify-content-center mb-5 mt-2 pb-4 text-wrap" id="reviews">
+            <h3 class="pb-4" id="no-review">There are no reviews for this book</h3>
+        </div>
+    </div>
+    <div th:insert="allBooksPage :: chat-page">
+    </div>
+
+    <!--Modal for Delete Book-->
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="addbook modal fade" id="delete-modal"
+         tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Why do you want to delete the book?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group ">
+                        <label for="txt-delete-description"><span class="req"></span> Reason </label>
+                        <textarea autocomplete="off" class="form-control" id="txt-delete-description"
+                                  oninput="validateDescription(this.value);"
+                                  required
+                                  style="height: 60px" type="text"></textarea>
+                    </div>
+                    <div class="error-messages" id="errLast-description"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="button-submit" id="close-delete-modal" data-dismiss="modal">Close</button>
+                    <button class="button-submit" id="submit-delete">Delete Book</button>
+                </div>
             </div>
         </div>
     </div>
-    <div class="reviews row d-flex justify-content-center mb-5 mt-2 pb-4 text-wrap" id="reviews">
-        <h2 class="pb-4" id="no-review">There are no reviews for this book</h2>
-    </div>
-</div>
-<!--Modal for Delete Book-->
-<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="addbook modal fade" id="delete-modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4>Why do you want to delete the book?</h4>
-        </div>
-        <div class="modal-body">
-            <div class="form-group ">
-                <label for="txt-delete-description"><span class="req"></span> Reason </label>
-                <textarea autocomplete="off" class="form-control" id="txt-delete-description"
-                          oninput="validateDescription(this.value);"
-                          required
-                          style="height: 60px" type="text"></textarea>
-            </div>
-            <div class="error-messages" id="errLast-description"></div>
-        </div>
-        <div class="modal-footer">
-            <button class="button-submit" id="close-delete-modal" data-dismiss="modal">Close</button>
-            <button class="button-submit" id="submit-delete">Delete Book</button>
-        </div>
-    </div>
-</div>
-</div>
-<!--Modal for Update Book-->
-<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="addbook modal fade" id="update-modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5>UPDATE BOOK</h5>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label for="title"><span class="req"></span> Book Title </label>
-                <input autocomplete="on" class="form-control" id="txt-title"
-                       oninput="validateTitle(this.value);"
-                       required
-                       type="text"/>
-                <div id="errLast-title"></div>
-            </div>
-            <div class="form-group first-last-name">
-                <label for="txt-first-name"><span class="req"></span> Author first name </label>
-                <input autocomplete="off" class="form-control" id="txt-first-name"
-                       oninput="validateFirstName(this.value);"
-                       required
-                       type="text"/>
-                <div class="error-messages" id="errLast-first-name"></div>
+    <!--Modal for Update Book-->
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="addbook modal fade" id="update-modal"
+         tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>UPDATE BOOK</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="title"><span class="req"></span> Book Title </label>
+                        <input autocomplete="on" class="form-control" id="txt-title"
+                               oninput="validateTitle(this.value);"
+                               required
+                               type="text"/>
+                        <div id="errLast-title"></div>
+                    </div>
+                    <div class="form-group first-last-name">
+                        <label for="txt-first-name"><span class="req"></span> Author first name </label>
+                        <input autocomplete="off" class="form-control" id="txt-first-name"
+                               oninput="validateFirstName(this.value);"
+                               required
+                               type="text"/>
+                        <div class="error-messages" id="errLast-first-name"></div>
+                    </div>
+
+                    <div class="form-group first-last-name">
+                        <label for="txt-last-name"><span class="req"></span> Author last name </label>
+                        <input autocomplete="off" class="form-control" id="txt-last-name"
+                               oninput="validateLastName(this.value);"
+                               required
+                               type="text"/>
+                        <div class="error-messages" id="errLast-last-name"></div>
+                    </div>
+                    <br>
+                    <div class="form-group language-pages">
+                        <label for="txt-language"><span class="req"></span> Language </label>
+                        <input autocomplete="off" class="form-control" id="txt-language"
+                               oninput="validateLanguage(this.value);"
+                               required
+                               type="text"/>
+                        <div class="error-messages" id="errLast-language"></div>
+                    </div>
+
+                    <div class="form-group language-pages">
+                        <label for="txt-pages"><span class="req"></span> Pages </label>
+                        <input autocomplete="off" class="form-control" id="txt-pages"
+                               oninput="validatePages(this.value);"
+                               required
+                               type="number"/>
+                        <div class="error-messages" id="errLast-pages"></div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="txt-description"><span class="req"></span> Description </label>
+                        <textarea autocomplete=" " class="form-control" id="txt-description"
+                                  required
+                                  style="height: 60px" type="text"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="button-submit" id="close-update-modal" data-dismiss="modal">Close</button>
+                    <button class="button-submit" id="submit-update">Update Book</button>
+                </div>
             </div>
 
-            <div class="form-group first-last-name">
-                <label for="txt-last-name"><span class="req"></span> Author last name </label>
-                <input autocomplete="off" class="form-control" id="txt-last-name"
-                       oninput="validateLastName(this.value);"
-                       required
-                       type="text"/>
-                <div class="error-messages" id="errLast-last-name"></div>
-            </div>
-            <br>
-            <div class="form-group language-pages">
-                <label for="txt-language"><span class="req"></span> Language </label>
-                <input autocomplete="off" class="form-control" id="txt-language"
-                       oninput="validateLanguage(this.value);"
-                       required
-                       type="text"/>
-                <div class="error-messages" id="errLast-language"></div>
-            </div>
-
-            <div class="form-group language-pages">
-                <label for="txt-pages"><span class="req"></span> Pages </label>
-                <input autocomplete="off" class="form-control" id="txt-pages"
-                       oninput="validatePages(this.value);"
-                       required
-                       type="number"/>
-                <div class="error-messages" id="errLast-pages"></div>
-            </div>
-            <div class="form-group ">
-                <label for="txt-description"><span class="req"></span> Description </label>
-                <textarea autocomplete=" " class="form-control" id="txt-description"
-                          required
-                          style="height: 60px" type="text"></textarea>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="button-submit" id="close-update-modal" data-dismiss="modal">Close</button>
-            <button class="button-submit" id="submit-update">Update Book</button>
-        </div>
-</div>
-    </div>
-</div>
-
+</main>
+<!--Footer-->
+<div class="jumbotron text-center"></div>
+<!--Script-->
 <script th:src="@{/scripts/book.js}"></script>
 <div th:insert="allBooksPage :: chat-page">
-</div>
-<script th:src="@{/scripts/chat.js}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<!--Footer-->
-<div class="jumbotron text-center" style="margin-bottom: 0"></div>
+
+    <script th:src="@{/scripts/chat.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </body>
 </html>

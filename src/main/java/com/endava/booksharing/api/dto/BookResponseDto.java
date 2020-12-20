@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,4 +24,5 @@ public class BookResponseDto {
     private String deletedWhy;
     private String deletedDate;
     private String status;
+    private Set<String> tags;
 }

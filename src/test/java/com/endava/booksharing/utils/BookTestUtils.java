@@ -22,35 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.endava.booksharing.TestConstants.ADDED_AT_DATE;
-import static com.endava.booksharing.TestConstants.AUTHOR_FIRST_NAME;
-import static com.endava.booksharing.TestConstants.AUTHOR_FIRST_NAME_ONE;
-import static com.endava.booksharing.TestConstants.AUTHOR_FIRST_NAME_TWO;
-import static com.endava.booksharing.TestConstants.AUTHOR_FULL_NAME_ONE;
-import static com.endava.booksharing.TestConstants.AUTHOR_FULL_NAME_TWO;
-import static com.endava.booksharing.TestConstants.AUTHOR_LAST_NAME;
-import static com.endava.booksharing.TestConstants.AUTHOR_LAST_NAME_ONE;
-import static com.endava.booksharing.TestConstants.AUTHOR_LAST_NAME_TWO;
-import static com.endava.booksharing.TestConstants.BOOK_ADDED_AT;
-import static com.endava.booksharing.TestConstants.BOOK_ADDED_AT_DATE;
-import static com.endava.booksharing.TestConstants.BOOK_DELETED_AT;
-import static com.endava.booksharing.TestConstants.BOOK_DELETED_AT_DATE;
-import static com.endava.booksharing.TestConstants.BOOK_DELETED_WHY;
-import static com.endava.booksharing.TestConstants.BOOK_DESCRIPTION;
-import static com.endava.booksharing.TestConstants.BOOK_LANGUAGE;
-import static com.endava.booksharing.TestConstants.BOOK_PAGES;
-import static com.endava.booksharing.TestConstants.BOOK_PAGES_NUMBER_ONE;
-import static com.endava.booksharing.TestConstants.BOOK_TITLE;
-import static com.endava.booksharing.TestConstants.BOOK_TITLE_ONE;
-import static com.endava.booksharing.TestConstants.BOOK_TITLE_TWO;
-import static com.endava.booksharing.TestConstants.BOOK_TITLE_UPDATED;
-import static com.endava.booksharing.TestConstants.DEFAULT_DATE;
-import static com.endava.booksharing.TestConstants.ID_ONE;
-import static com.endava.booksharing.TestConstants.ID_TWO;
-import static com.endava.booksharing.TestConstants.STATUS_DELETED;
-import static com.endava.booksharing.TestConstants.STATUS_FREE;
-import static com.endava.booksharing.TestConstants.USER_ONE_USERNAME;
-import static com.endava.booksharing.TestConstants.USER_TWO_USERNAME;
+import static com.endava.booksharing.TestConstants.*;
 import static com.endava.booksharing.utils.TagsTestUtils.DEFAULT_TAG;
 import static com.endava.booksharing.utils.TagsTestUtils.TAGS_REQUEST_DTO;
 import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
@@ -98,6 +70,7 @@ public class BookTestUtils {
             .bookStatus(STATUS_FREE)
             .author(AUTHOR_TWO)
             .user(USER_TWO)
+            .tags(Sets.newSet(DEFAULT_TAG))
             .build();
     public static final BookResponseDto BOOK_DELETED_RESPONSE_DTO = BookResponseDto
             .builder()
@@ -125,6 +98,7 @@ public class BookTestUtils {
             .author(AUTHOR_FIRST_NAME_TWO + " " + AUTHOR_LAST_NAME_TWO)
             .status(STATUS_FREE.toString())
             .addedBy(USER_TWO_USERNAME)
+            .tags(Sets.newSet(TAG_ONE))
             .build();
     public static final BookResponseDto BOOK_RESPONSE_DTO = BookResponseDto.builder()
             .author(AUTHOR_FIRST_NAME + " " + AUTHOR_LAST_NAME)

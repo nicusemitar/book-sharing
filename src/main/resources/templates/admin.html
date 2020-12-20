@@ -14,8 +14,6 @@
     <link rel="stylesheet" th:href="@{/css/admin.css}" type="text/css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/chat.css}">
 </head>
-
-<body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <a href="/all-books"><img th:src="@{/images/logo.png}" alt="logo" height="60px" width="180px"/></a>
     <div class="dropdown">
@@ -23,119 +21,125 @@
             <div><span id="name" sec:authentication="principal.username"></span></div>
         </button>
         <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+            <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/personal-cabinet">Personal
+                Cabinet</a></li>
             <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/all-books">HomePage</a>
             </li>
             <li role="presentation" class="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a></li>
         </ul>
     </div>
 </nav>
-
-<div class="container-fluid" style="margin-top: -25px">
-    <div class="row">
-        <div class="col-2"><br></div>
-        <div class="col-7"><br></div>
-        <div class="col-1"><br></div>
-        <div class="col"><br></div>
-    </div>
-
-    <div class="row">
-        <div class="col-2 left">
-            <h3>Admin Cabinet</h3>
-            <br>
-            <img class="user" th:src="@{/images/user-icon.jpg}"/>
-            <div class="card">
-                <div class="card-header" id="headingOne">
-                    <h5 class="mb-0">
-                        <button class="btn w-100" data-toggle="collapse" data-target="#collapseOne"
-                                aria-expanded="true" aria-controls="collapseOne">
-                            View Time Extend Requests
-                        </button>
-                    </h5>
-                </div>
-            </div>
-            <div class="card mb-2">
-                <div class="card-header" id="headingTwo">
-                    <h5 class="mb-0">
-                        <button class="btn w-100 collapsed" data-toggle="collapse" data-target="#collapseTwo"
-                                aria-expanded="false" aria-controls="collapseTwo">
-                            View Reviews
-                        </button>
-                    </h5>
-                </div>
-            </div>
+<main>
+    <div class="container-fluid" style="margin-top: -25px">
+        <div class="row">
+            <div class="col-2"><br></div>
+            <div class="col-9"><br></div>
+            <div class="col-1"><br></div>
         </div>
 
-        <div class="col-8">
-            <div id="accordion">
-                <div class="card">
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                        <div class="card-body">
+        <div class="row">
+            <div class="col-2 text-center">
+                <h5>Admin Cabinet</h5>
+                <br>
+                <div class="shadow p-4 mb-4 bg-white">
+                    <img id="user-icon" th:src="@{/images/user-icon.jpg}" style="width: 100%; margin: 0"/>
+                </div>
+                <br>
+                <div class="list-group">
+                    <a href="" class="list-group-item list-group-item-action" data-toggle="collapse"
+                       data-target="#collapseOne"
+                       aria-expanded="true" aria-controls="collapseOne">View Time Extend Requests</a>
+                    <a href="" class="list-group-item list-group-item-action" data-toggle="collapse"
+                       data-target="#collapseTwo"
+                       aria-expanded="false" aria-controls="collapseTwo">View Reviews</a>
+                    <a href="/all-books" class="list-group-item list-group-item-action">Home page</a>
+                    <a href="/logout" class="list-group-item list-group-item-action">Log out</a>
+                </div>
+            </div>
 
+            <div class="col-9">
+                <div id="accordion">
+                    <div class="card">
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                             data-parent="#accordion">
+                            <div class="card-body">
+
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card">
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                        <div class="card-body">
-                            <table class="table text-center" id="reviews-placeholder">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Username</th>
-                                    <th scope="col">Review</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                    <div class="card">
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div class="card-body">
+                                <table class="table text-center" id="reviews-placeholder">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Review</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
-                                </tbody>
-                            </table>
-                            <div class="row d-flex justify-content-center">
-                                <!--Pagination-->
-                                <div id="pagination-placeholder">
-                                    <ul class="pagination">
+                                    </tbody>
+                                </table>
+                                <div class="row d-flex justify-content-center">
+                                    <!--Pagination-->
+                                    <div id="pagination-placeholder">
+                                        <ul class="pagination">
 
-                                    </ul>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col"><br></div>
         </div>
-        <div class="col"><br></div>
-    </div>
+        <div class="row">
+            <div class="col-2"><br></div>
+            <div class="col-9"><br></div>
+            <div class="col-1"><br></div>
+        </div>
+        <div class="row">
+            <div class="col-2"><br></div>
+            <div class="col-9"><br></div>
+            <div class="col-1"><br></div>
+        </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-center">
-                    <h3 class="modal-title">Warning!</h3>
-                </div>
-                <div class="modal-body d-flex justify-content-center">
-                    <div id="messageDefault">
-                        <input type="hidden" id="review-id-delete">
-                        Are you sure you want to delete this review?
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-center">
+                        <h3 class="modal-title">Warning!</h3>
                     </div>
-                    <div class="text-center" id="messageSuccess">
-                        <img id="successImage" th:src="@{/images/check.png}">
-                        <p>Review was deleted successfully!</p>
+                    <div class="modal-body d-flex justify-content-center">
+                        <div id="messageDefault">
+                            <input type="hidden" id="review-id-delete">
+                            Are you sure you want to delete this review?
+                        </div>
+                        <div class="text-center" id="messageSuccess">
+                            <img id="successImage" th:src="@{/images/check.png}">
+                            <p>Review was deleted successfully!</p>
+                        </div>
+                        <div class="text-center" id="messageError">
+                            <img id="errorImage" th:src="@{/images/error.png}">
+                            <p>Oops, an error occurred!<br>Please try again later!</p>
+                        </div>
                     </div>
-                    <div class="text-center" id="messageError">
-                        <img id="errorImage" th:src="@{/images/error.png}">
-                        <p>Oops, an error occurred!<br>Please try again later!</p>
+                    <div class="modal-footer d-flex justify-content-end">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="cancel-delete">Cancel
+                        </button>
+                        <button type="button" class="btn btn-primary" id="confirm-delete">Confirm</button>
                     </div>
-                </div>
-                <div class="modal-footer d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="cancel-delete">Cancel
-                    </button>
-                    <button type="button" class="btn btn-primary" id="confirm-delete">Confirm</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</main>
 <div th:insert="allBooksPage :: chat-page">
 </div>
 <!--Footer-->
