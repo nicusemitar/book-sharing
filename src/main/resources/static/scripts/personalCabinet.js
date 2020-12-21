@@ -9,7 +9,7 @@ let bindingValidate = false;
 let qualityValidate = false;
 let goodColor = "#66cc66";
 let badColor = "#ff6666";
-
+let formdata;
 
 $(document).ready(() => {
     getAssignedBooks();
@@ -337,6 +337,15 @@ function openErrorContent() {
     $("#error-content").css("display", "block");
 }
 
+$('#imageFile').change(function () {
+    formdata = new FormData();
+    if ($(this).prop('files').length > 0) {
+        file = $(this).prop('files')[0];
+        formdata.append("file", file);
+    }
+});
+
+
 $("#submit-add-book").on("click", () => {
     if (validInput() === true) {
         $.ajax({
@@ -344,7 +353,18 @@ $("#submit-add-book").on("click", () => {
             method: "POST",
             data: JSON.stringify(bookObject()),
             contentType: "application/json",
-            success: () => {
+            success: (response) => {
+                if (formdata != undefined) {
+                    $.ajax({
+                        url: '/book/' + response.data.id + '/update-photo',
+                        method: "POST",
+                        data: formdata,
+                        processData: false,
+                        contentType: false,
+                        success: function (result) {
+                        }
+                    });
+                }
                 openSuccessContent();
             },
             error: () => {

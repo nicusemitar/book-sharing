@@ -46,4 +46,6 @@ public class BookRequestDto {
     private String authorLastName;
 
     private List<TagsRequestDto> tagList;
+
+    private String bookImageUrl;
 }

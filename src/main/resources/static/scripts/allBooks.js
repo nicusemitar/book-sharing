@@ -1,19 +1,13 @@
+let filterApplied = false;
 $(() => {
     getAllBooks();
     displayAllCategories();
 });
 
-let filterApplied = false;
-
 function getAllBooks() {
     $.ajax({
         url: "/books",
         method: "GET",
-        data: {
-            sort: $('#sortSelect').prop('value'),
-            size: $('#itemsNumber').prop('value'),
-            find: $('#search-key').prop('value')
-        },
         success: response => {
             displayBooks(response.books);
             displayPages(response.totalPages, response.currentPage + 1);
@@ -24,9 +18,18 @@ function getAllBooks() {
     })
 }
 
+
 function displayBooks(books) {
+    let columnNumber = 0;
+    let st;
+    let image_url;
     let placeholder = "";
     $.each(books, (index, book) => {
+        if (book.bookImageUrl === null) {
+            image_url = "/images/book-image.jpg";
+        } else {
+            image_url = book.bookImageUrl;
+        }
         if (book.status === "FREE") {
             st = '<img src = "/images/free.png" class = "img-for-status" width="50px" height="50px">';
         } else {
@@ -39,10 +42,10 @@ function displayBooks(books) {
             bookLanguage = 'Not indicated';
         }
         placeholder +=
-            `<span class="shadow float-left p-4 mb-4 bg-white" style="height: 320px">
+            `<span class="shadow float-left p-4 mb-4 bg-white" style="height: 350px">
                 <input class='user-id' type='hidden' value='${book.id}'>
                 ${st}
-                <img src="/images/book-image.jpg" style="width: 100%; padding: 10%" align="center">
+                <img src="${image_url}" style="width: 100%; padding: 15%" align="center">
                 <p align="center">
                     ${book.title}<br>
                     ${book.authorName}<br>
@@ -94,6 +97,7 @@ function goToPage(i) {
         filterRequest()
     }
 }
+
 
 function limitNumberOfShownPages(totalPages, currentPage) {
     let n = currentPage - 2;

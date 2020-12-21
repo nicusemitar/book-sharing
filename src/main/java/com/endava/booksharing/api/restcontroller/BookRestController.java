@@ -7,6 +7,7 @@ import com.endava.booksharing.api.dto.FilterDto;
 import com.endava.booksharing.api.exchange.Response;
 import com.endava.booksharing.service.BookService;
 import com.endava.booksharing.utils.exceptions.ExceptionsHandler;
+import com.endava.booksharing.utils.exceptions.InvalidFormatFile;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Data
 @RequiredArgsConstructor
@@ -35,8 +37,9 @@ public class BookRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveBook(@RequestBody @Valid BookRequestDto bookRequestDto) {
-        return ResponseEntity.ok(Response.build(bookService.saveBook(bookRequestDto)));
+    public ResponseEntity<Object> saveBook(@RequestBody @Valid BookRequestDto bookRequestDto) throws InvalidFormatFile, IOException {
+        BookResponseDto bookResponse = bookService.saveBook(bookRequestDto);
+        return ResponseEntity.ok(Response.build(bookResponse));
     }
 
     @DeleteMapping

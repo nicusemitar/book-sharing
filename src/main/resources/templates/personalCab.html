@@ -155,6 +155,11 @@
                                               style="height: 60px" type="text"></textarea>
                                     <div class="error-messages" id="errDescription"></div>
                                 </div>
+
+                                <div class="form-group description-div pt-2">
+                                    <label for="imageFile"><span class="req"></span>Book cover</label>
+                                    <input id = "imageFile" type="file" name="image">
+                                </div>
                             </div>
                             <div class="modal-body" id="error-content">
                                 <img id="error-image" th:src="@{/images/error.png}">

@@ -47,7 +47,7 @@
     <div class="bookInfo container mt-5 rounded">
         <div class="row">
             <div class="col-4 py-3">
-                <img th:src="@{/images/books-icon.png}" class="img-fluid w-100 rounded"
+                <img th:src="@{/images/books-icon.png}" id = "image_book" class="img-fluid w-100 rounded"
                      alt="Book image" style="margin-top: 25%">
             </div>
             <div class="col-8 pt-1">
@@ -114,8 +114,6 @@
             <h3 class="pb-4" id="no-review">There are no reviews for this book</h3>
         </div>
     </div>
-    <div th:insert="allBooksPage :: chat-page">
-    </div>
 
     <!--Modal for Delete Book-->
     <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="addbook modal fade" id="delete-modal"
@@ -174,7 +172,7 @@
                     </div>
                     <div class="form-group first-last-name">
                         <label for="txt-first-name"><span class="req"></span> Author first name </label>
-                        <input autocomplete="off" class="form-control" id="txt-first-name"
+                        <input autocomplete="off" class="form-control add" id="txt-first-name"
                                oninput="validateFirstName(this.value);"
                                required
                                type="text"/>
@@ -183,7 +181,7 @@
 
                     <div class="form-group first-last-name">
                         <label for="txt-last-name"><span class="req"></span> Author last name </label>
-                        <input autocomplete="off" class="form-control" id="txt-last-name"
+                        <input autocomplete="off" class="form-control add" id="txt-last-name"
                                oninput="validateLastName(this.value);"
                                required
                                type="text"/>
@@ -205,6 +203,11 @@
                         <textarea autocomplete=" " class="form-control" id="txt-description"
                                   required
                                   style="height: 60px" type="text"></textarea>
+                    </div>
+
+                    <div class="form-group ">
+                        <label for="imageFile"><span class="req"></span>Book cover</label>
+                        <input id = "imageFile" type="file" name="file">
                     </div>
                 </div>
                 <div class="modal-footer">

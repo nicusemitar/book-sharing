@@ -25,4 +25,5 @@ public class BookResponseDto {
     private String deletedDate;
     private String status;
     private Set<String> tags;
+    private String bookImageUrl;
 }
