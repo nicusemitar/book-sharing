@@ -20,7 +20,6 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
     <img th:src="@{/images/logo.png}" height="60px" width="180px"/>
 </nav>
 
@@ -46,38 +45,38 @@
                         <span class="input-group-text" id="basic-addon1"> <img th:src="@{/images/userlogo.png}"
                                                                                height="20px" width="20px"/></span>
                     </div>
-                    <input id="username-input" name = "username" required=true type="text" class="form-control" placeholder="Username" aria-label="Username"
+                    <input id="username-input" name="username" required=true type="text" class="form-control"
+                           placeholder="Username" aria-label="Username"
                            aria-describedby="basic-addon1">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1"> <img th:src="@{/images/lock.png}"
                                                                                    height="20px" width="20px"/></span>
                         </div>
-                        <input name="password" required=true type="password" class="form-control" placeholder="Password" aria-label="Password"
+                        <input name="password" required=true type="password" class="form-control" placeholder="Password"
+                               aria-label="Password"
                                aria-describedby="basic-addon1">
                     </div>
                     <div id="valid-error">
                         <div class="alert alert-danger">
-                            <p id = "validerr"></p>
+                            <p id="validerr"></p>
                         </div>
                     </div>
 
                     <div class="button">
-                            <input class="btn btn-primary" id="add-user-submit" type="button" value="Login"/>
+                        <input class="btn btn-primary" id="add-user-submit" type="button" value="Login"/>
                     </div>
-                    </div>
+                </div>
                 <div class="form-group">
                     <hr>
-                    <label>Don't have an account? Proceed to <a href="/register" style="color: blue">Registration</a></label>
+                    <label>Don't have an account? Proceed to <a href="/register"
+                                                                style="color: blue">Registration</a></label>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-
-<div class="navbar fixed-bottom navbar-expand-sm" style="background-color: #6c757d">
-</div>
+<!--JS Script-->
 <script type="text/javascript" th:src="@{/scripts/login.js}"></script>
 </body>
 </html>

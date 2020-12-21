@@ -17,35 +17,26 @@ function getAllBooks() {
 }
 
 function displayBooks(books) {
-    let columnNumber = 0;
-    let placeholder = `<tr>`;
-    let st;
+    let placeholder = "";
     $.each(books, (index, book) => {
-        if(book.status === "FREE"){
+        if (book.status === "FREE") {
             st = '<img src = "/images/free.png" class = "img-for-status" width="50px" height="50px">';
-        }else {
+        } else {
             st = '<img src = "/images/busy.png" class = "img-for-status" width="50px" height="50px">';
         }
         placeholder +=
-            `<td id="book${index}">
-                    <div class="shadow p-4 mb-4 bg-white" style="width: 200px; margin: 50px">
-                        <input class='user-id' type='hidden' value='${book.id}'>
-                        ${st}
-                        <img src="/images/book-image.jpg" style="width: 100%; padding: 10%" align="center">
-                        <p align="center">
-                            ${book.title}<br>
-                            ${book.authorName}<br>
-                            Language: ${book.language}
-                        </p>
-                    </div>
-                </td>`
-        columnNumber++;
-        if (columnNumber === 3) {
-            placeholder += `</tr>`;
-            columnNumber = 0;
-        }
+            `<span class="shadow float-left p-4 mb-4 bg-white" style="height: 320px">
+                <input class='user-id' type='hidden' value='${book.id}'>
+                ${st}
+                <img src="/images/book-image.jpg" style="width: 100%; padding: 10%" align="center">
+                <p align="center">
+                    ${book.title}<br>
+                    ${book.authorName}<br>
+                    Language: ${book.language}
+                </p>
+            </span>`
     });
-    $("#books-placeholder tbody").html(placeholder);
+    $("#books-placeholder").html(placeholder);
 }
 
 function displayPages(totalPages, currentPage) {
@@ -53,13 +44,13 @@ function displayPages(totalPages, currentPage) {
     for (let i = 1; i <= totalPages; i++) {
         if (i < currentPage) {
             placeholder +=
-                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" href="#" onclick="goToPage(${i})">${i}</a></li>`;
+                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" href="" onclick="goToPage(${i})">${i}</a></li>`;
         } else if (i === currentPage) {
             placeholder +=
-                `<li class="page-item active" id="page${i}" value="${i}"><a class="page-link" href="#" onclick="goToPage(${i})">${i}</a></li>`;
+                `<li class="page-item active" id="page${i}" value="${i}"><a class="page-link" href="" onclick="goToPage(${i})">${i}</a></li>`;
         } else if (i > currentPage) {
             placeholder +=
-                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" href="#" onclick="goToPage(${i})">${i}</a></li>`;
+                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" href="" onclick="goToPage(${i})">${i}</a></li>`;
         }
     }
     $("#pagination-placeholder ul").html(placeholder);
@@ -117,13 +108,13 @@ function displaySearchPages(totalPages, currentPage) {
     for (let i = 1; i <= totalPages; i++) {
         if (i < currentPage) {
             placeholder +=
-                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" href="#" onclick="goToSearchPage(${i})">${i}</a></li>`;
+                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" href="" onclick="goToSearchPage(${i})">${i}</a></li>`;
         } else if (i === currentPage) {
             placeholder +=
-                `<li class="page-item active" id="page${i}" value="${i}"><a class="page-link" href="#" onclick="goToSearchPage(${i})">${i}</a></li>`;
+                `<li class="page-item active" id="page${i}" value="${i}"><a class="page-link" href="" onclick="goToSearchPage(${i})">${i}</a></li>`;
         } else if (i > currentPage) {
             placeholder +=
-                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" href="#" onclick="goToSearchPage(${i})">${i}</a></li>`;
+                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" href="" onclick="goToSearchPage(${i})">${i}</a></li>`;
         }
     }
     $("#pagination-placeholder ul").html(placeholder);

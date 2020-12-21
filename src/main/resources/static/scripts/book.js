@@ -5,6 +5,7 @@ $(document).ready(() => {
 });
 
 let tags = [];
+
 function getBook(id) {
     $.ajax({
         url: `/books/${id}`,
@@ -33,26 +34,30 @@ function displayBook(book) {
         let authorFirstName = authorFullName.substr(0, authorFullName.indexOf(' '));
         let authorLastName = authorFullName.substr(authorFullName.indexOf(' ') + 1);
         let placeholderLanguage = `<th>Language:</th><td>${book.data.language}</td>`;
-        let placeholderNrPages= `<th>Number of Pages:</th><td>${book.data.pages}</td>`;
-        let placeholderStatus=`<th>Status:</th><td>${book.data.status}</td>`
+        let placeholderNrPages = `<th>Number of Pages:</th><td>${book.data.pages}</td>`;
+        let placeholderStatus = `<th>Status:</th><td>${book.data.status}</td>`
         let placeholderDescription = `<th>Description:</th><td>${book.data.description}</td>`;
+        let placeholderTags = `<th>Tags:</th><td>
+                                <div class="clearfix" id="tag-div"></div></td>`;
         let placeholderAddedBy = `<th>Added by:</th><td>${book.data.addedBy}</td>`;
         let placeholderAddedAt = `<th>Added at:</th><td>${book.data.addedAt}</td>`;
-        let assignButton = '<th><button id = "assign-button" class="btn btn-primary btn-lg">Assign to me</button></th>';
-        let waitingAssignButton = '<th><button id = "assign-button" class="btn btn-primary btn-lg">Get in line</button></th>';
+        let assignButton = '<button id = "assign-button" class="btn btn-primary btn-lg">Assign to me</button>';
+        let waitingAssignButton = '<button id = "assign-button" class="btn btn-primary btn-lg">Get in line</button>';
         $("#title").html(placeholderTitle);
         $("#book-author").html(placeholderAuthor);
         $("#book-language").html(placeholderLanguage);
         $("#book-pages").html(placeholderNrPages);
         $("#book-description").html(placeholderDescription);
         $("#book-status").html(placeholderStatus);
+        $("#book-tags").html(placeholderTags);
         $("#book-added-by").html(placeholderAddedBy);
         $("#book-added-at").html(placeholderAddedAt);
+        displayTags($(book.data.tags));
 
-        if(book.data.status === "FREE"){
-            $("#assignButton").html(assignButton);
+        if (book.data.status === "FREE") {
+            $("#assignButton th").html(assignButton);
         } else {
-            $("#assignButton").html(waitingAssignButton);
+            $("#assignButton th").html(waitingAssignButton);
         }
         $("#txt-title").attr("value", placeholderTitle);
         $("#txt-description").val(`${book.data.description}`);
@@ -60,6 +65,20 @@ function displayBook(book) {
         $("#txt-last-name").attr("value", authorLastName);
         $("#txt-language").attr("value", `${book.data.language}`);
         $("#txt-pages").attr("value", `${book.data.pages}`);
+    }
+}
+
+function displayTags(tags) {
+    if (tags.length > 0) {
+        let placeholder = "";
+        $.each(tags, (index, tag) => {
+            placeholder += `
+        <span class="float-left border border-secondary">${tag}</span>
+        `;
+        });
+        $("#tag-div").html(placeholder);
+    } else {
+        $("#tag-div").html("<p>There are no tags for this book</p>")
     }
 }
 
@@ -246,7 +265,6 @@ function validateDescription(txt) {
 }
 
 
-
 const validInput = () => {
     if (titleValidate === true || lastNameValidate === true || firstNameValidate === true || pagesValidate === true
         || languageValidate === true || descriptionValidate === true) {
@@ -287,4 +305,3 @@ const bookObject = () => {
         description: $("#txt-description").val()
     };
 };
-

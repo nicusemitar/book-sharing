@@ -1,26 +1,24 @@
-
-let titleValidate = false;
-let lastNameValidate = false;
-let firstNameValidate = false;
-let pagesValidate = false;
-let languageValidate = false;
-let descriptionValidate = false;
-let goodColor = "#66cc66";
-let badColor = "#ff6666";
-
-
 $(document).ready(() => {
     getAssignedBooks();
 });
-var currentAssigments;
-var currentAssignment;
+
+let currentAssignments;
+let currentAssignment;
+let titleValidate = true;
+let lastNameValidate = true;
+let firstNameValidate = true;
+let pagesValidate = true;
+let languageValidate = true;
+let descriptionValidate = false;
+let goodColor = "#66cc66";
+let badColor = "#ff6666";
 
 function getAssignedBooks() {
     $.ajax({
         url: "/assignments/current-user",
         method: "GET",
         success: response => {
-            currentAssigments = response;
+            currentAssignments = response;
             displayAssignedBooks(response);
         },
         error: err => {
@@ -32,37 +30,29 @@ function getAssignedBooks() {
 
 function displayAssignedBooks(assignments) {
     if (assignments.length > 0) {
-        let columnNumber = 0;
-        let placeholder = `<tr>`;
+        let placeholder = "";
         $.each(assignments, (index, assignments) => {
             placeholder +=
-                `<td id="book${index}">
-                    <div class="shadow p-4 mb-4 bg-white" style="width: 250px; margin: 25px">
-                        <input class='user-id' type='hidden' value='${assignments.id}'>
-                        <input class='book-id' type='hidden' value='${assignments.bookId}'>
-                        <img src="/images/book-image.jpg" style="width: 100%; padding: 10%" align="center">
-                        <p align="center">
-                            ${assignments.bookName}<br>
-                            Assign date: ${assignments.assignDate}<br>
-                            Due date: ${assignments.dueDate}
-                        </p>
-                        <button type="button" class="extend-button extend1" value="${index}"
-                        id="extend-open" data-toggle="modal" data-target="#exampleModal">Extend Time</button>
-                    </div>
-                </td>`
-            columnNumber++;
-            if (columnNumber === 3) {
-                placeholder += `</tr>`;
-                columnNumber = 0;
-            }
+                `<span class="shadow float-left p-4 mb-4 bg-white">
+                    <input class='user-id' type='hidden' value='${assignments.id}'>
+                    <input class='book-id' type='hidden' value='${assignments.bookId}'>
+                    <img src="/images/book-image.jpg" style="width: 100%; padding: 10%" align="center">
+                    <p align="center">
+                        ${assignments.bookName}<br>
+                        Assign date: ${assignments.assignDate}<br>
+                        Due date: ${assignments.dueDate}
+                    </p>
+                    <button type="button" class="extend-button extend1" value="${index}"
+                    id="extend-open" data-toggle="modal" data-target="#exampleModal">Extend Time</button>
+                </span>`
         });
-        $("#books-table tbody").html(placeholder);
+        $("#books-placeholder").html(placeholder);
     } else {
-        $(".assignedBooks").html("<h4>You have no assigned books.</h4>");
+        $("#books-placeholder").html("<p>You don't have any assigned books.</p>");
     }
 
     $(".extend1").on('click', function () {
-        currentAssignment = currentAssigments[this.value];
+        currentAssignment = currentAssignments[this.value];
         console.log(this);
     });
 }
@@ -259,10 +249,12 @@ $("#submit-add-book").on("click", () => {
             data: JSON.stringify(bookObject()),
             contentType: "application/json",
             success: function (result) {
-                window.location.href = '/all-books';
+                alert("Your book was added successfully");
+                window.location.href = '/personal-cabinet';
             },
             error: function (result) {
-                window.location.href = '/login';
+                alert("Could not add your book!");
+                window.location.href = '/personal-cabinet';
             }
         });
     } else {
@@ -271,11 +263,11 @@ $("#submit-add-book").on("click", () => {
 });
 
 const bookObject = () => {
-    let tagList2=[]
+    let tagList2 = []
 
     tags.forEach(function (element) {
         const tagName = () => {
-            return{
+            return {
                 tagName: element.text
             };
         };
@@ -291,14 +283,6 @@ const bookObject = () => {
         description: $("#txt-description").val()
     };
 };
-
-$("#books-table").on("click", ".shadow", function (e) {
-    if (e.target !== this) {
-        return;
-    }
-    let id = this.querySelector(".book-id").value;
-    window.location.href = `/book/${id}`;
-})
 
 function clearTextArea() {
     $("#textArea").val("");
@@ -380,7 +364,7 @@ function submitError() {
 }
 
 function formatDate(date) {
-    var d = new Date(date),
+    let d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
         year = d.getFullYear();
@@ -393,7 +377,7 @@ function formatDate(date) {
     return [year, month, day].join('-');
 }
 
-$("#books-table").on("click", ".shadow", function (e) {
+$("#books-placeholder").on("click", ".shadow", function (e) {
     if (e.target !== this) {
         return;
     }

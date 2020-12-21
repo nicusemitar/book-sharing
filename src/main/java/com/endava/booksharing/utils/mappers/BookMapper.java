@@ -74,6 +74,7 @@ public class BookMapper {
             .deletedBy(book.getDeletedBy() != null ? book.getDeletedBy().getUsername() : null)
             .deletedWhy(book.getDeletedWhy() != null ? book.getDeletedWhy() : null)
             .deletedDate(book.getDeletedAt() != null ? book.getDeletedAt().toString() : null)
+            .tags(book.getTags().stream().map(Tags::getTagName).collect(Collectors.toSet()))
             .build();
 
     public static final Function<Book, BooksResponseDto> mapBookToBooksResponseDto = book -> BooksResponseDto.builder()

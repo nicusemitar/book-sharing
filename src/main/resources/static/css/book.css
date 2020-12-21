@@ -1,11 +1,11 @@
 .bookInfo {
-    font-size: 1.3em;
-    background-image: linear-gradient(315deg, #f9d29d 0%, #ffd8cb 74%);
+    font-size: 1.1em;
+    color: black;
 }
 
 .review {
-    font-size: 1.3em;
-    background-image: linear-gradient(315deg, #f9d29d 0%, #ffd8cb 74%);
+    font-size: 1.1em;
+    color: black;
 }
 
 .form-control {
@@ -36,14 +36,19 @@
 
 table.table > tbody > tr > td, table.table > tbody > tr > th {
     border-top: 2px solid #708090;
-    border-bottom: 2px solid #708090;
 }
 
 .btn-primary {
-    background-color: #fce043;
-    background-image: linear-gradient(315deg, #fce043 0%, #fb7ba2 74%);
-    border: none;
+    background-image: linear-gradient(to left, #e74c3c, #e67e22);
+}
+
+.btn-group-lg > .btn, .btn-lg {
+    font-size: 1.1rem;
+}
+
+.table {
     color: black;
+    border: none;
 }
 
 h2#no-review {
@@ -52,6 +57,28 @@ h2#no-review {
 
 #navbar {
     justify-content: space-between;
+}
+
+.float-left {
+    padding: 3px 9px;
+    background-color: lightgray;
+    margin: 3px;
+    border: 2px black;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.jumbotron {
+    flex-shrink: 0;
+    margin-bottom: 0;
+}
+
+main {
+    flex: 1 0 auto;
 }
 
 /*Styling for update and delete buttons-----------------*/
@@ -181,4 +208,6 @@ textarea.form-control {
     border: 3px solid #708090;
 }
 
-
+.table td, .table th {
+    vertical-align: middle;
+}

@@ -16,6 +16,40 @@
     align-content: center;
 }
 
+#books-placeholder {
+    width: 100%;
+    table-layout: fixed;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.jumbotron {
+    flex-shrink: 0;
+    margin-bottom: 0;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.shadow {
+    width: 210px;
+    margin: 5%;
+}
+
+.page-item.active .page-link {
+    background-image: linear-gradient(to left, #e74c3c, #e67e22);
+    border: none;
+}
+
+.page-link {
+    color: black;
+}
+
 .img-for-status {
     position: absolute;
     clear: both;

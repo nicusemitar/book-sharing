@@ -83,13 +83,13 @@ function displayPages(totalPages, currentPage) {
     for (let i = 1; i <= totalPages; i++) {
         if (i < currentPage) {
             placeholder +=
-                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" onclick="goToPage(${i})">${i}</a></li>`;
+                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" href="" onclick="goToPage(${i})">${i}</a></li>`;
         } else if (i === currentPage) {
             placeholder +=
-                `<li class="page-item active" id="page${i}" value="${i}"><a class="page-link" onclick="goToPage(${i})">${i}</a></li>`;
+                `<li class="page-item active" id="page${i}" value="${i}"><a class="page-link" href="" onclick="goToPage(${i})">${i}</a></li>`;
         } else if (i > currentPage) {
             placeholder +=
-                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" onclick="goToPage(${i})">${i}</a></li>`;
+                `<li class="page-item" id="page${i}" value="${i}"><a class="page-link" href="" onclick="goToPage(${i})">${i}</a></li>`;
         }
     }
     $("#pagination-placeholder ul").html(placeholder);
