@@ -57,12 +57,56 @@
         <div class="row">
             <div class="col-1"></div>
             <div class="col-8">
+                <div id="on-page-selectors-block">
+
+                    <label for="sortSelect">Sort by</label>
+                    <select class="custom-select on-page-select" id="sortSelect">
+                        <option value="title">Book Title</option>
+                        <option value="author_id">Authors</option>
+                        <option value="user_id">Users</option>
+                        <option value="pages">Pages</option>
+                        <option value="addedAt">New</option>
+                    </select>
+
+                    <label for="itemsNumber" class="display-items-number">Displaying items</label>
+                    <select class="custom-select on-page-select" id="itemsNumber">
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="60">60</option>
+                        <option value="120">120</option>
+                    </select>
+
+                    <button type="button" id="reset-filters" class="btn btn-primary">Reset filters</button>
+
+                </div>
                 <div class="clearfix" id="books-placeholder">
 
                 </div>
             </div>
             <div class="col-1"></div>
-            <div class="col"></div>
+            <div class="col">
+                <table id="filters-placeholder">
+                    <tbody>
+                    </tbody>
+                </table>
+
+                <h6 class="filter-header available-header">Availability</h6>
+                <label><input type="radio" value="" name="availability" class=" filter-box">
+                    All</label>
+                <br>
+                <input type="radio" id="available" value="FREE" name="availability" class="filter-box">
+                <label for="available">Available</label>
+                <br>
+                <label for="authorSearch" class="filter-header">Find by author</label>
+                <input class="form-control" id="authorSearch" type="text" placeholder="Author name"
+                       aria-label="Search">
+
+                <label for="tagsSearch" class="filter-header">Find by Tags</label>
+                <input class="form-control" id="tagsSearch" type="text" placeholder="Enter tag name"
+                       aria-label="Search">
+                <br>
+                <button type="button" id="filter-button" class="btn btn-primary">Apply filters</button>
+            </div>
         </div>
         <div class="row">
             <div class="col-1"><br></div>

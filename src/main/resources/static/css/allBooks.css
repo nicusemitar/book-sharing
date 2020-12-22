@@ -64,3 +64,79 @@ main {
 .page-link {
     color: black;
 }
+
+
+ul {
+    list-style-type: none;
+}
+
+.dropdown-menu {
+    border: 2px solid coral;
+    border-radius: 15%;
+    background-image: linear-gradient(to left, #e74c3c, #e67e22);
+}
+
+.dropdown-menu a {
+    color: white;
+}
+
+.dropdown-menu a:hover {
+    color: white;
+}
+
+#btn-upgrade {
+    border: none;
+    padding: 12px 24px;
+    width: 150px;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    background-image: linear-gradient(to left, #e74c3c, #e67e22);
+    outline: none;
+}
+
+#btn-upgrade:hover {
+    position: relative;
+    bottom: 1px;
+    box-shadow: 1px 1px 4px lightslategray;
+}
+
+.filter-box {
+
+}
+
+.on-page-select {
+    width: 160px;
+}
+
+.on-page-selectors-block {
+    display: inline-block;
+}
+
+#filter-button {
+    border: none;
+    border-radius: 8px;
+    background-image: linear-gradient(to left, #e74c3c, #e67e22);
+}
+
+#reset-filters {
+    margin-left: 15px;
+    border: none;
+    border-radius: 8px;
+    background-image: linear-gradient(to left, #e74c3c, #e67e22);
+    display: none;
+}
+
+.filter-header{
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.display-items-number{
+    margin-left: 30px;
+}
+
+.available-header{
+    margin-top: 10px;
+}

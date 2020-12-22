@@ -59,4 +59,9 @@ public class BookRestController {
 
         return ResponseEntity.ok(bookService.getBooks(find, page, size, sort));
     }
+
+    @GetMapping("/lang")
+    public ResponseEntity<Object> getAllLanguages(){
+        return ResponseEntity.ok(bookService.getBooksLanguages());
+    }
 }

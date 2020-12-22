@@ -18,6 +18,6 @@ public class TagsRequestDto {
     private String tagName;
 
     @NotNull
-    @Pattern(regexp = "^[A-Z]*$", message = "Invalid tag type!")
+    @Pattern(regexp = "^[A-Z]*$",message = "Invalid tag type!")
     private String tagType;
 }

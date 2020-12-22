@@ -8,6 +8,7 @@ import com.endava.booksharing.api.dto.PageableBooksResponseDto;
 import com.endava.booksharing.model.Author;
 import com.endava.booksharing.model.Book;
 import com.endava.booksharing.model.Tags;
+import com.endava.booksharing.model.enums.StatusType;
 import com.endava.booksharing.model.enums.TagsType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
