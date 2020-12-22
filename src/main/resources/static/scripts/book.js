@@ -34,23 +34,38 @@ function displayBook(book) {
         let authorFirstName = authorFullName.substr(0, authorFullName.indexOf(' '));
         let authorLastName = authorFullName.substr(authorFullName.indexOf(' ') + 1);
         let placeholderLanguage = `<th>Language:</th><td>${book.data.language}</td>`;
+        let placeholderNoLanguage = `<th>Language:</th><td>Language is not indicated</td>`;
         let placeholderNrPages = `<th>Number of Pages:</th><td>${book.data.pages}</td>`;
         let placeholderStatus = `<th>Status:</th><td>${book.data.status}</td>`
         let placeholderDescription = `<th>Description:</th><td>${book.data.description}</td>`;
+        let placeholderNoDescription = `<th>Description:</th><td>Description is not indicated</td>`;
         let placeholderTags = `<th>Tags:</th><td>
                                 <div class="clearfix" id="tag-div"></div></td>`;
         let placeholderAddedBy = `<th>Added by:</th><td>${book.data.addedBy}</td>`;
+        let placeholderNoAddedBy = `<th>Added by:</th><td>User is not indicated</td>`;
         let placeholderAddedAt = `<th>Added at:</th><td>${book.data.addedAt}</td>`;
         let assignButton = '<button id = "assign-button" class="btn btn-primary btn-lg">Assign to me</button>';
         let waitingAssignButton = '<button id = "assign-button" class="btn btn-primary btn-lg">Get in line</button>';
         $("#title").html(placeholderTitle);
         $("#book-author").html(placeholderAuthor);
-        $("#book-language").html(placeholderLanguage);
+        if (book.data.language !== null) {
+            $("#book-language").html(placeholderLanguage);
+        } else {
+            $("#book-language").html(placeholderNoLanguage);
+        }
         $("#book-pages").html(placeholderNrPages);
-        $("#book-description").html(placeholderDescription);
+        if (book.data.description !== null) {
+            $("#book-description").html(placeholderDescription);
+        } else {
+            $("#book-description").html(placeholderNoDescription);
+        }
         $("#book-status").html(placeholderStatus);
         $("#book-tags").html(placeholderTags);
-        $("#book-added-by").html(placeholderAddedBy);
+        if (book.data.addedBy !== null) {
+            $("#book-added-by").html(placeholderAddedBy);
+        } else {
+            $("#book-added-by").html(placeholderNoAddedBy);
+        }
         $("#book-added-at").html(placeholderAddedAt);
         displayTags($(book.data.tags));
 
@@ -60,10 +75,18 @@ function displayBook(book) {
             $("#assignButton th").html(waitingAssignButton);
         }
         $("#txt-title").attr("value", placeholderTitle);
-        $("#txt-description").val(`${book.data.description}`);
+        if (book.data.description !== null) {
+            $("#txt-description").val(`${book.data.description}`);
+        } else {
+            $("#txt-description").attr("placeholder",`Currently is not indicated`);
+        }
         $("#txt-first-name").attr("value", authorFirstName);
         $("#txt-last-name").attr("value", authorLastName);
-        $("#txt-language").attr("value", `${book.data.language}`);
+        if (book.data.language !== null) {
+            $("#txt-language").attr("value", `${book.data.language}`);
+        } else {
+            $("#txt-language").attr("placeholder",`Currently is not indicated`);
+        }
         $("#txt-pages").attr("value", `${book.data.pages}`);
     }
 }
