@@ -12,6 +12,7 @@
             integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/allBooks.css}">
+    <link sec:authorize="hasAuthority('ADMIN')" rel="stylesheet" type="text/css" th:href="@{/css/notification.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/chat.css}">
 </head>
 <body>
@@ -28,6 +29,7 @@
             </span>
             </div>
         </div>
+        <div class="notification" sec:authorize="hasAuthority('ADMIN')"></div>
         <div class="dropdown">
             <button id="btn-upgrade" type="button" data-toggle="dropdown">
                 <div><span id="name" sec:authentication="principal.username"></span></div>
@@ -119,6 +121,7 @@
 <div class="jumbotron text-center"></div>
 <!--JS Script-->
 <script th:src="@{/scripts/allBooks.js}"></script>
+<script sec:authorize="hasAuthority('ADMIN')" th:src="@{/scripts/notification.js}"></script>
 <script th:src="@{/scripts/chat.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>

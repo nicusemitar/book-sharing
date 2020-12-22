@@ -22,7 +22,7 @@ public class ExceptionsHandler {
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> handleUnknownException(Exception ex) {
-        log.warn("Instance not saved!");
+        log.warn(ex.getMessage(), ex);
         if (ex instanceof HttpRequestMethodNotSupportedException) {
             return new ResponseEntity<>(new ErrorResponseObject(ex.getMessage()), METHOD_NOT_ALLOWED);
         } else if (ex instanceof NullPointerException) {

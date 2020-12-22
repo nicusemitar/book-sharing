@@ -1,5 +1,8 @@
 package com.endava.booksharing.service;
 
+import com.endava.booksharing.api.dto.PageableTimeExtendResponseDto;
+import com.endava.booksharing.api.dto.TimeExtendRequestDto;
+import com.endava.booksharing.api.dto.TimeExtendResponseDto;
 import com.endava.booksharing.repository.AssignmentsRepository;
 import com.endava.booksharing.repository.TimeExtendRepository;
 import com.endava.booksharing.utils.exceptions.AccessDeniedException;
@@ -12,14 +15,21 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static com.endava.booksharing.TestConstants.ID_ONE;
+import static com.endava.booksharing.TestConstants.PAGE_ONE;
+import static com.endava.booksharing.TestConstants.SIZE_ONE;
 import static com.endava.booksharing.utils.AssignmentsTestUtils.ASSIGNMENTS_TWO;
+import static com.endava.booksharing.utils.TimeExtendTestUtils.PAGEABLE_TIME_EXTEND_RESPONSE_DTO;
 import static com.endava.booksharing.utils.TimeExtendTestUtils.TIME_EXTEND_ONE;
 import static com.endava.booksharing.utils.TimeExtendTestUtils.TIME_EXTEND_ONE_NO_ID;
+import static com.endava.booksharing.utils.TimeExtendTestUtils.TIME_EXTEND_PAGE;
 import static com.endava.booksharing.utils.TimeExtendTestUtils.TIME_EXTEND_REQUEST_DTO;
 import static com.endava.booksharing.utils.TimeExtendTestUtils.TIME_EXTEND_REQUEST_DTO_DATE_EQUAL_WITH_DUE_DATE;
 import static com.endava.booksharing.utils.TimeExtendTestUtils.TIME_EXTEND_REQUEST_DTO_DATE_SMALLER_THAN_DUE_DATE;
@@ -27,8 +37,10 @@ import static com.endava.booksharing.utils.TimeExtendTestUtils.TIME_EXTEND_REQUE
 import static com.endava.booksharing.utils.TimeExtendTestUtils.TIME_EXTEND_RESPONSE_DTO;
 import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
 import static com.endava.booksharing.utils.UserTestUtils.USER_TWO;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -146,5 +158,28 @@ public class TimeExtendServiceTest {
                 timeExtendService.save(TIME_EXTEND_REQUEST_DTO_DATE_GREATER_THAN_ASSIGN_DATE_30_DAYS, ID_ONE));
 
         verify(assignmentsRepository).findById(ID_ONE);
+    }
+
+    @Test
+    public void shouldGetAllRequests() {
+        PageableTimeExtendResponseDto extendResponseDtoList = PAGEABLE_TIME_EXTEND_RESPONSE_DTO;
+
+        when(timeExtendRepository.findAll(any(Pageable.class))).thenReturn(TIME_EXTEND_PAGE);
+
+        PageableTimeExtendResponseDto actualResponseDtoList = timeExtendService.getAllRequests(PAGE_ONE, SIZE_ONE);
+
+        assertAll(
+                () -> assertEquals(extendResponseDtoList.getTotalItems(), actualResponseDtoList.getTotalItems()),
+                () -> assertEquals(extendResponseDtoList.getTotalPages(), actualResponseDtoList.getTotalPages())
+        );
+
+        verify(timeExtendRepository).findAll(any(Pageable.class));
+    }
+
+    @Test
+    public void shouldDeleteRequests() {
+        timeExtendService.deleteRequest(ID_ONE);
+
+        verify(timeExtendRepository).deleteById(ID_ONE);
     }
 }

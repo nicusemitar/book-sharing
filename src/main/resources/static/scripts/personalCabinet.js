@@ -292,6 +292,7 @@ function clearTextArea() {
     $("#messageError").css("display", "none");
     $("#submit").css("display", "block");
     $("#invalidReason").css("display", "none");
+    location.reload();
 }
 
 function submitRequest() {

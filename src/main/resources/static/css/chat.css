@@ -7,7 +7,6 @@
 
 .dropdown-menu{
     border: 2px solid coral;
-    border-radius: 15%;
     background-image: linear-gradient(to left, #e74c3c,#e67e22);
 }
 

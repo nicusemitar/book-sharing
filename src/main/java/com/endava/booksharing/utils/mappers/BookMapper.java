@@ -38,6 +38,7 @@ public class BookMapper {
         book.setDeletedBy(user);
         book.setDeletedWhy(deletedWhy);
         book.setDeletedAt(LocalDate.now(zoneId));
+        book.setBookStatus(StatusType.DELETED);
     }
 
     public static void updateFromBookRequestDtoToBook(Book book, BookRequestDto bookRequestDto, List<Tags> tagsFromDatabase) {

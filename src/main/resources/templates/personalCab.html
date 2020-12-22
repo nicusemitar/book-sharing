@@ -12,6 +12,7 @@
             integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
             src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/personalCab.css}" type="text/css">
+    <link sec:authorize="hasAuthority('ADMIN')" rel="stylesheet" type="text/css" th:href="@{/css/notification.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/chat.css}">
 </head>
 
@@ -19,6 +20,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <a href="/all-books"><img th:src="@{/images/logo.png}" alt="logo" height="60px" width="180px"/></a>
     <div class="dropdown">
+        <div class="notification" sec:authorize="hasAuthority('ADMIN')"></div>
         <button id="btn-upgrade" type="button" data-toggle="dropdown">
             <div><span id="name" sec:authentication="principal.username"></span></div>
         </button>
@@ -210,6 +212,7 @@
 <!--JS Script-->
 <script th:src="@{/scripts/personalCabinet.js}"></script>
 <script th:src="@{/scripts/chat.js}"></script>
+<script sec:authorize="hasAuthority('ADMIN')" th:src="@{/scripts/notification.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </body>
