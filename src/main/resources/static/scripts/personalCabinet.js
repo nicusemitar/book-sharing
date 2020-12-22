@@ -1,17 +1,24 @@
-$(document).ready(() => {
-    getAssignedBooks();
-});
-
-let currentAssignments;
-let currentAssignment;
-let titleValidate = true;
-let lastNameValidate = true;
-let firstNameValidate = true;
-let pagesValidate = true;
-let languageValidate = true;
+let titleValidate = false;
+let lastNameValidate = false;
+let firstNameValidate = false;
+let pagesValidate = false;
+let languageValidate = false;
 let descriptionValidate = false;
+let genresValidate = false;
+let bindingValidate = false;
+let qualityValidate = false;
 let goodColor = "#66cc66";
 let badColor = "#ff6666";
+
+
+$(document).ready(() => {
+    getAssignedBooks();
+    getGenreTags();
+    getQualityTags();
+    getBindingTags();
+});
+var currentAssignments;
+var currentAssignment;
 
 function getAssignedBooks() {
     $.ajax({
@@ -131,15 +138,51 @@ function validateLanguage(txt) {
     }
 }
 
+function validateGenres(genres) {
+    if (!genres || genres.length === 0) {
+        document.getElementById("errGenre").innerHTML = "<span class='warning'>Please select at least one genre!</span>";
+        document.getElementById("errGenre").style.color = badColor;
+        genresValidate = false;
+    } else {
+        document.getElementById("errGenre").innerHTML = "<span class='valid'>Good!</span>";
+        document.getElementById("errGenre").style.color = goodColor;
+        genresValidate = true;
+    }
+}
+
+function validateBinding(binding) {
+    if (!binding) {
+        document.getElementById("errBinding").innerHTML = "<span class='warning'>Please select binding!</span>";
+        document.getElementById("errBinding").style.color = badColor;
+        bindingValidate = false;
+    } else {
+        document.getElementById("errBinding").innerHTML = "<span class='valid'>Good!</span>";
+        document.getElementById("errBinding").style.color = goodColor;
+        bindingValidate = true;
+    }
+}
+
+function validateQuality(quality) {
+    if (!quality) {
+        document.getElementById("errQuality").innerHTML = "<span class='warning'>Please select quality!</span>";
+        document.getElementById("errQuality").style.color = badColor;
+        qualityValidate = false;
+    } else {
+        document.getElementById("errQuality").innerHTML = "<span class='valid'>Good!</span>";
+        document.getElementById("errQuality").style.color = goodColor;
+        qualityValidate = true;
+    }
+}
+
 function validateDescription(txt) {
     if (txt.trim().length < 1) {
-        document.getElementById("errLast-description").innerHTML = "<span class='warning'>Please enter the description</span>";
-        document.getElementById("errLast-description").style.color = badColor;
+        document.getElementById("errDescription").innerHTML = "<span class='warning'>Please enter the description!</span>";
+        document.getElementById("errDescription").style.color = badColor;
         document.getElementById("txt-description").style.border = "medium solid #ff6666"
         descriptionValidate = false;
     } else {
-        document.getElementById("errLast-description").innerHTML = "<span class='valid'>Good!</span>";
-        document.getElementById("errLast-description").style.color = goodColor;
+        document.getElementById("errDescription").innerHTML = "<span class='valid'>Good!</span>";
+        document.getElementById("errDescription").style.color = goodColor;
         document.getElementById("txt-description").style.border = "medium solid #66cc66"
         descriptionValidate = true;
     }
@@ -228,7 +271,8 @@ let tags = [];
 
 const validInput = () => {
     if (titleValidate === true && lastNameValidate === true && firstNameValidate === true && pagesValidate === true
-        && languageValidate === true && descriptionValidate === true) {
+        && languageValidate === true && descriptionValidate === true && genresValidate === true
+        && bindingValidate === true && qualityValidate === true) {
         return true;
     } else {
         validateTitle($("#txt-title").val());
@@ -237,8 +281,41 @@ const validInput = () => {
         validateLanguage($("#txt-language").val());
         validatePages($("#txt-pages").val());
         validateDescription($("#txt-description").val());
+        validateGenres($("#genre").val());
+        validateQuality($("#quality").val());
+        validateBinding($("#binding").val());
         return false;
     }
+}
+
+function openGeneralContent() {
+    $("#error-content").css("display", "none");
+    $("#success-content").css("display", "none");
+    $("#general-content").css("display", "block");
+    $("#submit-add-book").css("display", "block");
+    $("#txt-title").val("");
+    $("#txt-first-name").val("");
+    $("#txt-last-name").val("");
+    $("#txt-language").val("");
+    $("#txt-pages").val("");
+    $("#txt-description").val("");
+    $("#genre").val('default').selectpicker("refresh");
+    $("#quality").val('default').selectpicker("refresh");
+    $("#binding").val('default').selectpicker("refresh");
+}
+
+function openSuccessContent() {
+    $("#error-content").css("display", "none");
+    $("#general-content").css("display", "none");
+    $("#submit-add-book").css("display", "none");
+    $("#success-content").css("display", "block");
+}
+
+function openErrorContent() {
+    $("#success-content").css("display", "none");
+    $("#general-content").css("display", "none");
+    $("#submit-add-book").css("display", "none");
+    $("#error-content").css("display", "block");
 }
 
 $("#submit-add-book").on("click", () => {
@@ -248,17 +325,13 @@ $("#submit-add-book").on("click", () => {
             method: "POST",
             data: JSON.stringify(bookObject()),
             contentType: "application/json",
-            success: function (result) {
-                alert("Your book was added successfully");
-                window.location.href = '/personal-cabinet';
+            success: () => {
+                openSuccessContent();
             },
-            error: function (result) {
-                alert("Could not add your book!");
-                window.location.href = '/personal-cabinet';
+            error: () => {
+                openErrorContent();
             }
         });
-    } else {
-        document.getElementById("myModal").style.display = "block"
     }
 });
 
@@ -268,11 +341,39 @@ const bookObject = () => {
     tags.forEach(function (element) {
         const tagName = () => {
             return {
-                tagName: element.text
+                tagName: element.text,
+                tagType: "CUSTOM"
             };
         };
         tagList2.push(tagName());
     })
+
+    let selectedTag = () => {
+        return {
+            tagName: $("#quality").val(),
+            tagType: "QUALITY"
+        }
+    }
+    tagList2.push(selectedTag());
+
+    selectedTag = () => {
+        return {
+            tagName: $("#binding").val(),
+            tagType: "BINDING"
+        }
+    }
+    tagList2.push(selectedTag());
+
+    $("#genre").val().forEach(function (element) {
+        const tagName = () => {
+            return {
+                tagName: element,
+                tagType: "GENRE"
+            }
+        };
+        tagList2.push(tagName());
+    })
+
     return {
         title: $("#txt-title").val(),
         authorFirstName: $("#txt-first-name").val(),
@@ -283,6 +384,14 @@ const bookObject = () => {
         description: $("#txt-description").val()
     };
 };
+
+$("#books-table").on("click", ".shadow", function (e) {
+    if (e.target !== this) {
+        return;
+    }
+    let id = this.querySelector(".book-id").value;
+    window.location.href = `/book/${id}`;
+})
 
 function clearTextArea() {
     $("#textArea").val("");
@@ -385,3 +494,72 @@ $("#books-placeholder").on("click", ".shadow", function (e) {
     let id = this.querySelector(".book-id").value;
     window.location.href = `/book/${id}`;
 })
+
+function getGenreTags() {
+    $.ajax({
+        url: "/tags/type/genre",
+        method: "GET",
+        success: response => {
+            displayGenreTags(response);
+        }
+    })
+}
+
+function displayGenreTags(genres) {
+    if (genres.length > 0) {
+        let placeholder = "";
+        $.each(genres, (index, genre) => {
+            placeholder += `
+                <option value="${genre.tagName}">${genre.tagName}</option>
+                `;
+        });
+        $("#genre").append(placeholder);
+        $("#genre").selectpicker("refresh");
+    }
+}
+
+function getQualityTags() {
+    $.ajax({
+        url: "/tags/type/quality",
+        method: "GET",
+        success: response => {
+            displayQualityTags(response);
+        }
+    })
+}
+
+function displayQualityTags(qualities) {
+    if (qualities.length > 0) {
+        let placeholder = "";
+        $.each(qualities, (index, quality) => {
+            placeholder += `
+                <option value="${quality.tagName}">${quality.tagName}</option>
+                `;
+        });
+        $("#quality").append(placeholder);
+        $("#quality").selectpicker("refresh");
+    }
+}
+
+function getBindingTags() {
+    $.ajax({
+        url: "/tags/type/binding",
+        method: "GET",
+        success: response => {
+            displayBindingTags(response);
+        }
+    })
+}
+
+function displayBindingTags(bindings) {
+    if (bindings.length > 0) {
+        let placeholder = "";
+        $.each(bindings, (index, binding) => {
+            placeholder += `
+                <option value="${binding.tagName}">${binding.tagName}</option>
+                `;
+        });
+        $("#binding").append(placeholder);
+        $("#binding").selectpicker("refresh");
+    }
+}

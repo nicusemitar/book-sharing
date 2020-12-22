@@ -5,19 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class TagsRequestDto {
-    @NotNull
-    @Pattern(regexp = "^[a-zA-Z ]*$", message = "Invalid tags!")
+public class TagsResponseDto {
     private String tagName;
-
-    @NotNull
-    @Pattern(regexp = "^[A-Z]*$", message = "Invalid tag type!")
     private String tagType;
 }

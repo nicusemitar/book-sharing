@@ -15,12 +15,10 @@ import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.endava.booksharing.utils.mappers.TagsMapper.mapTagsRequestDtoToTags;
 import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
@@ -41,14 +39,13 @@ public class BookMapper {
         book.setBookStatus(StatusType.DELETED);
     }
 
-    public static void updateFromBookRequestDtoToBook(Book book, BookRequestDto bookRequestDto, List<Tags> tagsFromDatabase) {
+    public static void updateFromBookRequestDtoToBook(Book book, BookRequestDto bookRequestDto) {
         log.info("Setting new records for book");
 
         book.setTitle(bookRequestDto.getTitle());
         book.setPages(bookRequestDto.getPages());
         book.setDescription(bookRequestDto.getDescription());
         book.setBookLanguage(bookRequestDto.getBookLanguage());
-        book.setTags(mapTagsRequestDtoToTags(bookRequestDto.getTagList(), tagsFromDatabase));
         book.getAuthor().setFirstName(bookRequestDto.getAuthorFirstName());
         book.getAuthor().setLastName(bookRequestDto.getAuthorLastName());
     }

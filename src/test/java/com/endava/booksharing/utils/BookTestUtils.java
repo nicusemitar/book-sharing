@@ -8,7 +8,7 @@ import com.endava.booksharing.api.dto.PageableBooksResponseDto;
 import com.endava.booksharing.model.Author;
 import com.endava.booksharing.model.Book;
 import com.endava.booksharing.model.Tags;
-import com.endava.booksharing.model.enums.StatusType;
+import com.endava.booksharing.model.enums.TagsType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mockito.internal.util.collections.Sets;
@@ -127,7 +127,6 @@ public class BookTestUtils {
             .authorLastName(AUTHOR_LAST_NAME)
             .bookLanguage(BOOK_LANGUAGE)
             .pages(BOOK_PAGES)
-            .tagList(Collections.singletonList(TAGS_REQUEST_DTO))
             .description(BOOK_DESCRIPTION)
             .build();
 
@@ -191,8 +190,8 @@ public class BookTestUtils {
             .deletedDate(DEFAULT_DATE.toString())
             .deletedWhy(BOOK_DESCRIPTION)
             .build();
-    public static List<Tags> tagsList = Arrays.asList(new Tags(ID_ONE, "adventure", Collections.EMPTY_SET),
-            new Tags(ID_TWO, "science", Collections.EMPTY_SET));
+    public static List<Tags> tagsList = Arrays.asList(new Tags(ID_ONE, "adventure", TagsType.GENRE, Collections.EMPTY_SET),
+            new Tags(ID_TWO, "science", TagsType.GENRE, Collections.EMPTY_SET));
 
     static List<String> tagsStringList = Arrays.asList("science", "adventure");
     public static Set<String> TAGS_STRING_SET = new HashSet<>(tagsStringList);

@@ -4,6 +4,7 @@ import com.endava.booksharing.api.dto.BooksResponseDto;
 import com.endava.booksharing.api.dto.PageableBooksResponseDto;
 import com.endava.booksharing.model.Book;
 import com.endava.booksharing.model.Tags;
+import com.endava.booksharing.model.enums.TagsType;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +28,8 @@ import static com.endava.booksharing.utils.AuthorTestUtils.AUTHOR_ONE;
 import static com.endava.booksharing.utils.AuthorTestUtils.AUTHOR_TWO;
 
 public class BooksServiceTestUtils {
-    public static List<Tags> tagsList = Arrays.asList(new Tags(ID_ONE, "adventure", Collections.EMPTY_SET),
-            new Tags(ID_TWO, "science", Collections.EMPTY_SET));
+    public static List<Tags> tagsList = Arrays.asList(new Tags(ID_ONE, "adventure", TagsType.GENRE, Collections.EMPTY_SET),
+            new Tags(ID_TWO, "science",TagsType.GENRE, Collections.EMPTY_SET));
 
     static List<String> tagsStringList = Arrays.asList("science", "adventure");
     public static Set<String> TAGS_STRING_SET = new HashSet<>(tagsStringList);

@@ -5,7 +5,7 @@ $(document).ready(() => {
 
 function getReviews() {
     $.ajax({
-        url: `/review`,
+        url: `/reviews`,
         method: "GET",
         success: response => {
             displayReviews(response.reviews, response.currentPage);
@@ -49,7 +49,7 @@ $("#confirm-delete").on('click', function () {
     let id = $("#review-id-delete").val();
     $.ajax({
         method: "DELETE",
-        url: `/review/${id}`,
+        url: `/reviews/${id}`,
         success: () => {
             styleSuccessModal();
             getReviews();
@@ -99,7 +99,7 @@ function displayPages(totalPages, currentPage) {
 
 function goToPage(i) {
     $.ajax({
-        url: "/review",
+        url: "/reviews",
         method: "GET",
         data: {page: i - 1},
         success: response => {
