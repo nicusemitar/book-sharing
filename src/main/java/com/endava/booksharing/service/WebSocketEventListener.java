@@ -1,8 +1,8 @@
 package com.endava.booksharing.service;
 
 
+import com.endava.booksharing.api.dto.ChatMessageDto;
 import com.endava.booksharing.model.ChatMessage;
-import com.endava.booksharing.model.enums.MessageType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -11,6 +11,8 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -32,11 +34,12 @@ public class WebSocketEventListener {
         if(username != null) {
             log.info("User Disconnected : " + username);
 
-            ChatMessage chatMessage = new ChatMessage();
-            chatMessage.setType(MessageType.LEAVE);
-            chatMessage.setSender(username);
+            ChatMessageDto chatMessage = ChatMessageDto.builder()
+                    .type("LEAVE")
+                    .sender(username)
+                    .build();
 
-            messagingTemplate.convertAndSend("/topic/public", chatMessage);
+            messagingTemplate.convertAndSend("/topic/public", Collections.singletonList(chatMessage));
         }
     }
 }

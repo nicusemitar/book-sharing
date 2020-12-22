@@ -1,5 +1,6 @@
 package com.endava.booksharing.utils;
 
+import com.endava.booksharing.api.dto.ChatMessageDto;
 import com.endava.booksharing.model.ChatMessage;
 import com.endava.booksharing.model.enums.MessageType;
 import lombok.AccessLevel;
@@ -14,6 +15,11 @@ public class ChatMessageUtils {
             .content("hello")
             .sender("username")
             .type(MessageType.CHAT).build();
+
+    public static final ChatMessageDto SAMPLE_MESSAGE_DTO = ChatMessageDto.builder()
+            .content("hello")
+            .sender("username")
+            .type("CHAT").build();
 
     public static final Map<String, Object> sessionAttributes = new HashMap<>();
     public static final Map<String, String> currentUserAttributes = new HashMap<>();
