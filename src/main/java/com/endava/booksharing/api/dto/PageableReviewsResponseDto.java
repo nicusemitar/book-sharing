@@ -5,12 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class ReviewResponseDto {
-    private Long id;
-    private String textReview;
-    private String username;
+public class PageableReviewsResponseDto {
+    public long totalItems;
+    public int totalPages;
+    public int currentPage;
+    public List<ReviewResponseDto> reviews;
 }

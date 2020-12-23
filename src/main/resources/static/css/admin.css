@@ -186,6 +186,6 @@ main {
     color: black;
 }
 
-*, ::after, ::before{
+.pagination{
     justify-content: center;
 }

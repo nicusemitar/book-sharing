@@ -211,3 +211,8 @@ textarea.form-control {
 .table td, .table th {
     vertical-align: middle;
 }
+
+.dropdown-menu.show {
+    display: block;
+    left: 40px;
+}

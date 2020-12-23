@@ -12,6 +12,10 @@ import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RoleTestUtils {
+    public static final Set<Role> AUTHORITES = new HashSet<>(Arrays.asList(
+            Role.builder().roleType(RoleType.ADMIN).build()
+            , Role.builder().roleType(RoleType.USER).build()));
+
     public static Set<Role> USER_ROLES() {
         Set<Role> roles = new HashSet<>();
         roles.add(ROLE_USER());
@@ -23,8 +27,4 @@ public class RoleTestUtils {
         role.setRoleType(RoleType.USER);
         return role;
     }
-
-    public static final Set<Role> AUTHORITES = new HashSet<>(Arrays.asList(
-            Role.builder().roleType(RoleType.ADMIN).build()
-            , Role.builder().roleType(RoleType.USER).build()));
 }
