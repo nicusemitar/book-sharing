@@ -6,6 +6,20 @@ $(document).ready(() => {
 
 let tags = [];
 
+function verifyUserAssignmentForThisBook(bookID){
+    $.ajax({
+        url: `/assignments/current-user`,
+        method: "GET",
+        success: response => {
+            $.each(response, (index, assignment) => {
+                if(assignment.bookId === bookID || response.length >= 3){
+                    $("#assign-button").hide();
+                }
+            })
+        },
+    })
+}
+
 function getBook(id) {
     $.ajax({
         url: `/books/${id}`,
@@ -66,6 +80,21 @@ function displayBook(book) {
         $("#txt-language").attr("value", `${book.data.language}`);
         $("#txt-pages").attr("value", `${book.data.pages}`);
     }
+    verifyUserAssignmentForThisBook(book.data.id);
+    $("#assign-button").on("click", () => {
+        $.ajax({
+            method: "POST",
+            url: `/assignments/${book.data.id}/assign`,
+            data: JSON.stringify(reviewObject()),
+            contentType: "application/json",
+            success: response => {
+                $("#assign-button").hide();
+            },error: err=>{
+                let errText = '<p class = "alert alert-danger">'+err.responseJSON.message+'</p>';
+                $("#assignButton").html(errText);
+            }
+        })
+    });
 }
 
 function displayTags(tags) {

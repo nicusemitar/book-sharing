@@ -7,8 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import java.util.Optional;
+
 @Repository
 public interface TagsRepository extends JpaRepository<Tags, Long> {
     List<Tags> findAllByTagTypeEquals(TagsType tagType);
     List<Tags> findAllByTagNameContaining(String tagName);
+    Optional<Tags> findTagsByTagName(String tagName);
 }

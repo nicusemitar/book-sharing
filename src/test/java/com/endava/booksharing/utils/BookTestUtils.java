@@ -25,6 +25,7 @@ import java.util.Set;
 
 import static com.endava.booksharing.TestConstants.*;
 import static com.endava.booksharing.utils.TagsTestUtils.DEFAULT_TAG;
+import static com.endava.booksharing.utils.TagsTestUtils.TAGS_BUSY;
 import static com.endava.booksharing.utils.TagsTestUtils.TAGS_REQUEST_DTO;
 import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
 import static com.endava.booksharing.utils.UserTestUtils.USER_TWO;
@@ -152,6 +153,19 @@ public class BookTestUtils {
             .addedAt(DEFAULT_DATE)
             .user(USER_ONE)
             .bookStatus(STATUS_FREE)
+            .id(ID_ONE)
+            .build();
+
+    public static final Book BOOK_TWO_BUSY = Book.builder()
+            .title(BOOK_TITLE)
+            .author(AUTHOR_ONE)
+            .bookLanguage(BOOK_LANGUAGE)
+            .pages(BOOK_PAGES)
+            .tags(Sets.newSet(TAGS_BUSY))
+            .description(BOOK_DESCRIPTION)
+            .addedAt(DEFAULT_DATE)
+            .user(USER_ONE)
+            .bookStatus(StatusType.BUSY)
             .id(ID_ONE)
             .build();
 

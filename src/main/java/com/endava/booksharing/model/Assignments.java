@@ -24,7 +24,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class Assignments {
+public class Assignments implements Comparable<Assignments>{
 
     @Id
     @SequenceGenerator(name = "assignments_id_generator", sequenceName = "seq_assignments", allocationSize = 1)
@@ -44,5 +44,8 @@ public class Assignments {
     @OneToOne
     private Book book;
 
-
+    @Override
+    public int compareTo(Assignments one) {
+        return this.getDueDate().compareTo(one.getDueDate());
+    }
 }

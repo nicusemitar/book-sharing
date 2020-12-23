@@ -1,11 +1,11 @@
 package com.endava.booksharing.api.restcontroller;
 
+import com.endava.booksharing.api.dto.AssignmentsResponseDto;
 import com.endava.booksharing.api.dto.TimeExtendRequestDto;
 import com.endava.booksharing.api.dto.TimeExtendResponseDto;
 import com.endava.booksharing.api.exchange.Response;
 import com.endava.booksharing.service.AssignmentsService;
 import com.endava.booksharing.service.TimeExtendService;
-import com.endava.booksharing.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -26,12 +28,11 @@ import javax.validation.Valid;
 public class AssignmentsRestController {
 
     private final AssignmentsService assignmentsService;
-    private final UserDetailsServiceImpl userDetailsService;
     private final TimeExtendService timeExtendService;
 
     @GetMapping(value = "/current-user")
     public ResponseEntity<Object> getAssignmentsByLoggedUser() {
-        return new ResponseEntity<>(assignmentsService.getAssignmentsByUserId(userDetailsService.getCurrentUser().getId()), HttpStatus.OK);
+        return new ResponseEntity<>(assignmentsService.getAssignmentsByUser(), HttpStatus.OK);
     }
 
     @PostMapping("/{id}/extends")
@@ -52,5 +53,10 @@ public class AssignmentsRestController {
             @RequestParam(defaultValue = "8", name = "size") int size) {
         if (page < 0 || size <= 0) throw new IllegalArgumentException("Illegal arguments");
         return ResponseEntity.ok(timeExtendService.getAllRequests(page, size));
+    }
+
+    @PostMapping(value = "/{bookId}/assign")
+    public ResponseEntity<AssignmentsResponseDto> assignToCurrentUser(@PathVariable @NotNull Long bookId) {
+        return ResponseEntity.ok(assignmentsService.saveAssigmentForCurrentUserForBookWithID(bookId));
     }
 }
