@@ -6,16 +6,29 @@ $(document).ready(() => {
 
 let tags = [];
 
-function verifyUserAssignmentForThisBook(bookID){
+function verifyUserAssignmentForThisBook(bookID) {
     $.ajax({
         url: `/assignments/current-user`,
         method: "GET",
         success: response => {
             $.each(response, (index, assignment) => {
-                if(assignment.bookId === bookID || response.length >= 3){
-                    $("#assign-button").hide();
+                if (assignment.bookId === bookID) {
+                    let placeholder = `
+                        <span class="d-inline-block" data-toggle="popover" data-trigger="hover" title="Sorry mate!" data-content="You already have an assignment for this book">
+                            <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Get in line</button>
+                        </span>`
+                    $("#assignButtons").html(placeholder);
+                    $('[data-toggle="popover"]').popover();
                 }
             })
+            if (response.length >= 3) {
+                let placeholder = `
+                        <span class="d-inline-block" data-toggle="popover" data-trigger="hover" title="Sorry mate!" data-content="You already have assignments for 3 books">
+                            <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Get in line</button>
+                        </span>`
+                $("#assignButtons").html(placeholder);
+                $('[data-toggle="popover"]').popover();
+            }
         },
     })
 }
@@ -58,8 +71,8 @@ function displayBook(book) {
         let placeholderAddedBy = `<th>Added by:</th><td>${book.data.addedBy}</td>`;
         let placeholderNoAddedBy = `<th>Added by:</th><td>User is not indicated</td>`;
         let placeholderAddedAt = `<th>Added at:</th><td>${book.data.addedAt}</td>`;
-        let assignButton = '<button id = "assign-button" class="btn btn-primary btn-lg">Assign to me</button>';
-        let waitingAssignButton = '<button id = "assign-button" class="btn btn-primary btn-lg">Get in line</button>';
+        let assignButton = '<button id = "assign-button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#assignModal">Assign to me</button>';
+        let waitingAssignButton = '<button id = "assign-button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#assignModal">Get in line</button>';
         $("#title").html(placeholderTitle);
         $("#book-author").html(placeholderAuthor);
         if (book.data.language !== null) {
@@ -85,8 +98,17 @@ function displayBook(book) {
 
         if (book.data.status === "FREE") {
             $("#assignButton th").html(assignButton);
+            $("#waitingListMessage").css("display", "none");
+            $("#messageSucces").css("display", "none");
+            $("#messageError").css("display", "none");
+            $("#afterAction").css("display", "none");
+
         } else {
             $("#assignButton th").html(waitingAssignButton);
+            $("#assignBookMessage").css("display", "none");
+            $("#messageSucces").css("display", "none");
+            $("#messageError").css("display", "none");
+            $("#afterAction").css("display", "none");
         }
         $("#txt-title").attr("value", placeholderTitle);
         if (book.data.description !== null) {
@@ -104,17 +126,32 @@ function displayBook(book) {
         $("#txt-pages").attr("value", `${book.data.pages}`);
     }
     verifyUserAssignmentForThisBook(book.data.id);
-    $("#assign-button").on("click", () => {
+    $("#submit-assign").on("click", () => {
         $.ajax({
             method: "POST",
             url: `/assignments/${book.data.id}/assign`,
             data: JSON.stringify(reviewObject()),
             contentType: "application/json",
             success: response => {
-                $("#assign-button").hide();
-            },error: err=>{
-                let errText = '<p class = "alert alert-danger">'+err.responseJSON.message+'</p>';
-                $("#assignButton").html(errText);
+                let currentDate = new Date(getCurrentDate());
+                let assignDate = new Date(response.assignDate);
+                if(currentDate.getTime() === assignDate.getTime()){
+                    $(".message-assign").text(`Congratulations! you can have this book starting from  today`);
+                } else {
+                    $(".message-assign").text(`Congratulations! you can have this book starting from  ` + `${response.assignDate}`);
+                }
+                $("#assignBook").css("display", "none");
+                $("#afterAction").css("display", "block")
+                $("#messageSucces").css("display", "block");
+                $("#assignBookMessage").css("display", "none");
+                $("#waitingListMessage").css("display", "none");
+                $("#messageError").css("display", "none");
+                $('#assignModal').on('hidden.bs.modal', function () {
+                    location.reload();
+                })
+
+            }, error: err => {
+                window.location.href = "/error";
             }
         })
     });
@@ -132,6 +169,14 @@ function displayTags(tags) {
     } else {
         $("#tag-div").html("<p>There are no tags for this book</p>")
     }
+}
+
+function getCurrentDate() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    return today = yyyy + '-' + mm + '-' + dd;
 }
 
 function displayReviews(reviews) {

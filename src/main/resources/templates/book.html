@@ -14,7 +14,6 @@
     <link rel="stylesheet" th:href="@{/css/chat.css}">
     <link rel="stylesheet" th:href="@{/css/book.css}">
     <link sec:authorize="hasAuthority('ADMIN')" rel="stylesheet" type="text/css" th:href="@{/css/notification.css}">
-    <script th:src="@{/scripts/book.js}"></script>
 </head>
 <body>
 <main>
@@ -61,7 +60,7 @@
                                 <tr id="book-added-at"></tr>
                                 <tr id="book-tags"></tr>
                                 <tr id="assignButton">
-                                    <th>
+                                    <th id="assignButtons">
 
                                     </th>
                                     <td>
@@ -206,12 +205,52 @@
             </div>
         </div>
     </div>
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="assignModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ASSIGN BOOK</h5>
+                </div>
+                <div class="modal-body" id="assignBookMessage">
+                    <h3>Are you sure you want to assign this book?</h3><br>
+                    <h4 class="alert-warning">Please remember that you can't have more than 3 books assigned and in queue</h4>
+                </div>
+                <div class="modal-body" id="waitingListMessage">
+                    <h3>Are you sure you want to add this book to your waiting list?</h3><br>
+                    <h4 class="alert-warning">Please remember that you can't have more than 3 books assigned and in queue</h4>
+                </div>
+
+                <div class="modal-body" id="messageSucces">
+                    <h3 class="message-assign"></h3>
+                    <img id="succesImage" src="/images/check.png"/>
+                </div>
+
+                <div class="modal-body" id="messageError">
+                    <h3>Something went wrong<br> please try again !</h3>
+                    <img id="errorImage" src="/images/error.png"/>
+                </div>
+
+
+                <div class="modal-footer" id="assignBook">
+                    <button class="buton-submit" data-dismiss="modal" id="close" type="button">
+                        NO
+                    </button>
+                    <button class="buton-submit" id="submit-assign"> YES</button>
+                </div>
+
+                <div class="modal-footer" id="afterAction">
+                    <button class="buton-submit" data-dismiss="modal" type="button" onclick="location.reload()">NO</button>
+                    <button class="buton-submit" data-dismiss="modal" onclick="location.reload()"> YES</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <!--Footer-->
 <div class="jumbotron text-center"></div>
+<div th:insert="allBooksPage :: chat-page"></div>
 <!--Script-->
 <script th:src="@{/scripts/book.js}"></script>
-<div th:insert="allBooksPage :: chat-page"></div>
 <script sec:authorize="hasAuthority('ADMIN')" th:src="@{/scripts/notification.js}"></script>
 <script th:src="@{/scripts/chat.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>

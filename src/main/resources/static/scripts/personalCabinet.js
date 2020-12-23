@@ -39,8 +39,11 @@ function displayAssignedBooks(assignments) {
     if (assignments.length > 0) {
         let placeholder = "";
         $.each(assignments, (index, assignments) => {
-            placeholder +=
-                `<span class="shadow float-left p-4 mb-4 bg-white">
+            let currentDate = new Date(getCurrentDate());
+            let assignDate = new Date(assignments.assignDate);
+            if (currentDate.getTime() >= assignDate.getTime()) {
+                placeholder +=
+                    `<span class="shadow float-left p-4 mb-4 bg-white">
                     <input class='user-id' type='hidden' value='${assignments.id}'>
                     <input class='book-id' type='hidden' value='${assignments.bookId}'>
                     <img src="/images/book-image.jpg" style="width: 100%; padding: 10%" align="center">
@@ -52,6 +55,21 @@ function displayAssignedBooks(assignments) {
                     <button type="button" class="extend-button extend1" value="${index}"
                     id="extend-open" data-toggle="modal" data-target="#exampleModal">Extend Time</button>
                 </span>`
+            } else {
+                placeholder +=
+                    `<span class="shadow float-left p-4 mb-4 bg-white" style="opacity: 0.4;">
+                    <input class='user-id' type='hidden' value='${assignments.id}'>
+                    <input class='book-id' type='hidden' value='${assignments.bookId}'>
+                    <img src="/images/waiting-assignment.png" style="width: 100%; padding: 10%" align="center">
+                    <p align="center">
+                        ${assignments.bookName}<br>
+                        This book will be
+                        available for you on: ${assignments.assignDate}<br>
+                    </p>
+                    <button disabled="true" type="button" class="extend-button extend1" value="${index}"
+                    id="extend-open" data-toggle="modal" data-target="#exampleModal">Extend Time</button>
+                </span>`
+            }
         });
         $("#books-placeholder").html(placeholder);
     } else {
@@ -64,6 +82,13 @@ function displayAssignedBooks(assignments) {
     });
 }
 
+function getCurrentDate() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    return today = yyyy + '-' + mm + '-' + dd;
+}
 function validateTitle(txt) {
     let regAdd = /^[A-z0-9]([- ',.A-z0-9]{0,40}[A-z0-9])$/
     if (regAdd.test(txt) === false) {
