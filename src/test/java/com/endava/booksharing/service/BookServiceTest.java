@@ -39,6 +39,8 @@ import static com.endava.booksharing.utils.BookTestUtils.DELETE_BOOK_REQUEST_DTO
 import static com.endava.booksharing.utils.BookTestUtils.PAGEABLE_BOOKS_RESPONSE_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.TO_UPDATE_BOOK_REQUEST_DTO;
 import static com.endava.booksharing.utils.BookTestUtils.UPDATED_BOOK_RESPONSE_DTO;
+import static com.endava.booksharing.utils.BookTestUtils.BOOK_LIST;
+import static com.endava.booksharing.utils.BookTestUtils.FILTER_DTO_ONE;
 import static com.endava.booksharing.utils.TagsTestUtils.DEFAULT_TAG;
 import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -178,5 +180,18 @@ public class BookServiceTest {
 
         assertEquals(expectedPageableBooksResponseDto, actualPageableBooksResponseDto);
         verify(bookRepository).findAll(any(Specification.class), any(Pageable.class));
+    }
+
+    @Test
+    public void shouldReturnFilteredPageableBooksResponseDto() {
+        when(bookRepository.findAll(any(Specification.class))).thenReturn(BOOK_LIST);
+
+        PageableBooksResponseDto expectedPageableBooksResponseDto = PAGEABLE_BOOKS_RESPONSE_DTO;
+        PageableBooksResponseDto actualPageableBooksResponseDto = bookService
+                .getFilteredBooks(FILTER_DTO_ONE.getAuthorName(), FILTER_DTO_ONE.getLanguage(), FILTER_DTO_ONE.getTags(),
+                        FILTER_DTO_ONE.getGenTags(), FILTER_DTO_ONE.getTagsFind(), FILTER_DTO_ONE.getStatus(), FILTER_DTO_ONE.getPage(), FILTER_DTO_ONE.getSize(), FILTER_DTO_ONE.getSort());
+
+        assertEquals(expectedPageableBooksResponseDto, actualPageableBooksResponseDto);
+        verify(bookRepository).findAll(any(Specification.class));
     }
 }

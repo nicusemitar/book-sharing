@@ -5,6 +5,8 @@ import com.endava.booksharing.api.dto.BookResponseDto;
 import com.endava.booksharing.api.dto.BooksResponseDto;
 import com.endava.booksharing.api.dto.DeleteBookRequestDto;
 import com.endava.booksharing.api.dto.PageableBooksResponseDto;
+import com.endava.booksharing.api.dto.DeleteBookRequestDto;
+import com.endava.booksharing.api.dto.FilterDto;
 import com.endava.booksharing.model.Author;
 import com.endava.booksharing.model.Book;
 import com.endava.booksharing.model.Tags;
@@ -263,4 +265,15 @@ public class BookTestUtils {
             .books(Arrays.asList(BOOKS_RESPONSE_DTO_ONE, BOOKS_RESPONSE_DTO_TWO))
             .build();
 
+    public static final FilterDto FILTER_DTO_ONE = FilterDto.builder()
+            .authorName("")
+            .language(BOOK_LANGUAGE)
+            .tags(Sets.newSet(TAG_ONE))
+            .genTags(Sets.newSet(TAG_TWO))
+            .tagsFind(TAG_THREE)
+            .status(STATUS_FREE.toString())
+            .page(PAGE_ZERO)
+            .size(SIZE)
+            .sort(SORT_ONE)
+            .build();
 }
