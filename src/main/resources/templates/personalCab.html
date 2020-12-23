@@ -74,13 +74,21 @@
                                 <h5>ADD NEW BOOK </h5>
                             </div>
                             <div class="modal-body" id="general-content">
-                                <div class="form-group">
+                                <div class="form-group language-pages">
                                     <label for="txt-title"><span class="req"></span> Book Title </label>
                                     <input autocomplete="off" class="form-control add" id="txt-title"
                                            oninput="validateTitle(this.value);"
                                            required
                                            type="text"/>
-                                    <div id="errLast-title"></div>
+                                    <div class="error-messages" id="errLast-title"></div>
+                                </div>
+                                <div class="form-group language-pages">
+                                    <label for="txt-pages"><span class="req"></span> Pages </label>
+                                    <input autocomplete="off" class="form-control add" id="txt-pages"
+                                           oninput="validatePages(this.value);"
+                                           required
+                                           type="number"/>
+                                    <div class="error-messages" id="errLast-pages"></div>
                                 </div>
                                 <div class="form-group first-last-name">
                                     <label for="txt-first-name"><span class="req"></span> Author first name </label>
@@ -100,34 +108,27 @@
                                     <div class="error-messages" id="errLast-last-name"></div>
                                 </div>
                                 <br>
-                                <div class="form-group language-pages">
-                                    <label for="txt-language"><span class="req"></span> Language </label>
-                                    <input autocomplete="off" class="form-control add" id="txt-language"
-                                           oninput="validateLanguage(this.value);"
-                                           required
-                                           type="text"/>
-                                    <div class="error-messages" id="errLast-language"></div>
-                                </div>
-
-                                <div class="form-group language-pages">
-                                    <label for="txt-pages"><span class="req"></span> Pages </label>
-                                    <input autocomplete="off" class="form-control add" id="txt-pages"
-                                           oninput="validatePages(this.value);"
-                                           required
-                                           type="number"/>
-                                    <div class="error-messages" id="errLast-pages"></div>
-                                </div>
-
                                 <p>Tags</p>* Use "," to add new tag<br>
                                 <div class="form-group tags-input" data-name="tags-input"></div>
 
-                                <div class="form-group py-2">
-                                    <label for="genre">Genres</label><br>
-                                    <select class="selectpicker" multiple data-live-search="true" id="genre"
-                                            onchange="validateGenres(this.value);" title="Choose genres...">
-                                    </select><br>
-                                    <div class="error-messages" id="errGenre"></div>
+                                <div class="row d-flex justify-content-center">
+                                    <div class="form-group select-one py-2">
+                                        <label for="genre">Genres</label><br>
+                                        <select class="selectpicker" multiple data-live-search="true" id="genre"
+                                                onchange="validateGenres(this.value);" title="Choose genres...">
+                                        </select><br>
+                                        <div class="error-messages" id="errGenre"></div>
+                                    </div>
+                                    <div class="form-group select-one py-2">
+                                        <label for="txt-language"><span class="req"></span> Language </label><br>
+                                        <select class="selectpicker" data-live-search="true" id="txt-language"
+                                                onchange="validateLanguage(this.value);"
+                                                title="Choose language...">
+                                        </select><br>
+                                        <div class="error-messages" id="errLast-language"></div>
+                                    </div>
                                 </div>
+
                                 <div class="row d-flex justify-content-center">
                                     <div class="form-group select-one py-2">
                                         <label for="binding">Binding</label><br>

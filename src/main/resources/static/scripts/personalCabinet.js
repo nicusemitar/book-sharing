@@ -16,6 +16,7 @@ $(document).ready(() => {
     getGenreTags();
     getQualityTags();
     getBindingTags();
+    getLanguageTags();
 });
 var currentAssignments;
 var currentAssignment;
@@ -27,10 +28,6 @@ function getAssignedBooks() {
         success: response => {
             currentAssignments = response;
             displayAssignedBooks(response);
-        },
-        error: err => {
-            let responseObj = err.responseJSON;
-            alert(`ERROR: " ${responseObj.message} " TIME ${responseObj.time}`);
         }
     })
 }
@@ -55,7 +52,7 @@ function displayAssignedBooks(assignments) {
         });
         $("#books-placeholder").html(placeholder);
     } else {
-        $("#books-placeholder").html("<p>You don't have any assigned books.</p>");
+        $("#books-placeholder").html("<p class='text-center'>You don't have any assigned books.</p>");
     }
 
     $(".extend1").on('click', function () {
@@ -123,17 +120,14 @@ function validatePages(txt) {
     }
 }
 
-function validateLanguage(txt) {
-    let regAdd = /^[a-zA-Z]{1,30}$/
-    if (regAdd.test(txt) === false) {
-        document.getElementById("errLast-language").innerHTML = "<span class='warning'>Please use only letters!</span>";
+function validateLanguage(language) {
+    if (!language) {
+        document.getElementById("errLast-language").innerHTML = "<span class='warning'>Please select language!</span>";
         document.getElementById("errLast-language").style.color = badColor;
-        document.getElementById("txt-language").style.border = "medium solid #ff6666"
         languageValidate = false;
     } else {
         document.getElementById("errLast-language").innerHTML = "<span class='valid'>Good!</span>";
         document.getElementById("errLast-language").style.color = goodColor;
-        document.getElementById("txt-language").style.border = "medium solid #66cc66"
         languageValidate = true;
     }
 }
@@ -296,7 +290,7 @@ function openGeneralContent() {
     $("#txt-title").val("");
     $("#txt-first-name").val("");
     $("#txt-last-name").val("");
-    $("#txt-language").val("");
+    $("#txt-language").val('default').selectpicker("refresh");
     $("#txt-pages").val("");
     $("#txt-description").val("");
     $("#genre").val('default').selectpicker("refresh");
@@ -378,7 +372,7 @@ const bookObject = () => {
         title: $("#txt-title").val(),
         authorFirstName: $("#txt-first-name").val(),
         authorLastName: $("#txt-last-name").val(),
-        bookLanguage: $("#txt-language").val(),
+        bookLanguage: transformNameToValidForm($("#txt-language").val()),
         pages: $("#txt-pages").val(),
         tagList: tagList2,
         description: $("#txt-description").val()
@@ -502,7 +496,7 @@ function displayGenreTags(genres) {
         let placeholder = "";
         $.each(genres, (index, genre) => {
             placeholder += `
-                <option value="${genre.tagName}">${genre.tagName}</option>
+                <option value="${genre.tagName}">${transformNameToValidForm(genre.tagName)}</option>
                 `;
         });
         $("#genre").append(placeholder);
@@ -525,7 +519,7 @@ function displayQualityTags(qualities) {
         let placeholder = "";
         $.each(qualities, (index, quality) => {
             placeholder += `
-                <option value="${quality.tagName}">${quality.tagName}</option>
+                <option value="${quality.tagName}">${transformNameToValidForm(quality.tagName)}</option>
                 `;
         });
         $("#quality").append(placeholder);
@@ -548,10 +542,37 @@ function displayBindingTags(bindings) {
         let placeholder = "";
         $.each(bindings, (index, binding) => {
             placeholder += `
-                <option value="${binding.tagName}">${binding.tagName}</option>
+                <option value="${binding.tagName}">${transformNameToValidForm(binding.tagName)}</option>
                 `;
         });
         $("#binding").append(placeholder);
         $("#binding").selectpicker("refresh");
     }
+}
+
+function getLanguageTags() {
+    $.ajax({
+        url: "/tags/type/language",
+        method: "GET",
+        success: response => {
+            displayLanguageTags(response);
+        }
+    })
+}
+
+function displayLanguageTags(languages) {
+    if (languages.length > 0) {
+        let placeholder = "";
+        $.each(languages, (index, language) => {
+            placeholder += `
+                <option value="${language.tagName}">${transformNameToValidForm(language.tagName)}</option>
+                `;
+        });
+        $("#txt-language").append(placeholder);
+        $("#txt-language").selectpicker("refresh");
+    }
+}
+
+function transformNameToValidForm(name) {
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase().replace(/-/g, ' ');
 }

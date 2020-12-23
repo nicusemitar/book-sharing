@@ -9,7 +9,7 @@
     width: auto;
     height: auto;
     left: 15%;
-    top: 0%;
+    top: 0;
     margin-left: -300px;
     margin-bottom: 374px;
 }
@@ -468,7 +468,7 @@ ul.dropdown-menu.inner.show {
     background-image: none;
 }
 
-.dropdown-item:hover {
+.dropdown-item:hover, .dropdown-item.active, .dropdown-item:active {
     background-color: orange;
 }
 

@@ -20,6 +20,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.util.StringUtils.capitalize;
 
 @NoArgsConstructor(access = PRIVATE)
 @Slf4j
@@ -42,32 +43,33 @@ public class BookMapper {
     public static void updateFromBookRequestDtoToBook(Book book, BookRequestDto bookRequestDto) {
         log.info("Setting new records for book");
 
-        book.setTitle(bookRequestDto.getTitle());
+        book.setTitle(capitalize(bookRequestDto.getTitle()));
         book.setPages(bookRequestDto.getPages());
-        book.setDescription(bookRequestDto.getDescription());
-        book.setBookLanguage(bookRequestDto.getBookLanguage());
-        book.getAuthor().setFirstName(bookRequestDto.getAuthorFirstName());
-        book.getAuthor().setLastName(bookRequestDto.getAuthorLastName());
+        book.setDescription(capitalize(bookRequestDto.getDescription()));
+        book.setBookLanguage(capitalize(bookRequestDto.getBookLanguage()));
+        book.getAuthor().setFirstName(capitalize(bookRequestDto.getAuthorFirstName()));
+        book.getAuthor().setLastName(capitalize(bookRequestDto.getAuthorLastName()));
     }
 
     public static final Function<BookRequestDto, Book> mapBookRequestDtoToBook = bookRequestDto -> Book.builder()
             .title(bookRequestDto.getTitle())
-            .description(bookRequestDto.getDescription())
-            .bookLanguage(bookRequestDto.getBookLanguage())
+            .description(capitalize(bookRequestDto.getDescription()))
+            .bookLanguage(capitalize(bookRequestDto.getBookLanguage()))
             .pages(bookRequestDto.getPages())
-            .author(Author.builder().firstName(bookRequestDto.getAuthorFirstName()).lastName(bookRequestDto.getAuthorLastName()).build())
+            .author(Author.builder().firstName(capitalize(bookRequestDto.getAuthorFirstName()))
+                    .lastName(capitalize(bookRequestDto.getAuthorLastName())).build())
             .addedAt(LocalDate.now(zoneId))
             .build();
 
     public static final Function<Book, BookResponseDto> mapBookToBookResponseDto = book -> BookResponseDto.builder()
             .id(book.getId())
-            .title(book.getTitle())
+            .title(capitalize(book.getTitle()))
             .pages(book.getPages())
-            .description(book.getDescription())
-            .language(book.getBookLanguage())
-            .status(book.getBookStatus().toString())
+            .description(capitalize(book.getDescription()))
+            .language(capitalize(book.getBookLanguage()))
+            .status(capitalize(book.getBookStatus().toString()))
             .addedAt(book.getAddedAt() != null ? book.getAddedAt().toString() : null)
-            .author(book.getAuthor().getFirstName() + " " + (book.getAuthor().getLastName()))
+            .author(capitalize(book.getAuthor().getFirstName()) + " " + capitalize(book.getAuthor().getLastName()))
             .addedBy(book.getUser() != null ? book.getUser().getUsername() : null)
             .deletedBy(book.getDeletedBy() != null ? book.getDeletedBy().getUsername() : null)
             .deletedWhy(book.getDeletedWhy() != null ? book.getDeletedWhy() : null)
@@ -78,9 +80,9 @@ public class BookMapper {
     public static final Function<Book, BooksResponseDto> mapBookToBooksResponseDto = book -> BooksResponseDto.builder()
             .id(book.getId())
             .title(book.getTitle())
-            .authorName(book.getAuthor().getFirstName() + " " + book.getAuthor().getLastName())
-            .language(book.getBookLanguage())
-            .status(book.getBookStatus().toString())
+            .authorName(capitalize(book.getAuthor().getFirstName()) + " " + capitalize(book.getAuthor().getLastName()))
+            .language(capitalize(book.getBookLanguage()))
+            .status(capitalize(book.getBookStatus().toString()))
             .tags(book.getTags().stream().map(Tags::getTagName).collect(Collectors.toSet()))
             .build();
 

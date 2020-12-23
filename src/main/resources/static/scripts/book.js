@@ -96,12 +96,8 @@ function displayBook(book) {
         }
         $("#txt-first-name").attr("value", authorFirstName);
         $("#txt-last-name").attr("value", authorLastName);
-        if (book.data.language !== null) {
-            $("#txt-language").attr("value", `${book.data.language}`);
-        } else {
-            $("#txt-language").attr("placeholder",`Currently is not indicated`);
-        }
         $("#txt-pages").attr("value", `${book.data.pages}`);
+        getLanguageTags(transformNameToTagName(book.data.language));
     }
     verifyUserAssignmentForThisBook(book.data.id);
     $("#assign-button").on("click", () => {
@@ -287,17 +283,14 @@ function validatePages(txt) {
     }
 }
 
-function validateLanguage(txt) {
-    let regAdd = /^[a-zA-Z]{1,30}$/
-    if (regAdd.test(txt) === false) {
-        document.getElementById("errLast-language").innerHTML = "<span class='warning'>Please use only letters!</span>";
+function validateLanguage(language) {
+    if (!language) {
+        document.getElementById("errLast-language").innerHTML = "<span class='warning'>Please select language!</span>";
         document.getElementById("errLast-language").style.color = badColor;
-        document.getElementById("txt-language").style.border = "medium solid #ff6666"
         languageValidate = false;
     } else {
         document.getElementById("errLast-language").innerHTML = "<span class='valid'>Good!</span>";
         document.getElementById("errLast-language").style.color = goodColor;
-        document.getElementById("txt-language").style.border = "medium solid #66cc66"
         languageValidate = true;
     }
 }
@@ -351,9 +344,46 @@ const bookObject = () => {
         title: $("#txt-title").val(),
         authorFirstName: $("#txt-first-name").val(),
         authorLastName: $("#txt-last-name").val(),
-        bookLanguage: $("#txt-language").val(),
+        bookLanguage: transformNameToValidForm($("#txt-language").val()),
         pages: $("#txt-pages").val(),
         tagList: [],
         description: $("#txt-description").val()
     };
 };
+
+function getLanguageTags(currentLanguage) {
+    $.ajax({
+        url: "/tags/type/language",
+        method: "GET",
+        success: response => {
+            displayLanguageTags(response, currentLanguage);
+        }
+    })
+}
+
+function displayLanguageTags(languages, currentLanguage) {
+    if (languages.length > 0) {
+        let placeholder = "";
+        $.each(languages, (index, language) => {
+            if(language.tagName === currentLanguage) {
+                placeholder += `
+                <option value="${language.tagName}" selected>${transformNameToValidForm(language.tagName)}</option>
+                `;
+            } else {
+                placeholder += `
+                <option value="${language.tagName}">${transformNameToValidForm(language.tagName)}</option>
+                `;
+            }
+        });
+        $("#txt-language").append(placeholder);
+        $("#txt-language").selectpicker("refresh");
+    }
+}
+
+function transformNameToValidForm(name) {
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase().replace(/-/g, ' ');
+}
+
+function transformNameToTagName(name) {
+    return name.toLowerCase().replace(/\s/g, '-');
+}
