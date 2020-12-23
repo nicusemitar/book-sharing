@@ -45,7 +45,7 @@ public class AssignmentsService {
     private String getUserHaveToManyWaitingAssignments;
 
     public List<AssignmentsResponseDto> getAssignmentsByUser() {
-        return getActiveAssignmentsForCurrentUser().
+        return getActiveAndWaitingAssignments().
                 stream().
                 map(mapAssignmentsToAssignmentsResponseDto).
                 collect(Collectors.toList());

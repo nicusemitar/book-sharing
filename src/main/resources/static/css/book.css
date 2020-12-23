@@ -113,7 +113,6 @@ main {
 .modal-footer {
     border-top: 3px solid #708090;
     background-color: white;
-    height: 80px;
     display: block;
 }
 
@@ -260,4 +259,29 @@ ul.dropdown-menu.inner.show {
 .dropdown-menu.show {
     display: block;
     left: 40px;
+}
+
+.buton-submit {
+    outline: none;
+    background: none;
+    color: black;
+    border: 2px solid black;
+    text-transform: uppercase;
+    padding: 10px 30px;
+    min-width: 175px;
+    margin: 27px;
+    font-size: 16px;
+    transition: color 0.2s linear;
+    position: relative;
+}
+
+.buton-submit:hover {
+    outline: none;
+    color: white;
+    background-image: linear-gradient(315deg, #fce043 0%, #fb7ba2 74%);
+    border: 2px solid black;
+}
+
+.alert-warning{
+    font-size: 13px;
 }
