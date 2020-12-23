@@ -37,7 +37,7 @@ public class AssignmentsRestController {
 
     @PostMapping("/{id}/extends")
     public ResponseEntity<Response<TimeExtendResponseDto>> saveRequest(@PathVariable Long id,
-                                                                       @RequestBody @Valid TimeExtendRequestDto timeExtendRequestDto) {
+            @RequestBody @Valid TimeExtendRequestDto timeExtendRequestDto) {
         return ResponseEntity.ok(Response.build(timeExtendService.save(timeExtendRequestDto, id)));
     }
 
@@ -58,5 +58,11 @@ public class AssignmentsRestController {
     @PostMapping(value = "/{bookId}/assign")
     public ResponseEntity<AssignmentsResponseDto> assignToCurrentUser(@PathVariable @NotNull Long bookId) {
         return ResponseEntity.ok(assignmentsService.saveAssigmentForCurrentUserForBookWithID(bookId));
+    }
+
+    @PostMapping("/extends/{id}")
+    public ResponseEntity<Object> approveRequest(@PathVariable Long id,
+                                                 @RequestBody @Valid TimeExtendRequestDto timeExtendRequestDto) {
+        return ResponseEntity.ok(Response.build(timeExtendService.acceptRequest(id, timeExtendRequestDto)));
     }
 }

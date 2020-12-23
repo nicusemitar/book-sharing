@@ -14,4 +14,7 @@ public interface AssignmentsRepository extends JpaRepository<Assignments, Long> 
 
     @Query("SELECT a from Assignments a where a.assignDate >= CURRENT_DATE")
     List<Assignments> getAllActiveAndWaitingAssignments();
+
+    @Query("SELECT a from Assignments a where a.dueDate >= CURRENT_DATE and a.book.id =:id")
+    List<Assignments> getActiveAndWaitingAssignmentsByBookId(Long id);
 }

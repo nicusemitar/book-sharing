@@ -23,9 +23,7 @@ import java.util.Collections;
 import static com.endava.booksharing.TestConstants.ID_ONE;
 import static com.endava.booksharing.TestConstants.INVALID_ID;
 import static com.endava.booksharing.utils.AssignmentsTestUtils.ASSIGNMENTS_RESPONSE_DTO;
-import static com.endava.booksharing.utils.TimeExtendTestUtils.PAGEABLE_TIME_EXTEND_RESPONSE_DTO;
-import static com.endava.booksharing.utils.TimeExtendTestUtils.TIME_EXTEND_REQUEST_DTO;
-import static com.endava.booksharing.utils.TimeExtendTestUtils.TIME_EXTEND_RESPONSE_DTO;
+import static com.endava.booksharing.utils.TimeExtendTestUtils.*;
 import static com.endava.booksharing.utils.UserTestUtils.USER_ONE;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
@@ -135,5 +133,21 @@ public class AssignmentsRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadGateway())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void shouldAcceptTimeExtendRequest() throws Exception {
+        when(timeExtendService.acceptRequest(ID_ONE, TIME_EXTEND_REQUEST_DTO_TWO)).thenReturn(Collections.singletonList(ASSIGNMENTS_RESPONSE_DTO));
+
+        mockMvc.perform(post("/assignments/extends/{id}", ID_ONE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(gson.toJson(TIME_EXTEND_REQUEST_DTO_TWO)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(gson.toJson(Response.build(Collections.singletonList(ASSIGNMENTS_RESPONSE_DTO)))));
+
+        verify(timeExtendService).acceptRequest(ID_ONE, TIME_EXTEND_REQUEST_DTO_TWO);
     }
 }

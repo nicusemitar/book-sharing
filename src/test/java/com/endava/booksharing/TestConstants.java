@@ -81,6 +81,7 @@ public class TestConstants {
     public static final String TIME_EXTEND_DESCRIPTION = "I need one more week";
     public static final LocalDate TIME_EXTEND_DATE_VALID = LocalDate.of(2020, 9, 15);
     public static final String TIME_EXTEND_DATE_VALID_AS_STRING = "2020-09-15";
+    public static final String TIME_EXTEND_DATE_ONE= "2020-09-15";
     public static final String TIME_EXTEND_DATE_VALID_REQUEST_AS_STRING = "2020-9-15";
     public static final String TIME_EXTEND_DATE_EQUAL_WITH_DUE_DATE_AS_STRING = "2020-9-13";
     public static final String TIME_EXTEND_DATE_SMALLER_THAN_DUE_DATE_AS_STRING = "2020-9-5";
