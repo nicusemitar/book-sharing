@@ -501,7 +501,3 @@ img#error-image, img#success-image {
 .clearfix {
     margin-left: 10%;
 }
-
-.dropdown-menu.show {
-    left: 40px;
-}

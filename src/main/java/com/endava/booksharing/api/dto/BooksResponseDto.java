@@ -18,4 +18,5 @@ public class BooksResponseDto {
     private String language;
     private String status;
     private Set<String> tags;
+    private String bookImageUrl;
 }

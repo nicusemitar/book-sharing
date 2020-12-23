@@ -68,6 +68,9 @@ public class Book {
     @Column(name = "deleted_why")
     private String deletedWhy;
 
+    @Column(name = "book_image_url")
+    private String bookImageUrl;
+
     @ManyToOne(fetch = FetchType.LAZY,
             cascade =
                     {

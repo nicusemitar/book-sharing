@@ -1,7 +1,18 @@
+let formdata;
+
 $(document).ready(() => {
     let id = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
     getBook(id);
     getReviews(id);
+});
+
+$('#imageFile').change(function () {
+    let file;
+    formdata = new FormData();
+    if ($(this).prop('files').length > 0) {
+        file = $(this).prop('files')[0];
+        formdata.append("file", file);
+    }
 });
 
 let tags = [];
@@ -33,6 +44,7 @@ function verifyUserAssignmentForThisBook(bookID) {
     })
 }
 
+
 function getBook(id) {
     $.ajax({
         url: `/books/${id}`,
@@ -55,6 +67,11 @@ function getReviews(id) {
 
 function displayBook(book) {
     if (book !== null) {
+        if (book.data.bookImageUrl === null) {
+            image_url = "/images/books-icon.png";
+        } else {
+            image_url = book.data.bookImageUrl;
+        }
         let placeholderTitle = `${book.data.title}`;
         let authorFullName = `${book.data.author}`
         let placeholderAuthor = `<th>Author:</th><td>${book.data.author}</td>`;
@@ -94,6 +111,7 @@ function displayBook(book) {
             $("#book-added-by").html(placeholderNoAddedBy);
         }
         $("#book-added-at").html(placeholderAddedAt);
+        $("#image_book").attr("src", image_url);
         displayTags($(book.data.tags));
 
         if (book.data.status === "FREE") {
@@ -332,10 +350,12 @@ function validateLanguage(language) {
     if (!language) {
         document.getElementById("errLast-language").innerHTML = "<span class='warning'>Please select language!</span>";
         document.getElementById("errLast-language").style.color = badColor;
+        document.getElementById("txt-language").style.border = "medium solid #ff6666"
         languageValidate = false;
     } else {
         document.getElementById("errLast-language").innerHTML = "<span class='valid'>Good!</span>";
         document.getElementById("errLast-language").style.color = goodColor;
+        document.getElementById("txt-language").style.border = "medium solid #66cc66"
         languageValidate = true;
     }
 }
@@ -373,7 +393,6 @@ $("#submit-update").on("click", () => {
             data: JSON.stringify(bookObject()),
             contentType: "application/json",
             success: function (result) {
-                window.location.href = `/book/${id}`;
             },
             error: function (result) {
                 document.getElementById("update-modal").style.display = "block"
@@ -382,8 +401,25 @@ $("#submit-update").on("click", () => {
     } else {
         document.getElementById("update-modal").style.display = "block"
     }
+    formdata = new FormData();
+    let file;
+    if ($('#imageFile').prop('files').length > 0) {
+        file = $('#imageFile').prop('files')[0];
+        formdata.append("file", file);
+    }
+    if (formdata !== undefined) {
+        $.ajax({
+            url: '/book/' + id + '/update-photo',
+            method: "POST",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+            }
+        });
+    }
+    window.location.href = `/book/${id}`;
 });
-
 const bookObject = () => {
     return {
         title: $("#txt-title").val(),
@@ -395,6 +431,8 @@ const bookObject = () => {
         description: $("#txt-description").val()
     };
 };
+
+
 
 function getLanguageTags(currentLanguage) {
     $.ajax({

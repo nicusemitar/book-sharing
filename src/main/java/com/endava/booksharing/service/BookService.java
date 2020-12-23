@@ -99,7 +99,7 @@ public class BookService {
     }
 
     @Transactional
-    public BookResponseDto updateBook(Long bookId, BookRequestDto bookRequestDto) {
+    public BookResponseDto  updateBook(Long bookId, BookRequestDto bookRequestDto) {
         log.info("Updating the records for book with id [{}]", bookId);
 
         Book toBeUpdatedBook = bookRepository.findById(bookId).orElseThrow(

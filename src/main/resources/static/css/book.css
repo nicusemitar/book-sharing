@@ -8,7 +8,7 @@
     color: black;
 }
 
-.form-control {
+.form-control.add {
     font-size: 1.1em;
     resize: none;
     height: 30px;
@@ -258,7 +258,6 @@ ul.dropdown-menu.inner.show {
 
 .dropdown-menu.show {
     display: block;
-    left: 40px;
 }
 
 .buton-submit {

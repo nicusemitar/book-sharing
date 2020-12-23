@@ -75,6 +75,7 @@ public class BookMapper {
             .deletedWhy(book.getDeletedWhy() != null ? book.getDeletedWhy() : null)
             .deletedDate(book.getDeletedAt() != null ? book.getDeletedAt().toString() : null)
             .tags(book.getTags().stream().map(Tags::getTagName).collect(Collectors.toSet()))
+            .bookImageUrl(book.getBookImageUrl())
             .build();
 
     public static final Function<Book, BooksResponseDto> mapBookToBooksResponseDto = book -> BooksResponseDto.builder()
@@ -84,6 +85,7 @@ public class BookMapper {
             .language(capitalize(book.getBookLanguage()))
             .status(capitalize(book.getBookStatus().toString()))
             .tags(book.getTags().stream().map(Tags::getTagName).collect(Collectors.toSet()))
+            .bookImageUrl(book.getBookImageUrl())
             .build();
 
     public static final Function<Page<BooksResponseDto>, PageableBooksResponseDto> mapBooksResponseDtoPageToPageableBooksResponseDto = booksPage -> PageableBooksResponseDto.builder()
