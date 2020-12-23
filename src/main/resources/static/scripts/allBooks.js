@@ -32,6 +32,12 @@ function displayBooks(books) {
         } else {
             st = '<img src = "/images/busy.png" class = "img-for-status" width="50px" height="50px">';
         }
+        let bookLanguage;
+        if (book.language != null) {
+            bookLanguage = book.language;
+        } else {
+            bookLanguage = 'Not indicated';
+        }
         placeholder +=
             `<span class="shadow float-left p-4 mb-4 bg-white" style="height: 320px">
                 <input class='user-id' type='hidden' value='${book.id}'>
@@ -40,7 +46,7 @@ function displayBooks(books) {
                 <p align="center">
                     ${book.title}<br>
                     ${book.authorName}<br>
-                    Language: ${book.language}
+                    Language: ${bookLanguage}
                 </p>
             </span>`
     });

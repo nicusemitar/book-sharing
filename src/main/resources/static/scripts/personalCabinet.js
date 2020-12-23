@@ -385,14 +385,6 @@ const bookObject = () => {
     };
 };
 
-$("#books-table").on("click", ".shadow", function (e) {
-    if (e.target !== this) {
-        return;
-    }
-    let id = this.querySelector(".book-id").value;
-    window.location.href = `/book/${id}`;
-})
-
 function clearTextArea() {
     $("#textArea").val("");
     $("#setDate").val("");
@@ -488,11 +480,11 @@ function formatDate(date) {
 }
 
 $("#books-placeholder").on("click", ".shadow", function (e) {
-    if (e.target !== this) {
-        return;
+    if (e.target !== this.querySelector("#extend-open")) {
+        let id = this.querySelector(".book-id").value;
+        window.location.href = `/book/${id}`;
     }
-    let id = this.querySelector(".book-id").value;
-    window.location.href = `/book/${id}`;
+    return;
 })
 
 function getGenreTags() {
